@@ -36,11 +36,16 @@ class Product(models.Model):
     material = models.CharField(max_length=255)
     coating = models.CharField(max_length=255)
     additional_info = models.CharField(max_length=500)
+    category = models.ForeignKey(
+        "Category",
+        on_delete=models.CASCADE,
+        related_name="products"
+    )
 
     class Meta:
         ordering = ["name"]
 
-    def __str__(self) -> CharField:
+    def __str__(self) -> str:
         return self.name
 
 

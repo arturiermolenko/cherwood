@@ -27,12 +27,7 @@ class Category(models.Model):
 
 
 def product_main_image_file_path(instance, filename) -> str:
-    return file_path(
-        instance,
-        filename,
-        f"main_{instance.name}",
-        "products"
-    )
+    return file_path(instance, filename, f"main_{instance.name}", "products")
 
 
 class Product(models.Model):
@@ -46,9 +41,7 @@ class Product(models.Model):
     coating = models.CharField(max_length=255)
     additional_info = models.CharField(max_length=500)
     category = models.ForeignKey(
-        "Category",
-        on_delete=models.CASCADE,
-        related_name="products"
+        "Category", on_delete=models.CASCADE, related_name="products"
     )
     main_image = models.ImageField(upload_to=product_main_image_file_path)
 

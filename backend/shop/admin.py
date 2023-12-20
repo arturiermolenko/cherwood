@@ -19,7 +19,7 @@ class ProductAdmin(admin.ModelAdmin):
         "height",
         "material",
         "coating",
-        "additional_info"
+        "additional_info",
     )
     list_filter = ("name", "material", "coating")
     search_fields = ("name",)

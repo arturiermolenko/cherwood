@@ -20,9 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = (
-    "django-insecure-^hkk$xn74+z)f)1!bt++d1rvq6(#l$3l*0all0q&=k8^9z)z6-"
-)
+SECRET_KEY = "django-insecure-^hkk$xn74+z)f)1!bt++d1rvq6(#l$3l*0all0q&=k8^9z)z6-"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -44,7 +42,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "debug_toolbar",
     "user",
-    "shop"
+    "shop",
 ]
 
 MIDDLEWARE = [
@@ -143,8 +141,6 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(
-        days=2
-    ),  # for convenience while developing
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=2),  # for convenience while developing
     "REFRESH_TOKEN_LIFETIME": timedelta(days=3),
 }

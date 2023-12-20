@@ -14,7 +14,6 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = (
         "id",
         "name",
-        "description",
         "length",
         "width",
         "height",

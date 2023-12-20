@@ -6,9 +6,7 @@ from rest_framework.exceptions import ValidationError
 
 
 class UserCreateSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(
-        write_only=True, style={"input_type": "password"}
-    )
+    password = serializers.CharField(write_only=True, style={"input_type": "password"})
     confirm_password = serializers.CharField(
         write_only=True, style={"input_type": "password"}
     )

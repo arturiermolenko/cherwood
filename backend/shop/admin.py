@@ -3,6 +3,10 @@ from django.contrib import admin
 from .models import Category, Product, ProductImage
 
 
+class ProductImageInline(admin.TabularInline):
+    model = ProductImage
+
+
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ("id", "name")
@@ -21,8 +25,6 @@ class ProductAdmin(admin.ModelAdmin):
         "coating",
         "additional_info",
     )
+    inlines = [ProductImageInline]
     list_filter = ("name", "material", "coating")
     search_fields = ("name",)
-
-
-admin.site.register(ProductImage)

@@ -357,3 +357,4 @@ pyrightconfig.json
 /venv/
 backend/uploads
 
+static

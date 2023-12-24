@@ -26,22 +26,49 @@ class Category(models.Model):
         return self.name
 
 
+def subcategory_image_file_path(instance, filename) -> str:
+    return file_path(instance, filename, instance.name, "subcategories")
+
+
+class Subcategory(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    image = models.ImageField(null=True, upload_to=subcategory_image_file_path)
+    category = models.ForeignKey(
+        "Category", on_delete=models.CASCADE, related_name="subcategories"
+    )
+
+    class Meta:
+        ordering = ["name"]
+        verbose_name_plural = "subcategories"
+
+    def __str__(self) -> str:
+        return f"{self.name}({self.category})"
+
+
 def product_main_image_file_path(instance, filename) -> str:
     return file_path(instance, filename, f"main_{instance.name}", "products")
 
 
 class Product(models.Model):
     name = models.CharField(max_length=255, unique=True)
+    name_eng = models.CharField(max_length=255, unique=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     description = models.TextField()
+    description_eng = models.TextField()
     length = models.IntegerField()
     width = models.IntegerField()
     height = models.IntegerField()
     material = models.CharField(max_length=255)
+    material_eng = models.CharField(max_length=255)
     coating = models.CharField(max_length=255)
+    coating_eng = models.CharField(max_length=255)
     additional_info = models.CharField(max_length=500)
+    additional_info_eng = models.CharField(max_length=500)
     category = models.ForeignKey(
         "Category", on_delete=models.CASCADE, related_name="products"
+    )
+    subcategory = models.ForeignKey(
+        "Subcategory", on_delete=models.CASCADE, related_name="products"
     )
     main_image = models.ImageField(upload_to=product_main_image_file_path)
 

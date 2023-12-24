@@ -51,14 +51,19 @@ def product_main_image_file_path(instance, filename) -> str:
 
 class Product(models.Model):
     name = models.CharField(max_length=255, unique=True)
+    name_eng = models.CharField(max_length=255, unique=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     description = models.TextField()
+    description_eng = models.TextField()
     length = models.IntegerField()
     width = models.IntegerField()
     height = models.IntegerField()
     material = models.CharField(max_length=255)
+    material_eng = models.CharField(max_length=255)
     coating = models.CharField(max_length=255)
+    coating_eng = models.CharField(max_length=255)
     additional_info = models.CharField(max_length=500)
+    additional_info_eng = models.CharField(max_length=500)
     category = models.ForeignKey(
         "Category", on_delete=models.CASCADE, related_name="products"
     )

@@ -6,13 +6,7 @@ from shop.models import Category, Product, ProductImage
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ("id", "name", "image")
-
-
-class CategoryListSerializer(CategorySerializer):
-    class Meta:
-        model = Category
-        fields = ("id", "name", "image")
+        fields = ("id", "name", "image", "subcategories")
 
 
 class ProductImageSerializer(serializers.ModelSerializer):
@@ -22,12 +16,13 @@ class ProductImageSerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    category_name = serializers.CharField(source="category.name", read_only=True)
+    images = ProductImageSerializer(read_only=True, many=True)
 
     class Meta:
         model = Product
         fields = (
             "id",
+            "name",
             "price",
             "description",
             "length",
@@ -36,41 +31,8 @@ class ProductSerializer(serializers.ModelSerializer):
             "material",
             "coating",
             "additional_info",
-            "category_name",
+            "category",
+            "subcategory",
             "main_image",
+            "images"
         )
-
-
-class ProductListSerializer(ProductSerializer):
-    class Meta:
-        model = Product
-        fields = ("id", "name", "price", "category_name")
-
-
-class ProductDetailSerializer(ProductSerializer):
-    images = ProductImageSerializer(many=True)
-
-    class Meta:
-        model = Product
-        fields = (
-            "id",
-            "price",
-            "description",
-            "length",
-            "width",
-            "height",
-            "material",
-            "coating",
-            "additional_info",
-            "category_name",
-            "main_image",
-            "images",
-        )
-
-
-class CategoryDetailSerializer(CategorySerializer):
-    products = ProductListSerializer(many=True)
-
-    class Meta:
-        model = Category
-        fields = ("products",)

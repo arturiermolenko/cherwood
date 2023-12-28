@@ -1,12 +1,20 @@
 from rest_framework import serializers
 
-from shop.models import Category, Product, ProductImage
+from shop.models import Category, Product, ProductImage, Subcategory
+
+
+class SubcategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Subcategory
+        fields = ["name", "name_eng"]
 
 
 class CategorySerializer(serializers.ModelSerializer):
+    subcategories = SubcategorySerializer(read_only=True, many=True)
+
     class Meta:
         model = Category
-        fields = ("id", "name", "image", "subcategories")
+        fields = ("id", "name", "name_eng", "subcategories")
 
 
 class ProductImageSerializer(serializers.ModelSerializer):
@@ -17,6 +25,14 @@ class ProductImageSerializer(serializers.ModelSerializer):
 
 class ProductSerializer(serializers.ModelSerializer):
     images = ProductImageSerializer(read_only=True, many=True)
+    category_name = serializers.CharField(source="category.name", read_only=True)
+    category_name_eng = serializers.CharField(
+        source="category.name_eng", read_only=True
+    )
+    subcategory_name = serializers.CharField(source="subcategory.name", read_only=True)
+    subcategory_name_eng = serializers.CharField(
+        source="subcategory.name_eng", read_only=True
+    )
 
     class Meta:
         model = Product
@@ -32,12 +48,11 @@ class ProductSerializer(serializers.ModelSerializer):
             "height",
             "material",
             "material_eng",
-            "coating",
-            "coating_eng",
-            "additional_info",
-            "additional_info_eng",
-            "category",
-            "subcategory",
+            "category_name",
+            "category_name_eng",
+            "subcategory_name",
+            "subcategory_name_eng",
+            "buying_with_it",
             "main_image",
-            "images"
+            "images",
         )

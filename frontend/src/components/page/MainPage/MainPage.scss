@@ -1,0 +1,47 @@
+@import "../../../helpers/variables.scss";
+
+.main {
+  margin: 40px 70px;
+  &__topOptions {
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__miniContainer {
+    display: flex;
+    align-items: center;
+  }
+
+  &__defolt {
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 120%;
+    color: $greenColor;
+    margin: 0px 30px;
+  }
+
+  &__shown {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+    color: $grayColor;
+  }
+
+  &__insta {
+    background-image: url("../../../img/Instagram.svg");
+    width: 24px;
+    height: 24px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin-left: 30px;
+  }
+
+  &__cardContainer {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}

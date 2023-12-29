@@ -1,0 +1,102 @@
+@import "../../../helpers/variables.scss";
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid $liteGrayColor;
+  justify-content: space-between;
+  padding: 24px 70px 40px;
+
+  &__container {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  &__container2 {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  &__img {
+    width: 24px;
+    height: 24px;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+ &__insta {
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 21.6px;
+  color: $grayColor;
+
+  display: flex;
+  align-items: center;
+
+  &--img {
+    background-image: url("../../../img/Instagram.svg");
+    margin-left: 24px;
+  }
+ }
+
+ &__phone {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 120%;
+  color: $grayColor;
+
+  display: flex;
+  align-items: center;
+
+  &--img {
+    margin-right: 24px;
+    background-image: url("../../../img/Phone.svg");
+  }
+ }
+
+ &__text {
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 120%; 
+  color: $text2Color;
+  margin-left: 30px;
+  display: flex;
+  align-items: center;
+
+  &:first-child {
+    margin: 0px;
+  }
+ }
+
+ &__miniContainer {
+  display: flex;
+  align-items: center;
+ }
+
+ &__locationImg {
+  margin-left: 24px;
+  background-image: url("../../../img/Location.svg");
+ }
+
+ &__gmail {
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 120%;
+  color: $grayColor;
+  display: flex;
+  align-items: center;
+
+  &--img {
+    margin-right: 24px;
+    background-image: url("../../../img/Gmail.svg");
+  }
+ }
+}

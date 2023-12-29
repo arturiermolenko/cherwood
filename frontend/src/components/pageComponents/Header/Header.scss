@@ -1,0 +1,144 @@
+@import "../../../helpers/variables.scss";
+
+.header {
+    &__mainContainer {
+      display: flex;
+      justify-content: space-between;
+      padding: 40px 70px;
+      align-items: center;
+      text-align: center;
+    }
+
+    &__container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    &__nav {
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      &--link {
+        margin-left: 32px;
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 28.8px;
+        text-decoration: none;
+        cursor: pointer;
+        color: $blackColor;
+        text-align: center;
+      }
+    }
+
+    &__img { 
+      background-repeat: no-repeat;
+      background-size: contain;
+    }
+
+    &__filter {
+      width: 48px;
+      height: 40px;
+      background-image: url("../../../img/Sort.svg");
+      box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.12);
+      border-radius: 10px;
+    }
+
+    &__chart {
+      width: 40px;
+      height: 32px;
+      background-image: url("../../../img/Chart.svg");
+    }
+
+    &__favorites {
+      width: 40px;
+      height: 40px;
+      background-color: $darkWhiteColor;
+      border: 1px solid $darkWhiteColor;
+      border-radius: 10px;
+      background-image: url("../../../img/Favorite.svg");
+    }
+
+    &__languageContainer {
+      display: flex;
+      align-items: center;
+      position: relative;
+      margin: 0px 48px;
+
+      background-color: $darkWhiteColor;
+      border: 1px solid $darkWhiteColor;
+      border-radius: 12px;
+      cursor: pointer;
+      padding: 8px 4px 8px 8px;
+    }
+
+    &__languages {
+      width: 24px;
+      height: 24px;
+      background-image: url("../../../img/Language.svg");
+      padding: 0;
+      margin: 0;
+
+      &--text {
+        color: $text2Color;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 120%;
+        margin-left: 3px;
+      }
+
+      &--button {
+        background-image: url("../../../img/MiniArrow.svg");
+        width: 24px;
+        height: 24px;
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+      }
+
+      &--select {
+        display: flex;
+        align-items: flex-end;
+      }
+    }
+
+    &__profile {
+      width: 32px;
+      height: 32px;
+      background-image: url("../../../img/Profile.svg");
+    }
+
+    &__select {
+      list-style: none;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 120%;
+      color: $blackColor;
+      margin: 8px 0px;
+      cursor: pointer;
+    }
+
+    &__list {
+      position: absolute;
+      top: 100%;
+      margin-top: 4px;
+      padding: 0px 10px;
+      background-color: $darkWhiteColor;
+      z-index: 1;
+      border-radius: 12px;
+    }
+
+    &__cont {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      align-items: center;
+    }
+}

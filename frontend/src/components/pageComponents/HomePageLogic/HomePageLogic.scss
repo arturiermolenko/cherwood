@@ -1,0 +1,60 @@
+.straviLogic {
+  margin-top: 130px;
+
+  &__header {
+    font-size: 40px;
+    font-weight: 400;
+    line-height: 120%;
+  }
+
+  &__descr {
+    width: 676px;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 120%;
+  }
+
+  &__miniContainer {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    margin: 0;
+  }
+}
+
+.sliderButton {
+  width: 32px;
+  height: 32px;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-position: center;
+  cursor: pointer;
+
+  &--prev {
+    background-image: url("../../../img/chevron-arrow-left.svg");
+    margin-right: 16px;
+
+    &:hover {
+      background-image: url("../../../img/chevron-arrow-left-hover.svg");
+    }
+
+    &:disabled {
+      background-image: url("../../../img/chevron-arrow-left.svg");
+      cursor: unset;
+    }
+  }
+
+  &--next {
+    background-image: url("../../../img/chevron-arrow-right.svg");
+
+    &:hover {
+      background-image: url("../../../img/chevron-arrow-right-hover.svg");
+    }
+
+    &:disabled {
+      background-image: url("../../../img/chevron-arrow-right.svg");
+      cursor: unset;
+    }
+  }
+}

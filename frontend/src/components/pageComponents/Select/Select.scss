@@ -1,0 +1,75 @@
+@import "../../../helpers/variables.scss";
+
+.select {
+  position: relative;
+
+  &__name {
+    cursor: pointer;
+    display: flex;
+    padding: 20px;
+    justify-content: flex-start;
+    align-items: center;
+    border: 0.5px solid $liteGrayColor;
+    border-radius: 16px;
+    color: $text2Color;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 120%
+  }
+
+  &__button {
+    background-image: url("../../../img/MiniArrow.svg");
+    width: 24px;
+    height: 24px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+  }
+
+  &__list {
+    padding: 10px 12px;
+    background-color: $whiteColor;
+    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.12);
+    border-radius: 12px;
+    width: 305px;
+    height: max-content;
+    margin-top: 5px;
+    position: absolute;
+    z-index: 1;
+  }
+
+  &__text {
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+    color: $text2Color;
+  }
+
+  &__apply {
+    background-color: $greenColor;
+    border-radius: 12px;
+    border: none;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 120%;
+    padding: 13px;
+    margin-top: 12px;
+    color: $whiteColor;
+    flex-grow: 1;
+    cursor: pointer;
+  }
+
+  &__flex {
+    display: flex;
+    align-items: center;
+  }
+
+  &__select {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid $grayscaleColor;
+  }
+}

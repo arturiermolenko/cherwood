@@ -11,13 +11,21 @@ from shop.serializers import (
 
 
 class CategoryViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, GenericViewSet):
-    queryset = Category.objects.all()
+    queryset = Category.objects.prefetch_related("subcategories").all()
     serializer_class = CategorySerializer
     permission_classes = (AllowAny,)
 
 
 class ProductViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, GenericViewSet):
-    queryset = Product.objects.order_by("id")
+    queryset = (
+        Product.objects.select_related()
+        .prefetch_related(
+            "images",
+            "buying_with_it__buying_with_it__product_set",
+            "category__subcategories__products",
+        )
+        .order_by("id")
+    )
     serializer_class = ProductSerializer
     permission_classes = (AllowAny,)
 

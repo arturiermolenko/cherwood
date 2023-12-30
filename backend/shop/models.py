@@ -62,11 +62,7 @@ class Product(models.Model):
     height = models.IntegerField()
     material = models.CharField(max_length=255)
     material_eng = models.CharField(max_length=255)
-    buying_with_it = models.ManyToManyField(
-        "self",
-        blank=True,
-        symmetrical=False
-    )
+    buying_with_it = models.ManyToManyField("self", blank=True, symmetrical=False)
     category = models.ForeignKey(
         "Category", on_delete=models.CASCADE, related_name="products"
     )

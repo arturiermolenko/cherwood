@@ -2,6 +2,7 @@
 
 .main {
   margin: 40px 70px;
+
   &__topOptions {
     margin-bottom: 30px;
     display: flex;
@@ -43,5 +44,7 @@
   &__cardContainer {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 32px;
   }
 }

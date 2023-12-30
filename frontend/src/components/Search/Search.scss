@@ -9,12 +9,17 @@
   padding: 8px;
   border: 1px solid $darkWhiteColor;
   background-color: $darkWhiteColor;
+  transition: all 0.5s ease;
+
+  &.focused {
+    background-color: $whiteColor;
+  }
 
   &__input {
     border: none;
     outline: none;
     max-width: 326px;
-    background-color: $darkWhiteColor;
+    background-color: transparent;
 
     & ::placeholder {
       font-size: 17px;
@@ -41,7 +46,7 @@
     cursor: pointer;
 
     border: none;
-    background-color: $darkWhiteColor;
+    background-color: transparent;
   }
 
   &__label {

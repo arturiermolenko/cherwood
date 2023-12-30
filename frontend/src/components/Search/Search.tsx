@@ -39,6 +39,19 @@ export const Search = () => {
    setSearchQuery('');
  };
 
+ const formInput = document.querySelector('.form__input');
+ const form = document.querySelector('.form');
+
+ if (form !== null  && formInput !== null) {
+  formInput.addEventListener('focus', function() {
+    form.classList.add('focused');
+   });
+ 
+   formInput.addEventListener('blur', function() {
+    form.classList.remove('focused');
+   });
+ }
+
  return (
    <div className="form">
      <label

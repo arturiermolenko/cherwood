@@ -5,6 +5,7 @@ import { getCherwood } from "../../../api";
 import { Card } from "../../pageComponents/Card/Card";
 import { Select } from "../../pageComponents/Select/Select";
 import { Search } from "../../Search/Search";
+import { CarouselOnPage } from "../../pageComponents/Carusel";
 
 
 export const MainPage = () => {
@@ -42,6 +43,8 @@ export const MainPage = () => {
           <Card cherwood={prod} key={prod.id}/>
         ))}
       </div>
+
+      <CarouselOnPage />
     </div>
   );
 }

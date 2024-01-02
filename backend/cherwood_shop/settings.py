@@ -162,3 +162,5 @@ SPECTACULAR_SETTINGS = {
         "defaultModelExpandDepth": 2,
     },
 }
+
+CART_SESSION_ID = "cart"

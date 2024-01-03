@@ -16,31 +16,40 @@ export const Select = () => {
       </div>
 
     {isSelect &&(
-      <form className="select__list">
+      <div className="select__container">
+        <div className="select__top">
+        <button 
+          className="filter__cross"
+          onClick={() => setIsSelect(!isSelect)}
+        />
+      </div>
+
+        <form className="select__list">
+          <label htmlFor="html" className="select__select">
+            <Checkbox 
+              {...label} 
+              style={{ color: '#1B998B' }}
+              aria-label="English"
+              id="checkID"
+            />
+              <label className="select__text" htmlFor="checkID">English</label>
+        </label>
+
         <label htmlFor="html" className="select__select">
-          <Checkbox 
-            {...label} 
-            style={{ color: '#1B998B' }}
-            aria-label="English"
-            id="checkID"
-          />
-             <label className="select__text" htmlFor="checkID">English</label>
-      </label>
+            <Checkbox 
+              {...label} 
+              style={{ color: '#1B998B' }}
+              aria-label="English"
+              id="checkID2"
+            />
+              <label className="select__text" htmlFor="checkID2">Adfgveg</label>
+        </label>
 
-      <label htmlFor="html" className="select__select">
-          <Checkbox 
-            {...label} 
-            style={{ color: '#1B998B' }}
-            aria-label="English"
-            id="checkID2"
-          />
-            <label className="select__text" htmlFor="checkID2">Adfgveg</label>
-      </label>
-
-      <p className="select__flex">
-        <button className="select__apply">Apply</button>
-      </p>
-    </form>
+          <p className="select__flex">
+            <button className="select__apply">Apply</button>
+          </p>
+        </form>
+      </div>
       )}
   </div>
  );

@@ -8,7 +8,7 @@ export const Footer = () => {
       <div className="footer">
         <NavLink
           to="/"
-          className="logo"
+          className="logo footer__none"
         />
         <div className="footer__mainContainer">
           <div className="footer__container">

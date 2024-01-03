@@ -8,9 +8,18 @@
   box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.12);
   border-radius: 16px;
 
+  @include onPhone {
+    width: 175px;
+    height: 190px;
+  }
+
   &__top {
     height: 345px;
     position: relative;
+
+    @include onPhone {
+      height: 145px;
+    }
   }
 
   &__minicontainer {
@@ -34,6 +43,14 @@
     position: absolute;
     left: 20px;
     bottom: 24px;
+    background-size: contain;
+
+    @include onPhone {
+      left: 5px;
+      bottom: 5px;
+      width: 24px;
+      height: 24px;
+    }
   }
 
   &__chart {
@@ -46,6 +63,14 @@
     bottom: 24px;
     cursor: pointer;
     position: absolute;
+    background-size: contain;
+
+    @include onPhone {
+      right: 5px;
+      bottom: 5px;
+      width: 29px;
+      height: 24px;
+    }
   }
 
   &__header {
@@ -53,6 +78,10 @@
     justify-content: space-between;
     align-items: center;
     padding: 20px 16px;
+
+    @include onPhone {
+      padding: 12px 10px;
+    }
   }
 
   &__name {
@@ -62,6 +91,12 @@
     font-weight: 500;
     line-height: 120%;
     max-width: 200px;
+
+    @include onPhone {
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 130%;
+    }
   }
 
   &__price {
@@ -70,5 +105,11 @@
     font-style: normal;
     font-weight: 600;
     line-height: 120%;
+
+    @include onPhone {
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 130%;
+    }
   }
 }

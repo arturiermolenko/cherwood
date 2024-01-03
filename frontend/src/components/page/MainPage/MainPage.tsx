@@ -6,6 +6,7 @@ import { Card } from "../../pageComponents/Card/Card";
 import { Select } from "../../pageComponents/Select/Select";
 import { Search } from "../../Search/Search";
 import { CarouselOnPage } from "../../pageComponents/Carusel";
+import { HomeInfo } from "../../pageComponents/HomeInfo/HomeInfo";
 
 
 export const MainPage = () => {
@@ -21,10 +22,12 @@ export const MainPage = () => {
   return (
     <div className="main">
       <div className="main__topOptions">
-      <p className="main__miniContainer">
+      <p className="main__miniContainer main__miniContainer--colum">
         <Select />
-        <div className="main__defolt">View all</div>
-        <div className="main__shown">Showed 6 results</div>
+        <div className="main__watch">
+          <div className="main__defolt">View all</div>
+          <div className="main__shown">Showed 6 results</div>
+        </div>
       </p>
 
       <p className="main__miniContainer">
@@ -35,7 +38,6 @@ export const MainPage = () => {
           target="_blank"
         />
       </p>
-
       </div>
 
       <div className="main__cardContainer">
@@ -45,6 +47,8 @@ export const MainPage = () => {
       </div>
 
       <CarouselOnPage />
+
+      <HomeInfo />
     </div>
   );
 }

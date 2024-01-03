@@ -3,10 +3,10 @@
 .carousel {
   margin-top: 50px;
   margin-bottom: 75px;
+  padding: 40px 70px;
 
   @include onPhone {
-    height: 352px;
-    margin-top: 24px;
+    padding: 0;
   }
 
   &__title {
@@ -15,6 +15,11 @@
     font-weight: 500;
     line-height: 120%;
     color: $darkGrayColor;
+
+    
+    @include onPhone {
+    margin-left: 16px;
+    }
   }
   
   &__add {
@@ -38,12 +43,31 @@
     bottom: 100px;
 
     cursor: pointer;
+
+    @include onPhone {
+      width: 160px;
+      height: 20px;
+      padding: 20px;
+
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 120%;
+
+      left: 30px;
+      bottom: 40px;
+    }
   }
 
   &__slide {
     background-position: center;
     width: 1300px;
     height: 868px;
+
+    @include onPhone {
+      height: 350px;
+      width: 100%;
+    }
   }
 
   &__button {
@@ -57,6 +81,10 @@
     background-color: rgba($darkGrayColor, 0.7);
     cursor: pointer;
     margin: 80px;
+
+    @include onPhone {
+      margin: 30px;
+    }
 
     &--prev {
       background-image: url(../../../img/LeftArrow.svg);
@@ -78,6 +106,12 @@
   margin: 0 auto;
   border-radius: 20px;
   position: relative;
+
+  @include onPhone {
+    height: 350px;
+    width: 100%;
+    border-radius: 0px;
+  }
 }
 
 .react-slideshow-container + ul.indicators {
@@ -86,9 +120,17 @@
 
 .react-slideshow-container + ul.indicators .each-slideshow-indicator:before {
   background: $greenColor !important;
+
+  @media (max-width: 640px) {
+    display: none !important;
+  }
 }
 
 .each-slide {
-  height: 868px;
   position: relative;
+
+  @include onPhone {
+    height: 320px;
+    width: 100%;
+  }
 }

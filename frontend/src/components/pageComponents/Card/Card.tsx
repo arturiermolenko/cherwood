@@ -1,19 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Cherwood } from "../../../helpers/Cherwood.js";
 import "./Card.scss";
+import { Modal } from "../Modal/Modal";
 
 type Props = {
   cherwood: Cherwood,
 }
 
 export const Card: React.FC<Props> = ({ cherwood }) => {
-//   const [isSelect, setIsSelect] = useState(false);
+  const [isSelect, setIsSelect] = useState(false);
 
-//   const hendlCloseModal = () => {
-//     setIsSelect(false);
-// }
+  const hendlModal = () => {
+    setIsSelect(!isSelect);
 
-// const hendlOpenModal = (stravi) => {
+    console.log(isSelect)
+}
+
+// const hendlOpenModal = (cher) => {
 //   setIsSelect(true);
   
 // }
@@ -42,7 +45,7 @@ export const Card: React.FC<Props> = ({ cherwood }) => {
 
   return (
     <>
-      <div className="card">
+      <div className="card" onClick={hendlModal}>
         <div className="card__top">
           <img 
             className="card__img" 
@@ -61,7 +64,7 @@ export const Card: React.FC<Props> = ({ cherwood }) => {
       </div>
     </div>
 
-    {/* {isSelect &&(<Modal card={stravi}/>)} */}
+    {isSelect &&(<Modal card={cherwood} hendlCloseModal={hendlModal}/>)}
   </>
   );
 }

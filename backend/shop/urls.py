@@ -1,7 +1,7 @@
 from django.urls import path, include
 from rest_framework import routers
 
-from shop.views import CategoryViewSet, ProductViewSet, AddRemoveFavouriteView
+from shop.views import CategoryViewSet, ProductViewSet, AddRemoveFavouriteView, CartAPI
 
 app_name = "shop"
 
@@ -17,4 +17,5 @@ urlpatterns = [
         AddRemoveFavouriteView.as_view(),
         name="favourites",
     ),
+    path("cart/", CartAPI.as_view(), name="cart"),
 ]

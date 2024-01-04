@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "drf_spectacular",
     "user",
     "shop",
+    "order",
 ]
 
 MIDDLEWARE = [
@@ -161,3 +162,5 @@ SPECTACULAR_SETTINGS = {
         "defaultModelExpandDepth": 2,
     },
 }
+
+CART_SESSION_ID = "cart"

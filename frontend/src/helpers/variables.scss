@@ -7,6 +7,7 @@ $liteGrayColor: #AEAEB4;
 $grayscaleColor: #EBEBEB;
 $darkWhiteColor: #F5F5FA;
 $text2Color: #615F5F;
+$backgroundColor: #CBCCCE;
 
 @mixin onPhone {
   @media (max-width:640px) {

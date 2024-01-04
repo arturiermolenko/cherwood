@@ -1,16 +1,38 @@
 @import "../../../helpers/variables.scss";
 
 .main {
-  margin: 40px 70px;
 
   &__topOptions {
     margin-bottom: 30px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin: 0;
+
+    padding: 40px 70px;
+
+    @include onPhone {
+      flex-direction: column-reverse;
+    }
   }
 
   &__miniContainer {
+    display: flex;
+    align-items: center;
+
+    @include onPhone {
+      gap: none;
+    }
+
+    &--colum {
+      @include onPhone {
+        flex-direction: column;
+        gap: 20px;
+      }
+    }
+  }
+
+  &__watch {
     display: flex;
     align-items: center;
   }
@@ -46,5 +68,13 @@
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 32px;
+    margin-bottom: 80px;
+    padding: 40px 70px;
+
+    @include onPhone {
+      padding: 16px;
+      margin-bottom: 56px;
+      justify-content: center;
+    }
   }
 }

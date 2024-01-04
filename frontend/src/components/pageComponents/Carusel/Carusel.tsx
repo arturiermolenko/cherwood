@@ -34,7 +34,8 @@ const arrowButtons = {
 
 export const CarouselOnPage = () => {
   const [cherwood, setCherwood] = useState<Cherwood[]>([]);
-
+  const isMobile = window.innerWidth <= 640;
+ 
   useEffect(() => {
       getCherwood()
         .then((straviFromServer) => {
@@ -45,7 +46,7 @@ export const CarouselOnPage = () => {
     <div className="carousel">
       <h2 className="carousel__title">Recommended products</h2>
 
-     <Slide {...arrowButtons} indicators duration={5000}>
+     <Slide {...arrowButtons} duration={5000} indicators={!isMobile}>
       {cherwood.map((photo) => (
         <div key={photo.id} className="each-slide">
           <img 

@@ -18,5 +18,4 @@ urlpatterns = [
         name="favourites",
     ),
     path("cart/", CartAPI.as_view(), name="cart"),
-
 ]

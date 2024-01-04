@@ -8,13 +8,9 @@ from shop.models import Product
 
 class Order(models.Model):
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name="orders"
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="orders"
     )
-    products = models.ManyToManyField(
-        Product, related_name="orders"
-    )
+    products = models.ManyToManyField(Product, related_name="orders")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def calculate_total(self) -> Decimal:

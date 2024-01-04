@@ -1,4 +1,3 @@
-
 from decimal import Decimal
 
 from django.conf import settings
@@ -10,7 +9,7 @@ from .models import Product
 class Cart:
     def __init__(self, request):
         """
-        initialize the cart
+        Initialize the cart
         """
         self.session = request.session
         cart = self.session.get(settings.CART_SESSION_ID)
@@ -22,56 +21,61 @@ class Cart:
     def save(self):
         self.session.modified = True
 
-    def add(self, product, quantity=1, override_quantity=False):
+    def add(
+            self,
+            product_id: str,
+    ):
         """
-        Add product to the cart or update its quantity
+        Add product to the cart or add one item to cart
         """
-        product_id = str(product["id"])
+
+        product = Product.objects.get(id=product_id)
         if product_id not in self.cart:
             self.cart[product_id] = {
-                "quantity": 0,
-                "price": str(product["price"])
+                "quantity": 1,
+                "price": str(product.price)
             }
-        if override_quantity:
-            self.cart[product_id]["quantity"] = quantity
         else:
-            self.cart[product_id]["quantity"] += quantity
+            self.cart[product_id]["quantity"] += 1
         self.save()
 
-    def remove(self, product):
+    def remove_one(self, product_id: str):
+        """
+        Remove 1 item of product from the cart
+        """
+        self.cart[product_id]["quantity"] -= 1
+        self.save()
+
+    def remove_item(self, product_id: str):
         """
         Remove a product from the cart
         """
-        product_id = str(product["id"])
-
         if product_id in self.cart:
             del self.cart[product_id]
             self.save()
 
-    def __iter__(self):
+    def get_all(self):
         """
-        Loop through cart items and fetch the products from the database
+        Add necessary fields to cart products
+        :return: dict of all products in the cart
         """
-        product_ids = self.cart.keys()
-        products = Product.objects.filter(id__in=product_ids)
-        cart = self.cart.copy()
-        for product in products:
-            cart[str(product.id)]["product"] = ProductSerializer(product).data
-        for item in cart.values():
-            item["price"] = Decimal(item["price"])
-            item["total_price"] = item["price"] * item["quantity"]
-            yield item
-
-    def __len__(self):
-        """
-        Count all items in the cart
-        """
-        return sum(item["quantity"] for item in self.cart.values())
+        for key, value in self.cart.items():
+            value["id"] = int(key)
+            value["price"] = Decimal(value["price"])
+            value["total_price"] = value["price"] * value["quantity"]
+        return self.cart.values()
 
     def get_total_price(self):
-        return sum(Decimal(item["price"]) * item["quantity"] for item in self.cart.values())
+        """
+        Count total price for products in the cart
+        """
+        return sum(
+            Decimal(item["price"]) * item["quantity"] for item in self.cart.values()
+        )
 
     def clear(self):
-        # remove cart from session
+        """
+        Remove cart from session
+        """
         del self.session[settings.CART_SESSION_ID]
         self.save()

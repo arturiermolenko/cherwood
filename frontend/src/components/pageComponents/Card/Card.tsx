@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Cherwood } from "../../../helpers/Cherwood.js";
 import "./Card.scss";
 import { Modal } from "../Modal/Modal";
+import { useAppSelector } from "../../../app/hooks";
 
 type Props = {
   cherwood: Cherwood,
@@ -9,40 +10,11 @@ type Props = {
 
 export const Card: React.FC<Props> = ({ cherwood }) => {
   const [isSelect, setIsSelect] = useState(false);
+  const languageReducer = useAppSelector(state => state.language);
 
   const hendlModal = () => {
     setIsSelect(!isSelect);
-
-    console.log(isSelect)
 }
-
-// const hendlOpenModal = (cher) => {
-//   setIsSelect(true);
-  
-// }
-
-//   const handlKeyDown = (event) => {
-//     if (event.code === "Escape") {
-//       hendlCloseModal();
-//     }
-//   };
-
-
-//  const handlBackdropClick = (event) => {
-//    if (event.currentTarget === event.target) {
-//      hendlCloseModal();
-//    }
-//  }
-
-//  useEffect(() => {
-//     window.addEventListener("keydown", handlKeyDown);
-
-//     return () => {
-//      window.removeEventListener("keydown", handlKeyDown);
-//    };
-
-//  }, [])
-
   return (
     <>
       <div className="card" onClick={hendlModal}>
@@ -59,7 +31,12 @@ export const Card: React.FC<Props> = ({ cherwood }) => {
         </div>
 
       <div className="card__header">
-        <h1 className="card__name">{cherwood.name}</h1>
+        <h1 className="card__name">
+          {languageReducer.language 
+            ?cherwood.name_eng
+            :cherwood.name
+          }
+        </h1>
          <p className="card__price">{`₴ ${cherwood.price}`}</p>
       </div>
     </div>

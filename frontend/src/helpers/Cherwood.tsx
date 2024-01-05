@@ -10,12 +10,11 @@ export interface Cherwood {
   height: number;
   material: string;
   material_eng: string;
-  coating: string;
-  coating_eng: string;
-  additional_info: string;
-  additional_info_eng: string;
-  category: number;
-  subcategory: number;
+  category_name: string;
+  category_name_eng: string;
+  subcategory_name: string;
+  subcategory_name_eng: string;
+  buying_with_it: number[];
   main_image: string;
   images: Image[];
 }

@@ -3,6 +3,15 @@
 .select {
   position: relative;
   transition: all 0.5s ease;
+  border: 0.5px solid $liteGrayColor;
+  border-radius: 16px;
+  display: flex;
+  gap: 20px;
+  padding: 5px;
+
+  @include onPhone {
+    margin-top: 20px;
+  }
 
   &__name {
     cursor: pointer;
@@ -10,13 +19,19 @@
     padding: 20px;
     justify-content: flex-start;
     align-items: center;
-    border: 0.5px solid $liteGrayColor;
-    border-radius: 16px;
+    border-radius: 12px;
+    border: 0.5px solid $grayscaleColor;
     color: $text2Color;
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
     line-height: 120%
+  }
+
+  &__target {
+    border: none;
+    background-color: $greenColor;
+    color: $whiteColor;
   }
 
   &__button {
@@ -26,6 +41,10 @@
     border: none;
     background-color: transparent;
     cursor: pointer;
+
+    &--target {
+      background-image: url("../../../img/WhiteArrow.svg");
+    }
   }
 
   &__container {
@@ -79,9 +98,15 @@
     align-items: center;
   }
 
-  &__select {
+  &__list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__checkbox {
     display: flex;
     align-items: center;
     border-bottom: 1px solid $grayscaleColor;
+    width: 305px;
   }
 }

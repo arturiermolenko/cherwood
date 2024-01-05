@@ -1,9 +1,11 @@
 import { useState } from "react";
 
 import "./Filter.scss";
+import { useAppSelector } from "../../../app/hooks";
 
 export const Filter = () => {
   const [isSelect, setIsSelect] = useState(false);
+  const languageReducer = useAppSelector(state => state.language);
 
   return (
     <div className="filter">
@@ -15,7 +17,12 @@ export const Filter = () => {
     {isSelect &&(
       <div className="filter__container">
         <div className="filter__top">
-          <h1 className="filter__header">Filters</h1>
+          <h1 className="filter__header">
+          {languageReducer.language 
+              ?('Filters')
+              :('Фільтри')
+            }
+          </h1>
           <button 
             className="filter__cross"
             onClick={() => setIsSelect(!isSelect)}
@@ -28,7 +35,10 @@ export const Filter = () => {
               className="filter__radio" 
               value='option1'
             />
-            Recommended to you
+            {languageReducer.language 
+              ?('Recommended to you')
+              :('Рекомендовано для вас')
+            }
           </label>
 
           <label className="filter__label">
@@ -37,7 +47,10 @@ export const Filter = () => {
               value="option2"
               className="filter__radio" 
             />
-            Recommended to you
+            {languageReducer.language 
+              ?('The cheapest')
+              :('Найдешевші')
+            }
           </label>
 
           <label className="filter__label">
@@ -46,7 +59,10 @@ export const Filter = () => {
               value="option3" 
               className="filter__radio" 
             />
-            Recommended to you
+            {languageReducer.language 
+              ?('The most expensive')
+              :('Найдорожчі')
+            }
           </label>
 
           <label className="filter__label">
@@ -55,13 +71,26 @@ export const Filter = () => {
               value="option3" 
               className="filter__radio" 
           />
-            The newest
+            {languageReducer.language 
+              ?('The newest')
+              :('Найновіші')
+            }
           </label>
         </form>
 
         <div className="filter__buttonContainer">
-          <button className="filter__button">Apply</button>
-          <button className="filter__button">Cancel all</button>
+          <button className="filter__button">
+            {languageReducer.language 
+              ?('Apply')
+              :('Застосувати')
+            }
+          </button>
+          <button className="filter__button">
+            {languageReducer.language 
+              ?('Cancel all')
+              :('Скасувати все')
+            }
+          </button>
         </div>
       </div>
       )}

@@ -2,7 +2,7 @@
 
 .modal {
   position: fixed;
-  z-index: 2;
+  z-index: 11;
   left: 0;
   top: 0;
   width: 100%;
@@ -28,13 +28,12 @@
 
     margin-top: 26px;
     padding: 16px;
-  }
-
-  &__name {
-    color: $blackColor;
-    font-size: 22px;
-    font-weight: 400;
-    line-height: 120%;
+  
+    @include onPhone {
+      width: auto;
+      box-shadow: none;
+      border-bottom: none;
+    }
   }
 
   &__category {
@@ -51,18 +50,36 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+
+    @include onPhone {
+      margin: 0;
+      border-radius: 0;
+      padding: 0;
+      align-items: normal;
+    }
   }
 
   &__slide {
     width: 600px;
     height: 700px;
     display: inline-block;
+    object-fit: cover;
+
+    @include onPhone {
+      width: 100%;
+      margin-top: 25px;
+    }
   }
 
   &__carousel {
-    width: 1000px;
+    width: 100%;
     height: 700px;
     text-align: center;
+
+    @include onPhone {
+      width: 100%;
+    }
   }
 
   &__like {
@@ -141,6 +158,10 @@
     line-height: 120%;
     color: $whiteColor;
     margin: auto;
+
+    @include onPhone {
+      width: 100%;
+    }
   }
 
   &__type {
@@ -190,6 +211,13 @@
     box-shadow: -6px 6px 6px -6px rgba(0, 0, 0, 0.12), 6px 6px 6px -6px rgba(0, 0, 0, 0.12), 0px 6px 6px -6px rgba(0, 0, 0, 0.12);
     border-radius: 16px;
     padding: 16px;
+
+    @include onPhone {
+      width: auto;
+      box-shadow: none;
+      border-bottom: 1px solid $liteGrayColor;
+      border-radius: 0;
+    }
   }
 
   &__minicontainer2 {
@@ -197,19 +225,41 @@
     justify-content: flex-start;
     align-items: flex-start;
     border-bottom: 1px solid $darkWhiteColor;
+    width: 100%;
   }
 
   &__together {
     &--header {
+      text-align: center;
       font-size: 24px;
       font-style: normal;
       font-weight: 500;
       line-height: 110%; 
       color: $text2Color;
     }
+
+    &--card {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 35px;
+      padding: 35px;
+
+      @include onPhone {
+        gap: 10px;
+        padding: 16px;
+      }
+    }
   }
 }
 
 body.modal-open {
   overflow: hidden;
+}
+
+.cross__none {
+  @include onPhone {
+    display: none;
+  }
 }

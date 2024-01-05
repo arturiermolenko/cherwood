@@ -2,19 +2,20 @@ import { NavLink } from 'react-router-dom';
 import "./Header.scss";
 import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { setLanguage } from '../../../action/action';
 import { Filter } from '../Filter/Filter';
-import { Language } from '../Language/Language';
+import { Profile } from '../Profile/Profile';
+import { changeLanguageAction } from '../../../app/slice/LanguageSlice';
 
 export const Header = () => {
   const [isSelect, setIsSelect] = useState(false);
   const dispatch = useAppDispatch();
-  const languageReducer = useAppSelector(state => state.language.booleanValue);
+  const languageReducer = useAppSelector(state => state.language);
 
   const handleLanguageChange = (isEnglish: boolean) => {
-    dispatch(setLanguage(isEnglish));
+    dispatch(changeLanguageAction(isEnglish));
     setIsSelect(prevState => !prevState);
   };
+
     return (
     <div className="header">
       <div className="header__mainContainer">
@@ -29,7 +30,10 @@ export const Header = () => {
                     to="/pay"
                     className="header__nav--link"
                   >
-                    Delivery and pay
+                  {languageReducer.language 
+                    ?('Delivery and pay')
+                    :('Доставка та оплата')
+                  }
                   </NavLink>
               </li>
 
@@ -38,7 +42,10 @@ export const Header = () => {
                     to="/contacts"
                     className="header__nav--link"
                   >
-                    Contacts
+                  {languageReducer.language 
+                    ?('Contacts')
+                    :('Контакти')
+                  }
                   </NavLink>
               </li>
 
@@ -47,7 +54,10 @@ export const Header = () => {
                     to="/aboutMe"
                     className="header__nav--link"
                   >
-                    About me
+                  {languageReducer.language 
+                    ?('About us')
+                    :('Про нас')
+                  }
                   </NavLink>
               </li>
           </ul>
@@ -80,7 +90,7 @@ export const Header = () => {
             >
               <div className="header__languages header__img"/>
               <div className="header__languages--select">
-                {languageReducer ?(
+                {languageReducer.language ?(
                   <div className="header__languages--text">En</div>
                 )
                 :(
@@ -95,7 +105,7 @@ export const Header = () => {
                 <li 
                   className="header__select"
                   onClick={() => handleLanguageChange(false)}
-                > Ukraine
+                > Українська
                 </li>
                 <li 
                   className="header__select"
@@ -105,8 +115,7 @@ export const Header = () => {
               </ul>
               )}
             </div>
-            
-            <Language />
+            <Profile />
           </div>
         </div>
     </div>

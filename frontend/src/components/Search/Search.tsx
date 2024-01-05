@@ -1,6 +1,6 @@
-import classNames from "classnames";
-import { useLocation, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import "./Search.scss";
+import { useAppSelector } from "../../app/hooks";
 
 type SearchParams = {
   [key: string]: string | string[] | null,
@@ -27,6 +27,7 @@ function getSearchWith(
 
 export const Search = () => {
  const [searchQuery, setSearchQuery] = useSearchParams();
+ const languageReducer = useAppSelector(state => state.language);
 
  const query = searchQuery.get('query') || '';
 
@@ -67,7 +68,11 @@ export const Search = () => {
          type="text"
          className="form__input"
          value={query}
-         placeholder='Search'
+         placeholder= {
+          languageReducer.language 
+            ?('Search')
+            :('Пошук')
+        }
          onChange={onQueryChange}
        />
      </label>

@@ -1,0 +1,32 @@
+[
+    {
+        "id": 3,
+        "name": "Вироби з дерева",
+        "name_eng": "Wooden products",
+        "subcategories": [
+            {
+                "name": "Дошки для нарізання",
+                "name_eng": "Сutting boards"
+            },
+            {
+                "name": "Меблі",
+                "name_eng": "Furniture"
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "name": "Вироби з фанери",
+        "name_eng": "Plywood products",
+        "subcategories": [
+            {
+                "name": "Упаковка",
+                "name_eng": "Packaging"
+            },
+            {
+                "name": "Ящики",
+                "name_eng": "Boxes"
+            }
+        ]
+    }
+]

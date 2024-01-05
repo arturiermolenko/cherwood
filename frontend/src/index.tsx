@@ -4,13 +4,17 @@ import reportWebVitals from './reportWebVitals';
 import { HashRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { App } from './App';
-import {store} from './app/store';
+import {persistor, store} from './app/store';
+import { PersistGate } from 'redux-persist/integration/react';
 
+// eslint-disable-next-line
 ReactDOM.render(
   <Provider store={store}>
-    <HashRouter>
-      <App />
-    </HashRouter>
+     <PersistGate persistor={persistor} loading={null}>
+      <HashRouter>
+        <App />
+      </HashRouter>
+     </PersistGate>
   </Provider>,
   document.getElementById('root'),
 );

@@ -7,6 +7,7 @@ import { Cherwood } from '../../../helpers/Cherwood';
 import { getCherwood } from '../../../api';
 
 import imh from "../.././../img/homeee.jpg"
+import { useAppSelector } from '../../../app/hooks';
 
 const arrowButtons = {
   prevArrow:
@@ -34,6 +35,7 @@ const arrowButtons = {
 
 export const CarouselOnPage = () => {
   const [cherwood, setCherwood] = useState<Cherwood[]>([]);
+  const languageReducer = useAppSelector(state => state.language);
   const isMobile = window.innerWidth <= 640;
  
   useEffect(() => {
@@ -44,7 +46,12 @@ export const CarouselOnPage = () => {
     }, []);
   return (
     <div className="carousel">
-      <h2 className="carousel__title">Recommended products</h2>
+      <h2 className="carousel__title">
+        {languageReducer.language 
+          ?('Recommended products')
+          :('Рекомендовані товари')
+        }
+      </h2>
 
      <Slide {...arrowButtons} duration={5000} indicators={!isMobile}>
       {cherwood.map((photo) => (
@@ -55,7 +62,12 @@ export const CarouselOnPage = () => {
             alt={`Slide ${photo.id}`}
           />
 
-          <button className='carousel__add'>Add to cart +</button>
+          <button className='carousel__add'>
+            {languageReducer.language 
+              ?('Add to cart +')
+              :('Додати до кошика +')
+            }
+          </button>
         </div>
         ))}
       </Slide>

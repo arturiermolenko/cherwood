@@ -1,8 +1,10 @@
 import { NavLink } from "react-router-dom";
 
 import "./Footer.scss"
+import { useAppSelector } from "../../../app/hooks";
 
 export const Footer = () => {
+  const languageReducer = useAppSelector(state => state.language);
 
   return (
       <div className="footer">
@@ -17,7 +19,11 @@ export const Footer = () => {
               className="footer__insta"
               target="_blank"
             >
-            More about the artist's activities on Instagram
+              {languageReducer.language 
+                ? `More about the arpenter${'\u2019'}s activities on Instagram`
+                : 'Більше інформації про діяльність столяра на Instagram'
+              }
+            
             <p className="footer__insta--img footer__img"/>
             </a>
 
@@ -35,7 +41,11 @@ export const Footer = () => {
               <NavLink
                 to="/"
                 className="footer__text"
-              > About us 
+              > 
+                {languageReducer.language 
+                  ?('About us')
+                  :('Про нас')
+                }
               </NavLink>
 
               <a
@@ -43,7 +53,10 @@ export const Footer = () => {
                 href="https://maps.app.goo.gl/Wi33AmYgTRsN23vb8"
                 className="footer__text"
               >
-              Location
+              {languageReducer.language 
+                  ?('Location')
+                  :('Локація')
+                }
               <p className="footer__locationImg footer__img"/>
             </a>
           </div>

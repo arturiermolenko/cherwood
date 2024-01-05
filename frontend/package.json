@@ -11,6 +11,7 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@types/react-router": "^5.1.20",
     "classnames": "^2.3.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -54,7 +55,9 @@
     "reactRoot": true
   },
   "devDependencies": {
+    "@types/react-dom": "^18.2.18",
     "@types/react-slick": "^0.23.13",
+    "@types/redux-persist": "^4.3.1",
     "typescript": "^5.3.3"
   }
 }

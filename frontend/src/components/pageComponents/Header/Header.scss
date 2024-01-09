@@ -63,8 +63,8 @@
     }
 
     &__chart {
-      width: 40px;
-      height: 32px;
+      width: 66px;
+      height: 40px;
       background-image: url("../../../img/Chart.svg");
 
       @include onPhone {
@@ -136,7 +136,7 @@
       font-weight: 500;
       line-height: 120%;
       color: $blackColor;
-      margin: 8px 0px;
+      margin: 10px 0px;
       cursor: pointer;
     }
 
@@ -148,6 +148,7 @@
       background-color: $darkWhiteColor;
       z-index: 1;
       border-radius: 12px;
+      width: 80px;
     }
 
     &__cont {

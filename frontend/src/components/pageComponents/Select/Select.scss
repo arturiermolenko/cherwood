@@ -16,7 +16,7 @@
   &__name {
     cursor: pointer;
     display: flex;
-    padding: 20px;
+    padding: 10px;
     justify-content: flex-start;
     align-items: center;
     border-radius: 12px;
@@ -87,15 +87,30 @@
     font-weight: 600;
     line-height: 120%;
     padding: 13px;
-    margin-top: 12px;
     color: $whiteColor;
     flex-grow: 1;
     cursor: pointer;
   }
 
+  &__cancel {
+    background-color: $whiteColor;
+    border-radius: 12px;
+    border: 1px solid $liteGrayColor;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 120%; 
+    color: $blackColor;
+    flex-grow: 1;
+    cursor: pointer;
+    padding: 13px;
+    margin-top: 12px;
+  }
+
   &__flex {
     display: flex;
-    align-items: center;
+    align-items: stretch;
+    flex-direction: column;
   }
 
   &__list {

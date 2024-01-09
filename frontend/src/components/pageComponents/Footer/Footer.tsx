@@ -2,9 +2,24 @@ import { NavLink } from "react-router-dom";
 
 import "./Footer.scss"
 import { useAppSelector } from "../../../app/hooks";
+import { useEffect, useState } from "react";
 
 export const Footer = () => {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const languageReducer = useAppSelector(state => state.language);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   return (
       <div className="footer">
@@ -48,7 +63,15 @@ export const Footer = () => {
                 }
               </NavLink>
 
-              <a
+              {windowWidth < 780 && (
+                <NavLink to="/pay" className="footer__text">
+                  {languageReducer.language 
+                    ? ('Delivery and pay')
+                    : ('Доставка та оплата')
+                  }
+                </NavLink>
+              )}
+              <a 
                 target="_blank"
                 href="https://maps.app.goo.gl/Wi33AmYgTRsN23vb8"
                 className="footer__text"

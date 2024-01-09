@@ -1,10 +1,10 @@
-@import "../../helpers/variables.scss";
+@import "../../../helpers/variables.scss";
 
 .form {
   display: flex;
   align-items: center;
   border-radius: 10px;
-  height: 40px;
+  height: 24px;
   width: 300px;
   padding: 8px;
   border: 1px solid $darkWhiteColor;
@@ -13,6 +13,7 @@
 
   &.focused {
     background-color: $whiteColor;
+    border: 1px solid $liteGrayColor
   }
 
   &__input {
@@ -32,12 +33,17 @@
   }
 
   &__search {
-    background-image: url("../../img/Search.svg");
+    background-image: url("../../../img/Search.svg");
+  }
+
+  &__cross {
+    background-image: url("../../../img/close.svg");
   }
 
 
   &__img {
     padding-right: 12px;
+    margin-right: 8px;
 
     width: 16px;
     height: 16px;

@@ -31,7 +31,7 @@ export const Header = () => {
                     className="header__nav--link"
                   >
                   {languageReducer.language 
-                    ?('Delivery and pay')
+                    ?('Delivery and payment')
                     :('Доставка та оплата')
                   }
                   </NavLink>
@@ -102,16 +102,21 @@ export const Header = () => {
 
             {isSelect &&(
               <ul className="header__list">
-                <li 
-                  className="header__select"
-                  onClick={() => handleLanguageChange(false)}
-                > Українська
-                </li>
-                <li 
-                  className="header__select"
-                  onClick={() => handleLanguageChange(true)}
-                > English
-                </li>
+                {languageReducer.language ?(
+                    <li 
+                    className="header__select"
+                    onClick={() => handleLanguageChange(false)}
+                  > Українська
+                  </li>
+                )
+                :(
+                  <li 
+                   className="header__select"
+                   onClick={() => handleLanguageChange(true)}
+                 > English
+                 </li>
+                 
+                )}
               </ul>
               )}
             </div>

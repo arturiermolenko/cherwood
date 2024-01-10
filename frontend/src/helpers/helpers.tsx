@@ -27,3 +27,13 @@ export function getSearchWith(
 
   return newParams.toString();
 }
+
+export const scrollToFooter = () => {
+  const footerElement = document.getElementById('footer');
+  if (footerElement) {
+    window.scrollTo({
+      top: footerElement.offsetTop,
+      behavior: 'smooth',
+    });
+  }
+};

@@ -11,6 +11,8 @@ import { useAppSelector } from "../../../app/hooks";
 import { useSearchParams } from "react-router-dom";
 import { getFilteredCherwood } from "../../../helpers/FilteredCherwood";
 import { NotFoundSearch } from "../../pageComponents/NotFoundSearch/NotFoundSearch";
+import { Header } from "../../pageComponents/Header/Header";
+import { Footer } from "../../pageComponents/Footer/Footer";
 
 const imagePerRow = 6;
 
@@ -85,6 +87,8 @@ const handleMoreImage = () => {
 };
 
   return (
+    <>
+    <Header />
     <div className="main">
       <div className="main__topOptions">
       <div className="main__miniContainer main__miniContainer--colum">
@@ -147,5 +151,7 @@ const handleMoreImage = () => {
 
       <HomeInfo />
     </div>
+    <Footer />
+    </>
   );
 }

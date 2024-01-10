@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { Filter } from '../Filter/Filter';
 import { Profile } from '../Profile/Profile';
 import { changeLanguageAction } from '../../../app/slice/LanguageSlice';
+import { scrollToFooter } from '../../../helpers/helpers';
 
 export const Header = () => {
   const [isSelect, setIsSelect] = useState(false);
@@ -38,20 +39,20 @@ export const Header = () => {
               </li>
 
               <li>
-                  <NavLink 
-                    to="/contacts"
+                  <p 
                     className="header__nav--link"
+                    onClick={scrollToFooter}
                   >
                   {languageReducer.language 
                     ?('Contacts')
                     :('Контакти')
                   }
-                  </NavLink>
+                  </p>
               </li>
 
               <li>
                   <NavLink 
-                    to="/aboutMe"
+                    to="/aboutUs"
                     className="header__nav--link"
                   >
                   {languageReducer.language 

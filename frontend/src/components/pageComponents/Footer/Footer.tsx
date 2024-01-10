@@ -15,14 +15,13 @@ export const Footer = () => {
 
     window.addEventListener('resize', handleResize);
 
-    // Cleanup the event listener on component unmount
     return () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
 
   return (
-      <div className="footer">
+      <div className="footer" id="footer">
         <NavLink
           to="/"
           className="logo footer__none"
@@ -94,6 +93,6 @@ export const Footer = () => {
           </a>
           </div>
         </div>
-      </div>
+    </div>
   );
 }

@@ -1,5 +1,8 @@
+import smtplib
+
+from django.core.mail import send_mail
 from django.http import JsonResponse
-from rest_framework import mixins, status
+from rest_framework import mixins, status, viewsets, generics
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
@@ -7,13 +10,15 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import GenericViewSet
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
-from shop.models import Category, Product, ProductImage
+import order.apps
+from shop.models import Category, Product, ProductImage, Order
+from shop.permissions import OrderPermission
 from shop.serializers import (
     CategorySerializer,
     ProductSerializer,
-    ProductImageSerializer,
+    ProductImageSerializer, OrderListSerializer, OrderDetailSerializer, OrderCreateSerializer,
 )
-from shop.services import Cart
+from shop.services import Cart, send_email
 
 
 class CategoryViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, GenericViewSet):
@@ -89,3 +94,25 @@ class CartAPI(APIView):
             return Response({"message": "choose action"}, status=status.HTTP_204_NO_CONTENT)
 
         return Response({"message": "cart updated"}, status=status.HTTP_202_ACCEPTED)
+
+
+class OrderCreateView(generics.CreateAPIView):
+    serializer_class = OrderCreateSerializer
+    queryset = Order.objects.all()
+    permission_classes = []
+    authentication_classes = []
+
+    def perform_create(self, serializer):
+        cart = Cart(self.request)
+        order = serializer.save(total=cart.get_total_price())
+        product_ids = cart.cart.keys()
+        order.products.set(product_ids)
+        subject = "Order Created"
+        text = (f"Order {order.id} has been created successfully on {order.created_at}.\n"
+                f"Items: ")
+        for product in order.products.all():
+            text += f"\n - {product} x {cart.cart[str(product.id)]['quantity']}"
+        text += f"\nTotal: {cart.get_total_price()}"
+        from_email = "cherwood@gmail.com"
+        send_email(order.email, from_email, text, subject)
+

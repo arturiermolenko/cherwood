@@ -9,7 +9,7 @@ class OrderCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Order
-        fields = ("email",)
+        fields = ("email", "first_name", "last_name", "phone_number")
 
 
 class OrderListSerializer(serializers.ModelSerializer):
@@ -19,8 +19,17 @@ class OrderListSerializer(serializers.ModelSerializer):
 
 
 class OrderDetailSerializer(serializers.ModelSerializer):
-    products = ProductSerializer(many=True, read_only=True)
+    order_items = serializers.StringRelatedField(many=True)
 
     class Meta:
         model = Order
-        fields = ("id", "email", "total", "created_at", "products")
+        fields = (
+            "id",
+            "email",
+            "first_name",
+            "last_name",
+            "phone_number",
+            "total",
+            "created_at",
+            "order_items"
+        )

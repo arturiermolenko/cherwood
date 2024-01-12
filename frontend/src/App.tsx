@@ -7,6 +7,8 @@ import {
 import { MainPage } from './components/page/MainPage/MainPage';
 import { AboutUs } from './components/page/AboutUs/AboutUs';
 import { DeliveryAndPay } from './components/page/DeliveryAndPay/DeliveryAndPay';
+import { LogIn } from './components/page/LogIn/LogIn'; 
+import { SingUp } from './components/page/SingUp/SingUp';
 
 export const App = () => {
     return (
@@ -26,9 +28,23 @@ export const App = () => {
         />
 
         <Route 
-          path="//pay" 
+          path="/pay" 
           element={(
             <DeliveryAndPay />
+          )}
+        />
+
+        <Route 
+          path="/singUp" 
+          element={(
+            <SingUp />
+          )}
+        />
+
+        <Route 
+          path="/logIn" 
+          element={(
+            <LogIn />
           )}
         />
       </Routes>

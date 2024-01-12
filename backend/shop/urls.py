@@ -1,7 +1,7 @@
 from django.urls import path, include
 from rest_framework import routers
 
-from shop.views import CategoryViewSet, ProductViewSet, AddRemoveFavouriteView, CartAPI, OrderCreateView
+from shop.views import CategoryViewSet, ProductViewSet, AddRemoveFavouriteView, CartAPI
 
 app_name = "shop"
 
@@ -18,5 +18,4 @@ urlpatterns = [
         name="favourites",
     ),
     path("cart/", CartAPI.as_view(), name="cart"),
-    path("create-order/", OrderCreateView.as_view(), name="create-order")
 ]

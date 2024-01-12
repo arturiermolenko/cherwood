@@ -1,43 +1,36 @@
 import {
     Routes,
     Route,
-    Outlet,
   } from 'react-router-dom';
   import "./App.scss";
-import { Header } from './components/pageComponents/Header/Header';
-import { Footer } from './components/pageComponents/Footer/Footer';
+
 import { MainPage } from './components/page/MainPage/MainPage';
-
-  const OutletPage = () => {
-    return (
-      <div className="page">
-        <Header />
-  
-        <Outlet />
-
-        <Footer />
-      </div>
-    );
-  };
+import { AboutUs } from './components/page/AboutUs/AboutUs';
+import { DeliveryAndPay } from './components/page/DeliveryAndPay/DeliveryAndPay';
 
 export const App = () => {
     return (
-        <Routes>
-            <Route 
-              path="/" 
-              element={(
-                <OutletPage />
-              )}
-            >
+      <Routes>
+        <Route 
+          path="/" 
+          element={(
+            <MainPage />
+          )}
+        />
 
-            <Route 
-              index
-              element={(
-                <MainPage />
-              )}
-            />
-            </Route>
+        <Route 
+          path="/aboutUs" 
+          element={(
+            <AboutUs />
+          )}
+        />
 
-        </Routes>
+        <Route 
+          path="//pay" 
+          element={(
+            <DeliveryAndPay />
+          )}
+        />
+      </Routes>
     );
 }

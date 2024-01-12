@@ -1,0 +1,82 @@
+@import "../../../helpers/variables.scss";
+
+.delivery {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  @include onDesktop {
+    margin-top: 26px;
+  }
+
+  &__container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__container2 {
+    @include onDesktop {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+    }
+  }
+
+  &__mimiCont {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__text {
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 120%; 
+    color: $blackColor;
+
+    @include onPhone {
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 130%;
+    }
+  }
+
+  &__img {
+    width: 32px;
+    height: 32px;
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    @include onPhone {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  &__delivery {
+    width: 40px;
+    height: 40px;
+    background-image: url("../../../img/Order.svg");
+
+    @include onPhone {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  &__pay {
+    background-image: url("../../../img/ArrowOrder.svg");
+  }
+
+  &__secure {
+    background-image: url("../../../img/Secure.svg");
+  }
+
+  &__newPost {
+    background-image: url("../../../img/novaP.png");
+    margin-right: 8px;
+  }
+}

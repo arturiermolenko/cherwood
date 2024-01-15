@@ -16,9 +16,11 @@ class OrderCreateView(generics.CreateAPIView):
         cart = Cart(self.request)
         order = serializer.save(total=cart.get_total_price())
         product_ids = cart.cart.keys()
-        for i in product_ids:
+        for product_id in product_ids:
             OrderItem.objects.create(
-                order=order, product_id=i, quantity=cart.cart[i]["quantity"]
+                order=order,
+                product_id=product_id,
+                quantity=cart.cart[product_id]["quantity"]
             )
         send_email(order)
-
+        cart.cart.clear()

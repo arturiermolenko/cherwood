@@ -1,0 +1,253 @@
+@import "../../../helpers/variables.scss";
+
+.aboutUs {
+  height: 100%;
+  width: 100%;
+  position: relative;
+
+  &__heaedr {
+    display: flex;
+    justify-content: space-between;
+    padding: 40px 70px;
+    align-items: center;
+    text-align: center;
+    z-index: 1; 
+
+    @include onPhone {
+      border-bottom: 0.5px solid #84848D;
+      padding: 16px;
+      margin-bottom: 50px;
+    }
+  }
+
+  &__trapezoid {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to top, #0E4F47, rgba(27, 153, 139, 0.21));
+      clip-path: polygon(25% 100%, 100% 100%, 100% 0%, 70% 0%);
+      transform: scaleX(-1);
+      z-index: 0; 
+
+      @include onPhone {
+        clip-path: polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%);
+      }
+    } 
+  }
+
+  &__nav {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    @include onPhone {
+      display: none;
+    }
+
+    &--link {
+      margin-left: 32px;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 120%;
+      text-decoration: none;
+      cursor: pointer;
+      color: $blackColor;
+      text-align: center;
+    }
+  }
+
+  &__active {
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 120%;
+    color: $greenColor;
+  }
+
+  &__button {
+    background-color: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &--text {
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 120%;
+      color: $blackColor;
+      cursor: pointer;
+    }
+  }
+
+  &__arrow {
+    width: 24px;
+    height: 24px;
+    background-image: url("../../../img/ArrowLeft.svg");
+    cursor: pointer;
+  }
+
+  &__container {
+    position: relative;
+    z-index: 1; 
+    margin: 4px 70px;
+    padding: 150px 70px 220px 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    border-radius: 12px;
+    background: rgba(225, 225, 225, 0.4); 
+
+    @include onDesktop {
+      flex-direction: column;
+    }
+
+    @include onPhone {
+      flex-direction: column;
+      padding: 26px 16px;
+    }
+  }
+
+  &__instCont {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+
+  &__container2 {
+    margin-right: 59px;
+
+    @include onPhone {
+      margin-right: 0;
+    }
+  }
+
+  &__descr {
+    width: 502px;
+    margin-bottom: 24px;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%; 
+    color: #535456;
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    @include onPhone {
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 130%;
+      max-width: 256px;
+    }
+  }
+
+  &__mainHeader {
+    margin-bottom: 56px;
+    font-size: 64px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 110%;
+    background: linear-gradient(177deg, #103531 -7.09%, rgba(8, 130, 116, 0.88) 92.78%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    @include onPhone {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 110%;
+      margin-bottom: 16px;
+    }
+  }
+  
+  &__footer {
+    padding: 40px 70px;
+    align-items: center;
+    text-align: center; 
+  }
+
+  &__text {
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+    color: $whiteColor;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 1;
+
+    @include onPhone {
+      font-size: 11px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 130%;
+      color: $grayscaleColor;
+    }
+
+    &--gmail {
+      @include onPhone {
+        z-index: 1;
+        font-size: 11px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 130%;
+        color: $grayscaleColor;
+      }
+    }
+  }
+
+  &__text2 {
+    @include onPhone {
+      z-index: 1;
+      font-size: 14px;
+      font-style: normal;
+      line-height: 120%; 
+      color: $whiteColor;
+    }
+  }
+
+  &__index {
+    z-index: 1;
+  }
+
+  &__phone {
+    background-image: url("../../../img/WhitePhone.svg");
+
+    @include onPhone {
+      background-image: url("../../../img/Phone2.svg");
+    }
+  }
+
+  &__insta {
+    background-image: url("../../../img/WhiteInst.svg");
+  }
+
+  &__location {
+    @include onPhone {
+      z-index: 1;
+      margin-left: 8px;
+      background-image: url("../../../img/Location2.svg");
+    }
+  }
+
+  &__gmail {
+    @include onPhone {
+      margin-right: 8px;
+      background-image: url("../../../img/Gmail3.svg");
+    }
+  }
+}

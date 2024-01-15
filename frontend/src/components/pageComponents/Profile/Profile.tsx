@@ -28,7 +28,7 @@ export const Profile = () => {
 
       <ul className="profile__listContainer">
         <li className="profile__select"> 
-        <NavLink to="profile" className="profile__option">
+        <NavLink to="/singUp" className="profile__option">
           <p className="profile__img profile__sing"/>
           <div className="profile__text">
           {languageReducer.language 
@@ -39,7 +39,7 @@ export const Profile = () => {
         </NavLink>
         </li>
         <li className="profile__select">
-          <NavLink to="profile" className="profile__option profile__option--noBorder">
+          <NavLink to="logIn" className="profile__option profile__option--noBorder">
             <p className="profile__img profile__logIn"/>
             <div className="profile__text">
               {languageReducer.language 

@@ -1,9 +1,16 @@
+@import "./helpers/variables.scss";
+
 .logo {
-  background-image: url("./img/Logo.png");
+  background-image: url("./img/Logo.svg");
   background-repeat: no-repeat;
   background-size: contain;
   width: 139px;
   height: 47px;
+
+  @include onPhone {
+    width: 60px;
+    height: 24px;
+  }
 }
 
 a {

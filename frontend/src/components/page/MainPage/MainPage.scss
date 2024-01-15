@@ -44,6 +44,7 @@
     line-height: 120%;
     color: $greenColor;
     margin: 0px 30px;
+    cursor: pointer;
   }
 
   &__shown {
@@ -66,15 +67,39 @@
   &__cardContainer {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
     gap: 32px;
-    margin-bottom: 80px;
     padding: 40px 70px;
 
     @include onPhone {
       padding: 16px;
-      margin-bottom: 56px;
       justify-content: center;
+    }
+  }
+
+  &__button {
+    background-color: $whiteColor;
+    border-radius: 12px;
+    border: 1px solid $liteGrayColor;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 120%; 
+    color: $blackColor;
+    flex-grow: 1;
+    cursor: pointer;
+    padding: 13px;
+    max-width: 480px;
+  }
+
+  &__buttonContainer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 80px;
+
+    @include onPhone {
+      margin-bottom: 56px;
+      padding: 16px;
     }
   }
 }

@@ -2,10 +2,29 @@ import { useState } from "react";
 
 import "./Filter.scss";
 import { useAppSelector } from "../../../app/hooks";
+import { useSearchParams } from "react-router-dom";
+import { getSearchWith } from "../../../helpers/helpers";
 
 export const Filter = () => {
   const [isSelect, setIsSelect] = useState(false);
   const languageReducer = useAppSelector(state => state.language);
+  const [searchQuery, setSearchQuery] = useSearchParams();
+  const [selectedOption, setSelectedOption] = useState('');
+
+  const handleCheckboxChange = (value: string) => {
+    setSelectedOption(value === selectedOption ? '' : value);
+  };
+
+  const submitForm = () => {
+    setSearchQuery(getSearchWith(searchQuery, { filter: selectedOption || null }));
+    setIsSelect(!isSelect);
+  };
+
+  const isClearSearch = () => {
+    setSelectedOption('');
+    setSearchQuery(getSearchWith(searchQuery, { filter: null }));
+    setIsSelect(!isSelect);
+  }
 
   return (
     <div className="filter">
@@ -13,7 +32,7 @@ export const Filter = () => {
       className="filter__img"
       onClick={() => setIsSelect(!isSelect)}
     />
-
+ 
     {isSelect &&(
       <div className="filter__container">
         <div className="filter__top">
@@ -25,7 +44,7 @@ export const Filter = () => {
           </h1>
           <button 
             className="filter__cross"
-            onClick={() => setIsSelect(!isSelect)}
+            onClick={isClearSearch}
           />
         </div>
         <form className="filter__form">
@@ -33,7 +52,9 @@ export const Filter = () => {
             <input 
               type="radio"
               className="filter__radio" 
-              value='option1'
+              value='random'
+              checked={selectedOption === 'random'}
+              onChange={() => handleCheckboxChange("random")}
             />
             {languageReducer.language 
               ?('Recommended to you')
@@ -44,8 +65,10 @@ export const Filter = () => {
           <label className="filter__label">
             <input 
               type="radio" 
-              value="option2"
+              value="cheapest"
               className="filter__radio" 
+              checked={selectedOption === 'cheapest'}
+              onChange={() => handleCheckboxChange("cheapest")}
             />
             {languageReducer.language 
               ?('The cheapest')
@@ -56,8 +79,10 @@ export const Filter = () => {
           <label className="filter__label">
             <input 
               type="radio" 
-              value="option3" 
+              value="expensive" 
               className="filter__radio" 
+              onChange={() => handleCheckboxChange("expensive")}
+              checked={selectedOption === 'expensive'}
             />
             {languageReducer.language 
               ?('The most expensive')
@@ -65,7 +90,7 @@ export const Filter = () => {
             }
           </label>
 
-          <label className="filter__label">
+          {/* <label className="filter__label">
             <input 
               type="radio" 
               value="option3" 
@@ -75,17 +100,23 @@ export const Filter = () => {
               ?('The newest')
               :('Найновіші')
             }
-          </label>
+          </label> */}
         </form>
 
         <div className="filter__buttonContainer">
-          <button className="filter__button">
+          <button 
+          className="filter__button" 
+          onClick={submitForm}
+          >
             {languageReducer.language 
               ?('Apply')
               :('Застосувати')
             }
           </button>
-          <button className="filter__button">
+          <button 
+            className="filter__cancel"
+            onClick={isClearSearch}
+          >
             {languageReducer.language 
               ?('Cancel all')
               :('Скасувати все')

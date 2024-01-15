@@ -11,7 +11,7 @@ from shop.models import Category, Product, ProductImage
 from shop.serializers import (
     CategorySerializer,
     ProductSerializer,
-    ProductImageSerializer,
+    ProductImageSerializer
 )
 from shop.services import Cart
 
@@ -89,3 +89,4 @@ class CartAPI(APIView):
             return Response({"message": "choose action"}, status=status.HTTP_204_NO_CONTENT)
 
         return Response({"message": "cart updated"}, status=status.HTTP_202_ACCEPTED)
+

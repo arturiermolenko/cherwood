@@ -183,7 +183,7 @@ useEffect(() => {
  
         <div className="modal__together">
           <h1 className="modal__together--header">
-          {languageReducer.language 
+            {languageReducer.language 
               ?('Together with this item buy')
               :("Разом з ними товарами купують")
             }

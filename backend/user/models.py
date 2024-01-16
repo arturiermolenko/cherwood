@@ -2,6 +2,8 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from shop.models import Product
+
 
 class UserManager(BaseUserManager):
     """Define a model manager for User model with no username field."""
@@ -40,6 +42,12 @@ class UserManager(BaseUserManager):
 class User(AbstractUser):
     username = None
     email = models.EmailField(_("email address"), unique=True)
+    favourites = models.ManyToManyField(
+        Product,
+        blank=True,
+        related_name="user_favourites",
+        symmetrical=False
+    )
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []

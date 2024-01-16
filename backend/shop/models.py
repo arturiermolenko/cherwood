@@ -1,6 +1,7 @@
 import os
 import uuid
 
+from django.conf import settings
 from django.db import models
 
 
@@ -16,6 +17,7 @@ def category_image_file_path(instance, filename) -> str:
 
 class Category(models.Model):
     name = models.CharField(max_length=255, unique=True)
+    name_eng = models.CharField(max_length=255, unique=True)
     image = models.ImageField(null=True, upload_to=category_image_file_path)
 
     class Meta:
@@ -32,6 +34,7 @@ def subcategory_image_file_path(instance, filename) -> str:
 
 class Subcategory(models.Model):
     name = models.CharField(max_length=255, unique=True)
+    name_eng = models.CharField(max_length=255, unique=True)
     image = models.ImageField(null=True, upload_to=subcategory_image_file_path)
     category = models.ForeignKey(
         "Category", on_delete=models.CASCADE, related_name="subcategories"
@@ -60,10 +63,7 @@ class Product(models.Model):
     height = models.IntegerField()
     material = models.CharField(max_length=255)
     material_eng = models.CharField(max_length=255)
-    coating = models.CharField(max_length=255)
-    coating_eng = models.CharField(max_length=255)
-    additional_info = models.CharField(max_length=500)
-    additional_info_eng = models.CharField(max_length=500)
+    buying_with_it = models.ManyToManyField("self", blank=True, symmetrical=False)
     category = models.ForeignKey(
         "Category", on_delete=models.CASCADE, related_name="products"
     )

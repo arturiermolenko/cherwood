@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cherwood</title>
+</head>
+<body>
+<h2>Order {{ order.id }} created!</h2>
+<ul >
+    <li><em>Customer's Email: </em> {{ order.email }}</li>
+    <li><em>First Name: </em> <b>{{ order.first_name }}</b></li>
+    <li><em>Last Name: </em> <b>{{ order.last_name }}</b></li>
+    <li><em>Phone number: </em> <b>{{ order.phone_number }}</b></li>
+</ul>
+<h3>Items:</h3>
+<ul>
+    {% for item in order.order_items.all %}
+        <li style="font-size: larger">
+            <b>{{ item }}</b>, amount = {{ item.quantity }}, total = <b>{{ item.calculate_total }}</b>
+            <br> <p>----------------</p>
+        </li>
+    {% endfor %}
+</ul>
+<h3><b>Total: {{ order.total }}</b></h3>
+<h4>Thank you!</h4>
+</body>
+</html>

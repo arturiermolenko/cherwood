@@ -9,7 +9,6 @@ import "./LogInLogic.scss";
 export const LogInLogic = () => {
   const languageReducer = useAppSelector((state) => state.language);
   const [values, setValues] = useState({
-    fullName: '',
     email: '',
     password: '',
     showPassword: false,
@@ -36,19 +35,18 @@ export const LogInLogic = () => {
     });
   };
 
-  const handleRegistration = async (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault();
 
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/user/register/', {
-        fullName: values.fullName,
+      const response = await axios.post('http://127.0.0.1:8000/api/user/login/', {
         email: values.email,
         password: values.password,
       });
 
-      console.log('Registration successful', response.data);
+      console.log('Login successful', response.data);
     } catch (error) {
-      console.error('Registration failed', (error as any).response?.data);
+      console.error('Login failed', (error as any).response?.data);
     }
     console.log(values)
   };
@@ -118,7 +116,7 @@ export const LogInLogic = () => {
       <div className="signUpLogic__container">
         <button
           className='signUpLogic__green signUpLogic__button2'
-          onClick={handleRegistration}
+          onClick={handleLogin}
         >
           {languageReducer.language
             ? 'Confirm'
@@ -153,7 +151,7 @@ export const LogInLogic = () => {
             : 'Якщо немаєте акаунта?'}
         </div>
 
-        <NavLink to='/logIn' className="signUpLogic__logIn">
+        <NavLink to='/singUp' className="signUpLogic__logIn">
           {languageReducer.language
             ? 'Sing up'
             : 'Зареєструватися'}

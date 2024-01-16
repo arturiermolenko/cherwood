@@ -64,6 +64,18 @@
     }
   }
 
+  &__error {
+    border: 1px solid $red;
+  }
+
+  &__errorText {
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+    color: $red;
+  }
+
   &__miniContainer {
     position: relative;
     display: flex;

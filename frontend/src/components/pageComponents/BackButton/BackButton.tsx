@@ -20,8 +20,8 @@ export const BackButton:React.FC<Props> = ({hendlCloseModal}) => {
       <span className="backButton__text">
         {
           languageReducer.language 
-            ?('product details')
-            :('назад до товарів')
+            ?('back')
+            :('назад')
         }
       </span>
     </div>

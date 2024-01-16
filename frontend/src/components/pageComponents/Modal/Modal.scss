@@ -252,6 +252,99 @@
       }
     }
   }
+
+  &__items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    flex-direction: row;
+    gap: 48px;
+    padding: 80px;
+    margin: 34px 170px 88px 120px;
+    border-left: 1px solid $liteGrayColor;
+    border-right: 1px solid $liteGrayColor;
+
+    @include onPhone {
+      border: none;
+      padding: 16px;
+      margin: 0px ;
+      gap: 8px;
+    }
+  }
+
+  &__like2 {
+    width: 240px;
+    height: 240px;
+    background-image: url("../../../img/BigLike.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    @include onPhone {
+      width: 56px;
+      height: 56px;
+    }
+  }
+
+  &__text2 {
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 110%; 
+    color: $blackColor;
+
+    @include onPhone {
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 120%;
+    }
+  }
+
+  &__text3 {
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+    color: $text2Color;
+    margin-bottom: 48px;
+
+    @include onPhone {
+      font-size: 11px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 130%;
+    }
+  }
+
+  &__arrow {
+    width: 24px;
+    height: 24px;
+    background-image: url("../../../img/RightArr.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    @include onPhone {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  &__button2 {
+    display: flex;
+    gap: 20px;
+    cursor: pointer;
+  }
+
+  &__empty {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    @include onPhone {
+      padding: 16px;
+    }
+  }
 }
 
 body.modal-open {

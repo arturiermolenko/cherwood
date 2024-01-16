@@ -4,6 +4,10 @@
   display: flex;
   align-items: center;
 
+  @include onPhone {
+    margin-left: 16px;
+  }
+
   cursor: pointer;
 
   &__icon {

@@ -8,11 +8,13 @@ import axios from 'axios';
 
 export const SignUpLogic = () => {
   const languageReducer = useAppSelector((state) => state.language);
+  const [error, setError] = useState(false);
   const [values, setValues] = useState({
-    fullName: '',
     email: '',
     password: '',
+    confirm_password: '',
     showPassword: false,
+    showPassword2: false,
   });
 
   const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
@@ -21,6 +23,13 @@ export const SignUpLogic = () => {
     setValues({
       ...values,
       showPassword: !values.showPassword,
+    });
+  };
+
+  const handleClickShowPassword2 = () => {
+    setValues({
+      ...values,
+      showPassword2: !values.showPassword2,
     });
   };
 
@@ -36,23 +45,35 @@ export const SignUpLogic = () => {
       ...values,
       password: event.target.value,
     });
+    setError(false);
+  };
+
+  const handleConfimPasswordChange = (event) => {
+    setValues({
+      ...values,
+      confirm_password: event.target.value,
+    });
+        setError(false);
   };
 
   const handleRegistration = async (event) => {
     event.preventDefault();
 
-    try {
-      const response = await axios.post('http://127.0.0.1:8000/api/user/register', {
-        // fullName: values.fullName,
-        email: values.email,
-        password: values.password,
-      });
-
-      console.log('Registration successful', response.data);
-    } catch (error) {
-      console.error('Registration failed', (error as any).response?.data);
+    if (values.password !== values.confirm_password) {
+      setError(true);
+    } else {
+      try {
+        const response = await axios.post('http://127.0.0.1:8000/api/user/register/', {
+          email: values.email,
+          password: values.password,
+          confirm_password: values.password,
+        });
+  
+        console.log('Registration successful', response.data);
+      } catch (error) {
+        console.error('Registration failed', (error as any).response?.data);
+      }
     }
-    console.log(values)
   };
 
   return (
@@ -64,26 +85,6 @@ export const SignUpLogic = () => {
       </h1>
 
       <div className="signUpLogic__container">
-        <div className="signUpLogic__miniContainer">
-          <p className="signUpLogic__text">
-            {languageReducer.language
-              ? 'Full name*'
-              : 'Ім\'я і призвіще*'}
-          </p>
-
-          <input
-            type="text"
-            className="signUpLogic__input"
-            placeholder={
-              languageReducer.language
-                ? 'Enter your full name'
-                : 'Введіть ваше ім\'я і призвіще'
-            }
-            value={values.fullName}
-            onChange={(event) => handleInputChange('fullName', event)}
-          />
-        </div>
-
         <div className="signUpLogic__miniContainer">
           <p className="signUpLogic__text">
             {languageReducer.language
@@ -113,19 +114,61 @@ export const SignUpLogic = () => {
 
           <input
             type={values.showPassword ? 'text' : 'password'}
-            className="signUpLogic__input"
+            className={classNames("signUpLogic__input", {
+              'signUpLogic__error': error,
+            })}
+            placeholder={
+              languageReducer.language
+                ? 'Enter your password'
+                : 'Введіть пароль'
+            }
+            onChange={handlePasswordChange}
+          />
+         {error &&( <p className="signUpLogic__errorText">
+            {languageReducer.language
+              ? 'Passwords do not match*'
+              : ' паролі не співпадають*'
+            }
+          </p>)}
+          <button
+            onClick={handleClickShowPassword}
+            className={classNames('signUpLogic__button', {
+              'signUpLogic__show': values.showPassword,
+            })}
+          />
+        </div>
+
+        <div className="signUpLogic__miniContainer">
+          <p className="signUpLogic__text">
+            {languageReducer.language
+              ? 'Сonfirm password*'
+              : 'Підтвердьте пароль*'
+            }
+          </p>
+
+          <input
+            type={values.showPassword ? 'text' : 'password'}
+            className={classNames("signUpLogic__input", {
+              'signUpLogic__error': error,
+            })}
             placeholder={
               languageReducer.language
                 ? 'Enter your password'
                 : 'Введіть пароль'
             }
 
-            onChange={handlePasswordChange}
+            onChange={handleConfimPasswordChange}
           />
+           {error &&( <p className="signUpLogic__errorText">
+            {languageReducer.language
+              ? 'Passwords do not match*'
+              : ' паролі не співпадають*'
+            }
+          </p>)}
           <button
-            onClick={handleClickShowPassword}
+            onClick={handleClickShowPassword2}
             className={classNames('signUpLogic__button', {
-              'signUpLogic__show': values.showPassword,
+              'signUpLogic__show': values.showPassword2,
             })}
           />
         </div>

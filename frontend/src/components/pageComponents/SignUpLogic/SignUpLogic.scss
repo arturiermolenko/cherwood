@@ -92,7 +92,7 @@
 
     border: none;
     background-color: transparent;
-    bottom: 13px;
+    bottom: 14px;
     right: 16px;
     cursor: pointer;
   }
@@ -110,11 +110,14 @@
     color: $whiteColor;
     border: none;
 
+    margin-top: 80px;
+
     @include onPhone {
       font-size: 13px;
       font-style: normal;
       font-weight: 400;
       line-height: 120%;
+      margin-top: 60px;
     }
   }
 
@@ -244,5 +247,27 @@
     align-items: center;
     justify-content: center;
     gap: 16px;
+  }
+
+  &__errorList {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin-top: 10px;
+  }
+
+  &__cross {
+    width: 16px;
+    height: 16px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-image: url("../../../img/RedCross.svg");
+    position: absolute;
+    right: 50px;
+  }
+
+  &__crossEmail {
+
+    right: 16px;
   }
 }

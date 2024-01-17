@@ -1,15 +1,11 @@
 from django.conf import settings
 from django.test import TestCase
-from django.urls import reverse
-from rest_framework.test import APIClient
 
 from shop.models import Product, Category, Subcategory
 from shop.services import Cart
 
-BASE_URL = reverse("shop:cart")
 
-
-class UnauthenticatedCartTests(TestCase):
+class CartTests(TestCase):
     """
     Unauthenticated user`s cart tests
     """

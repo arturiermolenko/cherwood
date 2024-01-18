@@ -11,15 +11,17 @@ import {
   REGISTER,
 } from 'redux-persist';
 import LanguageSlice from './slice/LanguageSlice';
+import RegistrationSlice from './slice/RegistrSlice';
 
 const persistConfig = {
   key: 'cherwood',
   storage,
-  whitelist: ['language'],
+  whitelist: ['language', 'registration'],
 };
 
 const rootReducer = combineReducers({
   language: LanguageSlice,
+  registration: RegistrationSlice,
 });
 
 const usersReducer = persistReducer(persistConfig, rootReducer);

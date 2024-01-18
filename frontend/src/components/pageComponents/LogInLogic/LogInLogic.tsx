@@ -1,21 +1,27 @@
-import { NavLink } from "react-router-dom";
-import { useAppSelector } from "../../../app/hooks";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import classNames from "classnames";
 import axios from "axios";
 import { useState } from "react";
 
 import "./LogInLogic.scss";
+import { addRegistrationAction } from "../../../app/slice/RegistrSlice";
 
 export const LogInLogic = () => {
   const languageReducer = useAppSelector((state) => state.language);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
   const [values, setValues] = useState({
     email: '',
     password: '',
     showPassword: false,
   });
   const [errors, setErrors] = useState({
-    email: [] as string[],  
-    password: [] as string[], 
+    email: '',  
+    emailUkr: '',
+    password: '', 
+    passwordUkr: '', 
   });
 
   const handleClickShowPassword = () => {
@@ -32,8 +38,10 @@ export const LogInLogic = () => {
     });
 
     setErrors({
-      email: [],  
-      password: [], 
+      email: '',  
+      emailUkr: '',
+      password: '', 
+      passwordUkr: '', 
     });
   };
 
@@ -44,8 +52,10 @@ export const LogInLogic = () => {
     });
 
     setErrors({
-      email: [],  
-      password: [], 
+      email: '',  
+      emailUkr: '',
+      password: '', 
+      passwordUkr: '', 
     });
   };
 
@@ -56,15 +66,23 @@ export const LogInLogic = () => {
       await axios.post('http://127.0.0.1:8000/api/user/login/', {
         email: values.email,
         password: values.password,
-      });
+      })
+      .then(response => {
+        dispatch(addRegistrationAction({
+          access: response.data.access,
+          refresh: response.data.refresh,
+        }))
+      })
+   
+      navigate('/');
 
     } catch (error) {
       setErrors({
-        email: (error as any).response?.data.email || [],
-        password: (error as any).response?.data.password || [],
+        email: 'An error occurred during login.',
+        emailUkr: 'При вході виникла помилка.',
+        password: 'An error occurred during login.',
+        passwordUkr: 'При вході виникла помилка.',
       });
-
-      console.log('Registration failed222', (error as any).response?.data)
     }
   };
 
@@ -102,17 +120,16 @@ export const LogInLogic = () => {
             value={values.email}
             onChange={(event) => handleInputChange('email', event)}
           />
-          {errors.email.length > 0 &&(<p className="signUpLogic__cross signUpLogic__crossEmail" />)}
         </label>
         
-        { errors.email.length > 0 && (
-            <ul className="signUpLogic__errorList">
-              {errors.email.map((errorMessage, index) => (
-                <li key={index} className="signUpLogic__errorText">
-                  {languageReducer.language ? errorMessage : 'Password error message'}
-                </li>
-              ))}
-            </ul>
+        {errors.email && (
+          <div className="signUpLogic__errorText">
+            {
+              languageReducer.language 
+              ? errors.email
+              : errors.emailUkr
+            }
+          </div>
           )}
         </div>
 
@@ -140,8 +157,6 @@ export const LogInLogic = () => {
             }
             onChange={handlePasswordChange}
           />
-
-        {errors.password.length > 0 &&(<p className="signUpLogic__cross" />)}
         
         <button
             onClick={handleClickShowPassword}
@@ -151,14 +166,14 @@ export const LogInLogic = () => {
           />
         </label>
 
-        {errors.password.length > 0 && (
-            <ul className="signUpLogic__errorList">
-              {errors.password.map((errorMessage, index) => (
-                <li key={index} className="signUpLogic__errorText">
-                  {languageReducer.language ? errorMessage : 'Password error message'}
-                </li>
-              ))}
-            </ul>
+        {errors.password && (
+          <div className="signUpLogic__errorText">
+            {
+              languageReducer.language 
+              ? errors.password
+              : errors.passwordUkr
+            }
+          </div>
           )}
         </div>
       </div>

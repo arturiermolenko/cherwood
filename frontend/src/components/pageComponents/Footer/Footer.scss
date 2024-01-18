@@ -122,6 +122,12 @@
  &__locationImg {
   margin-left: 24px;
   background-image: url("../../../img/Location.svg");
+
+  @include onPhone {
+    width: 10px;
+    height: 12px;
+    margin-left: 3px;
+  }
  }
 
  &__gmail {

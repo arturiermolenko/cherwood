@@ -10,6 +10,7 @@ import { DeliveryAndPay } from './components/page/DeliveryAndPay/DeliveryAndPay'
 import { LogIn } from './components/page/LogIn/LogIn'; 
 import { SingUp } from './components/page/SingUp/SingUp';
 import { Like } from './components/page/Like/Like';
+import { Chart } from './components/page/Chart/Chart';
 
 export const App = () => {
     return (
@@ -53,6 +54,13 @@ export const App = () => {
           path="/favorites" 
           element={(
             <Like />
+          )}
+        />
+
+        <Route 
+          path="/chart" 
+          element={(
+            <Chart />
           )}
         />
       </Routes>

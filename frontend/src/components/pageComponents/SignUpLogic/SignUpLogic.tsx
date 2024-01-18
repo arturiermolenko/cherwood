@@ -2,14 +2,17 @@ import { useState } from 'react';
 import { useAppSelector } from '../../../app/hooks';
 import "./SignUpLogic.scss";
 import classNames from 'classnames';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 export const SignUpLogic = () => {
   const languageReducer = useAppSelector((state) => state.language);
+  const navigate = useNavigate();
   const [errors, setErrors] = useState({
-    email: [] as string[],  
-    password: [] as string[], 
+    email: '',  
+    emailUkr: '',
+    password: '', 
+    passwordUkr: '', 
   });
   const [values, setValues] = useState({
     email: '',
@@ -40,8 +43,10 @@ export const SignUpLogic = () => {
     });
 
     setErrors({
-      email: [],  
-      password: [], 
+      email: '',  
+      emailUkr: '',
+      password: '', 
+      passwordUkr: '', 
     });
   };
 
@@ -52,8 +57,10 @@ export const SignUpLogic = () => {
     });
 
     setErrors({
-      email: [],  
-      password: [], 
+      email: '',  
+      emailUkr: '',
+      password: '', 
+      passwordUkr: '', 
     });
   };
 
@@ -64,28 +71,41 @@ export const SignUpLogic = () => {
     });
 
     setErrors({
-      email: [],  
-      password: [], 
+      email: '',  
+      emailUkr: '',
+      password: '', 
+      passwordUkr: '', 
     });
   };
 
   const handleRegistration = async (event) => {
     event.preventDefault();
 
-    try {
-      await axios.post('http://127.0.0.1:8000/api/user/register/', {
-        email: values.email,
-        password: values.password,
-        confirm_password: values.confirm_password,
-      });
-
-    } catch (error) {
+    if (values.password !== values.confirm_password) {
       setErrors({
-        email: (error as any).response?.data.email || [],
-        password: (error as any).response?.data.password || [],
+        email: '',  
+        emailUkr: '',
+        password: 'Passwords do not match.',
+        passwordUkr: 'Паролі не збігаються.', 
       });
-
-      console.log('Registration failed222', (error as any).response?.data)
+    } else {
+      try {
+        await axios.post('http://127.0.0.1:8000/api/user/register/', {
+          email: values.email,
+          password: values.password,
+          confirm_password: values.confirm_password,
+        });
+        
+        navigate('/');
+  
+      } catch (error) {
+        setErrors({
+          email: 'An error occurred during registration.',
+          emailUkr: 'Під час реєстрації виникла помилка.',
+          password: 'An error occurred during registration.',
+          passwordUkr: 'Під час реєстрації виникла помилка.',
+        });
+      }
     }
   };
 
@@ -123,17 +143,16 @@ export const SignUpLogic = () => {
             value={values.email}
             onChange={(event) => handleInputChange('email', event)}
           />
-          {errors.email.length > 0 &&(<p className="signUpLogic__cross signUpLogic__crossEmail" />)}
         </label>
         
-        { errors.email.length > 0 && (
-            <ul className="signUpLogic__errorList">
-              {errors.email.map((errorMessage, index) => (
-                <li key={index} className="signUpLogic__errorText">
-                  {languageReducer.language ? errorMessage : 'Password error message'}
-                </li>
-              ))}
-            </ul>
+        {errors.email && (
+          <div className="signUpLogic__errorText">
+            {
+              languageReducer.language 
+              ? errors.email
+              : errors.emailUkr
+            }
+          </div>
           )}
         </div>
 
@@ -162,8 +181,6 @@ export const SignUpLogic = () => {
             }
             onChange={handlePasswordChange}
           />
-
-        {errors.password.length > 0 &&(<p className="signUpLogic__cross" />)}
         
         <button
             onClick={handleClickShowPassword}
@@ -173,14 +190,14 @@ export const SignUpLogic = () => {
           />
         </label>
 
-        {errors.password.length > 0 && (
-            <ul className="signUpLogic__errorList">
-              {errors.password.map((errorMessage, index) => (
-                <li key={index} className="signUpLogic__errorText">
-                  {languageReducer.language ? errorMessage : 'Password error message'}
-                </li>
-              ))}
-            </ul>
+        {errors.password && (
+          <div className="signUpLogic__errorText">
+            {
+              languageReducer.language 
+              ? errors.password
+              : errors.passwordUkr
+            }
+          </div>
           )}
       </div>
 
@@ -210,8 +227,6 @@ export const SignUpLogic = () => {
               onChange={handleConfimPasswordChange}
             />
 
-          {errors.password.length > 0 &&(<p className="signUpLogic__cross" />)}
-
           <button
             onClick={handleClickShowPassword2}
             className={classNames('signUpLogic__button', {
@@ -220,14 +235,14 @@ export const SignUpLogic = () => {
           />
         </label>
 
-           { errors.password.length > 0 && (
-            <ul className="signUpLogic__errorList">
-              {errors.password.map((errorMessage, index) => (
-                <li key={index} className="signUpLogic__errorText">
-                  {languageReducer.language ? errorMessage : 'Password error message'}
-                </li>
-              ))}
-            </ul>
+        {errors.password && (
+          <div className="signUpLogic__errorText">
+              {
+              languageReducer.language 
+              ? errors.password
+              : errors.passwordUkr
+            }
+          </div>
           )}
         </div>
       </div>

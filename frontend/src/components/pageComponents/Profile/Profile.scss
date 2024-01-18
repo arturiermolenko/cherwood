@@ -9,10 +9,14 @@
     margin: 0;
   }
 
-  &__languages {
+  &__profile {
     width: 32px;
     height: 32px;
     background-image: url("../../../img/Profile.svg");
+  }
+
+  &__img2 {
+    background-image: url("../../../img/Man.svg");
   }
 
   &__list {
@@ -61,15 +65,27 @@
   }
 
   &__sing {
-    width: 24px;
-    height: 24px;
+    width: 16px;
+    height: 16px;
     background-image: url("../../../img/Profile3.svg");
   }
 
   &__logIn {
-    width: 24px;
-    height: 24px;
+    width: 17.791px;
+    height: 18px;
     background-image: url("../../../img/LogOut.svg");
+  }
+
+  &__pay {
+    width: 17.791px;
+    height: 18px;
+    background-image: url("../../../img/Pay.svg");
+  }
+
+  &__history {
+    width: 20px;
+    height: 18px;
+    background-image: url("../../../img/Time.svg");
   }
 
   &__option {

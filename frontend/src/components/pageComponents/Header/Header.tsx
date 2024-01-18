@@ -67,16 +67,17 @@ export const Header = () => {
             <div className="header__container header__container--row-reverse">
               <Filter />
 
-              <NavLink 
-                to="/chart" 
-                className="header__chart header__img"
-              >
+              <NavLink className="header__chart--cont" to="/chart" >
+                <div 
+                  className="header__chart header__img"
+                >
                 {/* {addProduct.length !== 0 && (
                   <div className="header__amount">
                     {addProduct.length}
                   </div>
                 )} */}
-                </NavLink>
+                </div>
+              </NavLink>
             </div>
 
             <NavLink 

@@ -7,20 +7,20 @@ import { getCherwood } from "../../../api";
 import { Card } from "../../pageComponents/Card/Card";
 import { useAppSelector } from "../../../app/hooks";
 import { NavLink } from "react-router-dom";
+import { UserType } from "../../../helpers/UserType";
 
 
 export const Like = () => {
-  const [cherwood, setCherwood] = useState<Cherwood[]>([]);
+  const [user, setUser] = useState<UserType>();
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-
   const languageReducer = useAppSelector(state => state.language);
 
-useEffect(() => {
-  getCherwood()
-  .then((straviFromServer) => {
-    setCherwood(straviFromServer);
-  })
-}, []);
+// useEffect(() => {
+//   getUser()
+//   .then((userFromServer) => {
+//     setUser(userFromServer)
+//   })
+// }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -63,7 +63,8 @@ useEffect(() => {
         />
         </div>
 
-        <NavLink className="modal__empty" to="/" >
+       {user?.favourites
+        ?(<NavLink className="modal__empty" to="/" >
           <p className="modal__like2" />
           <h1 className="modal__text2">
             {languageReducer.language 
@@ -87,13 +88,13 @@ useEffect(() => {
 
             <p className="modal__arrow" />
           </button>
-        </NavLink>
+        </NavLink>)
 
-        {/* <div className="modal__items">
-          {cherwood.map((item)=> (
+        :(<div className="modal__items">
+          {user?.favourites.map((item)=> (
             <Card cherwood={item}/>
           ))}
-        </div> */}
+        </div>)}
         {shouldShow && <Footer />}
       </div>
     </div>

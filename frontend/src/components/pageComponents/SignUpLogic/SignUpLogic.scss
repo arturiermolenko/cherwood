@@ -74,6 +74,7 @@
     font-weight: 400;
     line-height: 120%;
     color: $red;
+    margin-top: 10px;
   }
 
   &__miniContainer {
@@ -92,7 +93,7 @@
 
     border: none;
     background-color: transparent;
-    bottom: 13px;
+    bottom: 14px;
     right: 16px;
     cursor: pointer;
   }
@@ -110,11 +111,14 @@
     color: $whiteColor;
     border: none;
 
+    margin-top: 80px;
+
     @include onPhone {
       font-size: 13px;
       font-style: normal;
       font-weight: 400;
       line-height: 120%;
+      margin-top: 60px;
     }
   }
 

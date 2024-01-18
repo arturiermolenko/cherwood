@@ -10,6 +10,7 @@ import { Header } from "../Header/Header";
 import { Footer } from "../Footer/Footer";
 import { getCherwood } from "../../../api";
 import { Card } from "../Card/Card";
+import { LikeAndChart } from "../LikeAndChart/LikeAndChart";
 
 type Props = {
   card: Cherwood,
@@ -95,10 +96,7 @@ useEffect(() => {
       </div>
 
         <div className="modal__header">
-          <div className="modal__minicontainer">
-            <button className="modal__like" />
-            <button className="modal__chart" />
-          </div>
+          <LikeAndChart id={card.id} noAbsolute={true}/>
 
           <div className="card__header">
             <h1 className="modal__name">

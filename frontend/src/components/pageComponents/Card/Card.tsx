@@ -3,6 +3,8 @@ import { Cherwood } from "../../../helpers/Cherwood.js";
 import "./Card.scss";
 import { Modal } from "../Modal/Modal";
 import { useAppSelector } from "../../../app/hooks";
+import { LikeAndChart } from "../LikeAndChart/LikeAndChart";
+import img from "../../../img/e547dbac650979a00cdb494fbc168463.jpg"
 
 type Props = {
   cherwood: Cherwood,
@@ -14,23 +16,23 @@ export const Card: React.FC<Props> = ({ cherwood }) => {
 
   const hendlModal = () => {
     setIsSelect(!isSelect);
-}
+} 
+
   return (
     <>
-      <div className="card" onClick={hendlModal}>
+      <div className="card">
         <div className="card__top">
           <img 
             className="card__img" 
-            // src={cherwood.main_image} 
+             src={img} 
             alt="img" 
+            onClick={hendlModal}
           />
-          <div className="card__minicontainer">
-            <button className="card__like" />
-            <button className="card__chart" />
-          </div>
+
+          <LikeAndChart id={cherwood.id}/>
         </div>
 
-      <div className="card__header">
+      <div className="card__header" onClick={hendlModal}>
         <h1 className="card__name">
           {languageReducer.language 
             ?cherwood.name_eng

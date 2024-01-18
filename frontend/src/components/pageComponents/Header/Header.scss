@@ -63,12 +63,21 @@
     }
 
     &__chart {
-      width: 66px;
-      height: 40px;
+      width: 28.286px;
+      height: 28.235px;
       background-image: url("../../../img/Chart.svg");
 
-      @include onPhone {
-        margin-right: 20px;
+      &--cont {
+        padding: 6px 19px;
+        cursor: pointer;
+        border-radius: 14px;
+        background-color: $greenColor;
+        display: flex;
+        align-items: center;
+
+        @include onPhone {
+          margin-right: 20px;
+        }
       }
     }
 

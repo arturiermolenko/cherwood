@@ -1,17 +1,27 @@
-import { NavLink } from "react-router-dom";
-import { useAppSelector } from "../../../app/hooks";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import classNames from "classnames";
 import axios from "axios";
 import { useState } from "react";
 
 import "./LogInLogic.scss";
+import { addRegistrationAction } from "../../../app/slice/RegistrSlice";
 
 export const LogInLogic = () => {
   const languageReducer = useAppSelector((state) => state.language);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
   const [values, setValues] = useState({
     email: '',
     password: '',
     showPassword: false,
+  });
+  const [errors, setErrors] = useState({
+    email: '',  
+    emailUkr: '',
+    password: '', 
+    passwordUkr: '', 
   });
 
   const handleClickShowPassword = () => {
@@ -26,6 +36,13 @@ export const LogInLogic = () => {
       ...values,
       [field]: event.target.value,
     });
+
+    setErrors({
+      email: '',  
+      emailUkr: '',
+      password: '', 
+      passwordUkr: '', 
+    });
   };
 
   const handlePasswordChange = (event) => {
@@ -33,22 +50,40 @@ export const LogInLogic = () => {
       ...values,
       password: event.target.value,
     });
+
+    setErrors({
+      email: '',  
+      emailUkr: '',
+      password: '', 
+      passwordUkr: '', 
+    });
   };
 
   const handleLogin = async (event) => {
     event.preventDefault();
 
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/user/login/', {
+      await axios.post('http://127.0.0.1:8000/api/user/login/', {
         email: values.email,
         password: values.password,
-      });
+      })
+      .then(response => {
+        dispatch(addRegistrationAction({
+          access: response.data.access,
+          refresh: response.data.refresh,
+        }))
+      })
+   
+      navigate('/');
 
-      console.log('Login successful', response.data);
     } catch (error) {
-      console.error('Login failed', (error as any).response?.data);
+      setErrors({
+        email: 'An error occurred during login.',
+        emailUkr: 'При вході виникла помилка.',
+        password: 'An error occurred during login.',
+        passwordUkr: 'При вході виникла помилка.',
+      });
     }
-    console.log(values)
   };
 
   return (
@@ -60,16 +95,23 @@ export const LogInLogic = () => {
       </h1>
 
       <div className="signUpLogic__container">
-        <div className="signUpLogic__miniContainer">
+      <div className="signUpLogic__miniContainer">
           <p className="signUpLogic__text">
             {languageReducer.language
               ? 'Email address*'
               : 'Адреса електронної пошти*'}
           </p>
 
+          <label
+            className="signUpLogic__miniContainer"
+            htmlFor="searchInput"
+          >
+          
           <input
             type="email"
-            className="signUpLogic__input"
+            className={classNames("signUpLogic__input", {
+              'signUpLogic__error': errors.email.length > 0,
+            })}
             placeholder={
               languageReducer.language
                 ? 'Enter your email address'
@@ -78,6 +120,17 @@ export const LogInLogic = () => {
             value={values.email}
             onChange={(event) => handleInputChange('email', event)}
           />
+        </label>
+        
+        {errors.email && (
+          <div className="signUpLogic__errorText">
+            {
+              languageReducer.language 
+              ? errors.email
+              : errors.emailUkr
+            }
+          </div>
+          )}
         </div>
 
         <div className="signUpLogic__miniContainer">
@@ -87,32 +140,44 @@ export const LogInLogic = () => {
               : 'Пароль*'}
           </p>
 
+          <label
+            className="signUpLogic__miniContainer"
+            htmlFor="searchInput"
+          >
+          
           <input
             type={values.showPassword ? 'text' : 'password'}
-            className="signUpLogic__input"
+            className={classNames("signUpLogic__input", {
+              'signUpLogic__error': errors.password.length > 0,
+            })}
             placeholder={
               languageReducer.language
                 ? 'Enter your password'
                 : 'Введіть пароль'
             }
-
             onChange={handlePasswordChange}
           />
-          <button
+        
+        <button
             onClick={handleClickShowPassword}
             className={classNames('signUpLogic__button', {
               'signUpLogic__show': values.showPassword,
             })}
           />
-        </div>
+        </label>
 
-        <div className="logInLogic__container">
-          <NavLink to="/forgot" className="logInLogic">
-            Forgot your password
-          </NavLink>
+        {errors.password && (
+          <div className="signUpLogic__errorText">
+            {
+              languageReducer.language 
+              ? errors.password
+              : errors.passwordUkr
+            }
+          </div>
+          )}
         </div>
       </div>
-
+        
       <div className="signUpLogic__container">
         <button
           className='signUpLogic__green signUpLogic__button2'

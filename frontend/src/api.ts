@@ -47,7 +47,6 @@ export async function getChart(): Promise<Cherwood[]> {
       return response.json();
     })
     .then((jsonData: Cherwood[]) => {
-      console.log(jsonData, 'aewrgvesr')
       return Promise.resolve(jsonData);
     })
     .catch(error => {
@@ -57,24 +56,36 @@ export async function getChart(): Promise<Cherwood[]> {
 }
 
 
-// export async function getUser(): Promise<UserType> {
-//   const apiUrl = 'http://127.0.0.1:8000/api/user/me/';
 
-//   return fetch(apiUrl)
-//     .then(response => {
-//       if (!response.ok) {
-//         throw new Error(`Failed to fetch data from ${apiUrl}`);
-//       }
-//       return response.json();
-//     })
-//     .then((jsonData: UserType) => {
-//       return Promise.resolve(jsonData);
-//     })
-//     .catch(error => {
-//       console.error(error);
-//       return Promise.reject(error);
-//     });
-// }
+export async function getUser(access): Promise<UserType> {
+  const apiUrl = 'http://127.0.0.1:8000/api/user/me/';
+
+  const accessToken = access;
+
+  const headers = {
+    Authorization: `Bearer ${accessToken}`,
+  };
+
+  const requestOptions: RequestInit = {
+    method: 'GET',
+    headers: new Headers(headers),
+  };
+
+  return fetch(apiUrl, requestOptions)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Failed to fetch data from ${apiUrl}`);
+      }
+      return response.json();
+    })
+    .then((jsonData: UserType) => {
+      return Promise.resolve(jsonData);
+    })
+    .catch(error => {
+      console.error(error);
+      return Promise.reject(error);
+    });
+}
 
 
 export async function getOptions(): Promise<Option[]> {

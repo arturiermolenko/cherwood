@@ -3,7 +3,7 @@ import { Cherwood } from "../../../helpers/Cherwood";
 import { BackButton } from "../../pageComponents/BackButton/BackButton"; 
 import { Header } from "../../pageComponents/Header/Header"; 
 import { Footer } from "../../pageComponents/Footer/Footer"; 
-import { getCherwood } from "../../../api";
+import { getCherwood, getUser } from "../../../api";
 import { Card } from "../../pageComponents/Card/Card";
 import { useAppSelector } from "../../../app/hooks";
 import { NavLink } from "react-router-dom";
@@ -12,15 +12,27 @@ import { UserType } from "../../../helpers/UserType";
 
 export const Like = () => {
   const [user, setUser] = useState<UserType>();
+  const [cherwood, setCherwood] = useState<Cherwood[]>([]);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const languageReducer = useAppSelector(state => state.language);
+  const registrationReducer = useAppSelector(state => state.registration);
 
-// useEffect(() => {
-//   getUser()
-//   .then((userFromServer) => {
-//     setUser(userFromServer)
-//   })
-// }, []);
+  const favoriteCherwood = cherwood.filter(item => user?.favourites.includes(item.id));
+
+useEffect(() => {
+  getUser(registrationReducer.registration.access)
+  .then((userFromServer) => {
+    setUser(userFromServer)
+  })
+}, [user?.favourites]);
+
+useEffect(() => {
+  getCherwood()
+  .then((cherwoodFromServer) => {
+    setCherwood(cherwoodFromServer)
+  })
+}, []);
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -64,7 +76,15 @@ export const Like = () => {
         </div>
 
        {user?.favourites
-        ?(<NavLink className="modal__empty" to="/" >
+        ?(
+          <div className="modal__items">
+            {favoriteCherwood.map((item)=> (
+              <Card cherwood={item} key={item.id}/>
+            ))}
+          </div>
+          )
+        :(
+          <NavLink className="modal__empty" to="/" >
           <p className="modal__like2" />
           <h1 className="modal__text2">
             {languageReducer.language 
@@ -88,13 +108,8 @@ export const Like = () => {
 
             <p className="modal__arrow" />
           </button>
-        </NavLink>)
-
-        :(<div className="modal__items">
-          {user?.favourites.map((item)=> (
-            <Card cherwood={item}/>
-          ))}
-        </div>)}
+        </NavLink>
+        )}
         {shouldShow && <Footer />}
       </div>
     </div>

@@ -11,6 +11,7 @@ import { LogIn } from './components/page/LogIn/LogIn';
 import { SingUp } from './components/page/SingUp/SingUp';
 import { Like } from './components/page/Like/Like';
 import { Chart } from './components/page/Chart/Chart';
+import { ProfileMain } from './components/page/ProfileMain/Profile'; 
 
 export const App = () => {
     return (
@@ -61,6 +62,13 @@ export const App = () => {
           path="/chart" 
           element={(
             <Chart />
+          )}
+        />
+
+        <Route 
+          path="/profile" 
+          element={(
+            <ProfileMain />
           )}
         />
       </Routes>

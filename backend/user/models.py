@@ -48,6 +48,7 @@ class User(AbstractUser):
         related_name="user_favourites",
         symmetrical=False
     )
+    tel_number = models.CharField(max_length=13, unique=True, blank=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []

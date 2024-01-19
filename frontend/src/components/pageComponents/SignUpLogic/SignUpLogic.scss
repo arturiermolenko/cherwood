@@ -56,6 +56,10 @@
     font-family: 'Alegreya', serif;
     flex-grow: 1;
 
+    &:focus-visible {
+      outline: 1px solid $borderHoverColor;
+    }
+
     @include onPhone {
       font-size: 14px;
       font-style: normal;

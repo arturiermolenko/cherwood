@@ -10,6 +10,7 @@ $text2Color: #615F5F;
 $backgroundColor: #CBCCCE;
 $gray4: #84848D;
 $red:#D70015;
+$borderHoverColor:#535456;
 
 @mixin onPhone {
   @media (max-width:780px) {

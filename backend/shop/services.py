@@ -2,7 +2,6 @@ from decimal import Decimal
 
 from django.conf import settings
 
-from .serializers import ProductSerializer
 from .models import Product
 
 

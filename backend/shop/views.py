@@ -6,12 +6,14 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import GenericViewSet
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from drf_spectacular.utils import extend_schema, OpenApiParameter
+from drf_spectacular.types import OpenApiTypes
 
 from shop.models import Category, Product, ProductImage
 from shop.serializers import (
     CategorySerializer,
     ProductSerializer,
-    ProductImageSerializer
+    ProductImageSerializer, CartAPISerializer, AddRemoveFavouriteSerializer
 )
 from shop.services import Cart
 
@@ -45,6 +47,7 @@ class ProductImageViewSet(mixins.ListModelMixin, GenericViewSet):
 class AddRemoveFavouriteView(APIView):
     permission_classes = (IsAuthenticated,)
     authentication_classes = (JWTAuthentication,)
+    serializer_class = AddRemoveFavouriteSerializer
 
     def post(self, request, pk):
         user = self.request.user
@@ -63,8 +66,12 @@ class CartAPI(APIView):
     """
     Single API to handle cart operations
     """
+    serializer_class = CartAPISerializer
 
     def get(self, request):
+        """
+        Get information about the cart.
+        """
         cart = Cart(request)
 
         return Response(
@@ -72,7 +79,20 @@ class CartAPI(APIView):
             status=status.HTTP_200_OK,
         )
 
+    @extend_schema(
+        request=CartAPISerializer,
+        parameters=[
+            OpenApiParameter(name="product_id", type=OpenApiTypes.INT, location=OpenApiParameter.QUERY,
+                             description="The ID of the product."),
+            OpenApiParameter(name="action", type=OpenApiTypes.STR, location=OpenApiParameter.QUERY,
+                             description="The action to perform on the cart.",
+                             enum=["add", "remove_one", "remove", "clear"]),
+        ],
+    )
     def post(self, request, **kwargs):
+        """
+        Modify the cart based on the provided action.
+        """
         cart = Cart(request)
         product_id = request.data.get("product_id")
         action = request.data.get("action")
@@ -89,4 +109,3 @@ class CartAPI(APIView):
             return Response({"message": "choose action"}, status=status.HTTP_204_NO_CONTENT)
 
         return Response({"message": "cart updated"}, status=status.HTTP_202_ACCEPTED)
-

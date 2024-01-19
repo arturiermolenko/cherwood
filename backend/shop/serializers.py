@@ -56,3 +56,12 @@ class ProductSerializer(serializers.ModelSerializer):
             "main_image",
             "images",
         )
+
+
+class CartAPISerializer(serializers.Serializer):
+    product_id = serializers.IntegerField()
+    action = serializers.CharField()
+
+
+class AddRemoveFavouriteSerializer(serializers.Serializer):
+    ...

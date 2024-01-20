@@ -5,7 +5,17 @@ from django.conf import settings
 from .models import Product
 
 
-class Cart:
+class SingletonMeta(type):
+    _instances = {}
+
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            instance = super().__call__(*args, **kwargs)
+            cls._instances[cls] = instance
+        return cls._instances[cls]
+
+
+class Cart(metaclass=SingletonMeta):
     def __init__(self, request):
         """
         Initialize the cart

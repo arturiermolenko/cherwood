@@ -10,7 +10,7 @@
 
   @include onPhone {
     width: 175px;
-    height: 190px;
+    height: 230px;
   }
 
   &__top {
@@ -19,7 +19,8 @@
     position: relative;
 
     @include onPhone {
-      height: 145px;
+      height: 150px;
+      width: 175px;
     }
   }
 

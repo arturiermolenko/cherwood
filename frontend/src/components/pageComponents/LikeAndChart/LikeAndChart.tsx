@@ -18,10 +18,12 @@ export const LikeAndChart: React.FC<Props> = ({id, noAbsolute}) => {
   const registrationReducer = useAppSelector(state => state.registration);
 
 useEffect(() => {
-  getUser(registrationReducer.registration.access)
-  .then((userFromServer) => {
-    setUser(userFromServer)
-  })
+  if (registrationReducer.registration.access) {
+    getUser(registrationReducer.registration.access)
+    .then((userFromServer) => {
+      setUser(userFromServer)
+    })
+  }
 }, [isLike]);
 
   useEffect(() => {
@@ -30,7 +32,6 @@ useEffect(() => {
       .then((chartData) => {
         const isArray = Array.isArray(chartData);
         const isProductInChart = isArray && chartData.some((item) => item.id === id);
-        console.log(isArray)
         setIsInChart(isProductInChart);
       })
       .catch((error) => {

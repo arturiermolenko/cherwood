@@ -31,6 +31,7 @@ export const Profile = () => {
       }));
 
       setIsSelect(false);
+      window.location.reload();
     } catch (error) {
       console.log(error);
     } 

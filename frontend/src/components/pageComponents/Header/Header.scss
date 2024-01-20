@@ -21,10 +21,6 @@
       align-items: center;
       gap: 40px;
 
-      @include onPhone {
-        gap: none;
-      }
-
       &--row-reverse {
         @include onPhone {
           flex-direction: row-reverse;

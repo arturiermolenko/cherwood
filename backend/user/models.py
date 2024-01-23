@@ -1,4 +1,5 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.core.validators import RegexValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -48,7 +49,19 @@ class User(AbstractUser):
         related_name="user_favourites",
         symmetrical=False
     )
-    tel_number = models.CharField(max_length=13, unique=True, blank=True)
+    tel_number = models.CharField(
+        max_length=65,
+        blank=True,
+        unique=True,
+        validators=[
+            RegexValidator(
+                r"^\+[0-9]{1,3}\.[0-9]{4,14}(?:x.+)?$",
+                message="Make sure your phone number is in accordance with the format: "
+                        "+CCC.NNNNNNNNNNxEEEE, where C is the 1–3 digit country code, "
+                        "N is up to 14 digits, and E is the (optional) extension"
+            )
+        ]
+    )
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []

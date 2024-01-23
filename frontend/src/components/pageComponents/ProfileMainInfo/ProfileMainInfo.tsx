@@ -4,8 +4,13 @@ import { useEffect, useState } from "react";
 import { UserType } from "../../../helpers/UserType";
 import { getUser } from "../../../api";
 import axios from "axios";
+import { NavLink } from "react-router-dom";
 
-export const ProfileMainInfo = () => {
+type Props = {
+  noProfile: boolean,
+}
+
+export const ProfileMainInfo:React.FC<Props> = ({noProfile}) => {
   const registrationReducer = useAppSelector(state => state.registration);
   const languageReducer = useAppSelector(state => state.language);
 
@@ -14,6 +19,7 @@ export const ProfileMainInfo = () => {
   const [lastName, setLastName] = useState<string | undefined>(user?.last_name || '');
   // const [country, setCountry] = useState<string | undefined>(user?.country || '');
   // const [city, setCity] = useState<string | undefined>(user?.city || '');
+  const [email, setEmail] = useState<string | undefined>(user?.email || '');
   const [telNumber, setTelNumber] = useState<string | undefined>(user?.tel_number || '');
   const [errors, setErrors] = useState({
     tel_number: '',
@@ -42,6 +48,7 @@ export const ProfileMainInfo = () => {
     setLastName(user?.last_name || '');
     // setCountry(user?.country || '');
     // setCity(user?.city || '');
+    setEmail(user?.email || '');
     setTelNumber(user?.tel_number || '');
   }, [user]);
 
@@ -75,28 +82,32 @@ export const ProfileMainInfo = () => {
   }
     
   return (
-    <div className="profileLogic__mainContainer">
+    <div className={classNames("profileLogic__mainContainer ", {
+      'profileLogic__mainContainer--border': noProfile,
+    })}>
+
       <h1 className="profileLogic__headerText">
         My Profile
       </h1>
 
-      <div className="profileLogic__miniCont">
-        <p className="profileLogic__profileImg header__img"/>
+    <div className="profileLogic__miniCont">
+      <p className="profileLogic__profileImg header__img"/>
 
-          <div className="profileLogic__info">
-            <div className="profileLogic__name">
-              {`${firstName} ${lastName}`}
-            </div>
-
-            <div className="profileLogic__location">
-              City
-            </div>
-
-            <div className="profileLogic__phone">
-              {`+${telNumber}`}
-            </div>
+        <div className="profileLogic__info">
+          <div className="profileLogic__name">
+            {`${firstName} ${lastName}`}
           </div>
-      </div>
+
+          <div className="profileLogic__location">
+            City
+          </div>
+
+          <div className="profileLogic__phone">
+            {`+${telNumber}`}
+          </div>
+        </div>
+    </div>
+ 
 
       <div className="profileLogic__inputBox">
         <div className="signUpLogic__miniContainer">
@@ -229,7 +240,9 @@ export const ProfileMainInfo = () => {
           )}
         </label>
       </div>
-        <button 
+
+        <NavLink
+          to='/success' 
           className="
             signUpLogic__green 
             signUpLogic__button2
@@ -242,7 +255,7 @@ export const ProfileMainInfo = () => {
             ? 'Confirm'
             : 'Продовжити'
         }
-        </button>
+        </NavLink>
     </div>
   </div>
   );

@@ -4,6 +4,8 @@ import cherwoodData from "../src/data (4).json";
 import { Option } from "./helpers/Options";
 import options from "../src/options.json";
 import { UserType } from "./helpers/UserType";
+import { CartItem } from "./helpers/ChartInterface";
+import axios from "axios";
 
 function wait(delay: number) {
   return new Promise(resolve => setTimeout(resolve, delay));
@@ -36,7 +38,7 @@ export async function getCherwood(): Promise<Cherwood[]> {
 //     });
 // }
 
-export async function getChart(): Promise<Cherwood[]> {
+export async function getChart(): Promise<CartItem> {
   const apiUrl = 'http://127.0.0.1:8000/api/cart/';
 
   return fetch(apiUrl)
@@ -46,7 +48,7 @@ export async function getChart(): Promise<Cherwood[]> {
       }
       return response.json();
     })
-    .then((jsonData: Cherwood[]) => {
+    .then((jsonData: CartItem) => {
       return Promise.resolve(jsonData);
     })
     .catch(error => {
@@ -95,3 +97,18 @@ export async function getOptions(): Promise<Option[]> {
       return Promise.resolve(jsonData2);
     });
 }
+
+export const handleChart = async (currentAction: string, id: number) => {
+  try {
+    const data = {
+      product_id: id,
+      action: currentAction,
+    };
+
+    const url = 'http://127.0.0.1:8000/api/cart/';
+
+    await axios.post(url, data);
+  } catch (error) {
+    console.log(error);
+  }
+};

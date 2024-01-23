@@ -78,6 +78,10 @@
     align-items: center;
     gap: 14px;
 
+    &--red {
+      border: 0.5px solid $red;
+    }
+
     @include onPhone {
       gap: 32px;
       padding: 8px;
@@ -135,12 +139,15 @@
     flex-direction: column;
     flex-grow: 2;
     padding-left: 70px;
-    border-left: 1px solid $liteGrayColor;
 
     @include onPhone {
       border-left: none;
       padding: 0;
       margin-top: 20px;
+    }
+
+    &--border {
+      border-left: 1px solid $liteGrayColor;
     }
   }
 
@@ -208,7 +215,7 @@
 
   &__inputBox {
     padding: 20px 16px;
-    margin-top: 48px;
+    margin-top: 28px;
     display: flex;
     flex-direction: column;
 
@@ -238,6 +245,22 @@
   &__button2 {
     @include onPhone {
       margin: 30px 0 0 0;
+    }
+  }
+
+  &__warning {
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+    color: #007AFF;
+    text-align: center;
+    margin-top: 22px;
+
+    @include onPhone {
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 130%;
     }
   }
 }

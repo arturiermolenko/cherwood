@@ -4,4 +4,5 @@ export const initialState = {
     access: '',
     refresh: '',
   },
+  chart: false,
 };

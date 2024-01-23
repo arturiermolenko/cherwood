@@ -1,21 +1,36 @@
 import { NavLink } from 'react-router-dom';
 import "./Header.scss";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { Filter } from '../Filter/Filter';
 import { Profile } from '../Profile/Profile';
 import { changeLanguageAction } from '../../../app/slice/LanguageSlice';
 import { scrollToFooter } from '../../../helpers/helpers';
+import { getChart } from '../../../api';
+import { CartItem } from '../../../helpers/ChartInterface';
 
 export const Header = () => {
   const [isSelect, setIsSelect] = useState(false);
+  const [chart, setChart] = useState<CartItem>({ products: [], cart_total_price: 0 });
   const dispatch = useAppDispatch();
   const languageReducer = useAppSelector(state => state.language);
+  const chartReload = useAppSelector(state => state.chart);
+  const registrationReducer = useAppSelector(state => state.registration);
 
   const handleLanguageChange = (isEnglish: boolean) => {
     dispatch(changeLanguageAction(isEnglish));
     setIsSelect(prevState => !prevState);
   };
+
+  useEffect(() => {
+    getChart()
+    .then((chartData) => {
+      setChart(chartData);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}, [chartReload.chart]);
 
     return (
     <div className="header">
@@ -71,19 +86,21 @@ export const Header = () => {
                 <div 
                   className="header__chart header__img"
                 >
-                {/* {addProduct.length !== 0 && (
+                {chart.products.length !== 0 && (
                   <div className="header__amount">
-                    {addProduct.length}
+                    {chart.products.length}
                   </div>
-                )} */}
+                )}
                 </div>
               </NavLink>
             </div>
 
-            <NavLink 
+           {registrationReducer.registration.access &&(
+             <NavLink 
               to="/favorites" 
               className="header__favorites header__img"
             />
+            )}
 
             <div className="header__cont">
               <div 

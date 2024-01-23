@@ -6,9 +6,17 @@ import classNames from "classnames";
 import { ProfileMainInfo } from "../ProfileMainInfo/ProfileMainInfo";
 import { useEffect, useState } from "react";
 import { Footer } from "../Footer/Footer";
+import { HistoryLogic } from "../HistoryLogic/HistoryLogic";
+import { getChart } from "../../../api";
+import { CartItem } from "../../../helpers/ChartInterface";
 
-export const ProfileLogic = () => {
+type Props = {
+  profile: boolean;
+}
+
+export const ProfileLogic: React.FC<Props> = ({profile}) => {
   const languageReducer = useAppSelector(state => state.language);
+  const [chart, setChart] = useState<CartItem>({ products: [], cart_total_price: 0 });
   const location = useLocation();
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -24,6 +32,17 @@ export const ProfileLogic = () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+  
+  useEffect(() => {
+    getChart()
+    .then((chartData) => {
+      setChart(chartData);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}, []);
+
 
   const isActiveNav = ({ isActive }: { isActive: boolean }) => classNames(
     'profileLogic__link', { profileLogic__active: isActive },
@@ -39,11 +58,11 @@ export const ProfileLogic = () => {
             <div 
               className="header__chart header__img"
             >
-            {/* {addProduct.length !== 0 && (
+            {chart.products.length !== 0 && (
               <div className="header__amount">
-                {addProduct.length}
+                {chart.products.length}
               </div>
-            )} */}
+            )}
             </div>
           </NavLink>
 
@@ -112,8 +131,8 @@ export const ProfileLogic = () => {
             )}
       </div>
           
-      <div className="profileLogic__nav--box">
-        <div className="profileLogic__link">
+      <div className="profileLogic__nav--box"> 
+        <div className="profileLogic__link profileLogic__link--red">
           <p className="profileLogic__logout header__img" />
               {windowWidth > 780 &&( 
                 languageReducer.language 
@@ -135,7 +154,10 @@ export const ProfileLogic = () => {
 
         {windowWidth < 780 &&(<BackButton />)}
 
-        <ProfileMainInfo />
+      {profile 
+        ?(<ProfileMainInfo noProfile={true}/>)
+        :(<HistoryLogic />)
+      }
       </div>
 
       {windowWidth < 780 &&(<Footer />)}

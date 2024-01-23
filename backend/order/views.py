@@ -1,4 +1,5 @@
 from rest_framework import generics
+from rest_framework.exceptions import ValidationError
 
 from order.models import Order, OrderItem
 from order.serializers import OrderCreateSerializer
@@ -14,6 +15,8 @@ class OrderCreateView(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         cart = Cart(self.request)
+        if not cart.cart.keys():
+            raise ValidationError("Put something in your cart please.")
         order = serializer.save(total=cart.get_total_price())
         product_ids = cart.cart.keys()
         for product_id in product_ids:
@@ -23,4 +26,4 @@ class OrderCreateView(generics.CreateAPIView):
                 quantity=cart.cart[product_id]["quantity"]
             )
         send_email(order)
-        del cart
+        cart.clear()

@@ -33,5 +33,6 @@ class OrderListView(generics.ListAPIView):
         return (
             Order.objects.
             filter(email=self.request.user.email).
-            prefetch_related("order_items")
+            prefetch_related("order_items").
+            order_by("-created_at")
         )

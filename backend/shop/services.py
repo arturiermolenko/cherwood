@@ -86,5 +86,5 @@ class Cart(metaclass=SingletonMeta):
         """
         Remove cart from session
         """
-        del self.session[settings.CART_SESSION_ID]
-        self.save()
+        for prod_id in list(self.cart.keys()):
+            self.remove_item(prod_id)

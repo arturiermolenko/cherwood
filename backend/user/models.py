@@ -50,15 +50,13 @@ class User(AbstractUser):
         symmetrical=False
     )
     tel_number = models.CharField(
-        max_length=65,
+        max_length=10,
         blank=True,
         unique=True,
         validators=[
             RegexValidator(
-                r"^\+[0-9]{1,3}\.[0-9]{4,14}(?:x.+)?$",
-                message="Make sure your phone number is in accordance with the format: "
-                        "+CCC.NNNNNNNNNNxEEEE, where C is the 1–3 digit country code, "
-                        "N is up to 14 digits, and E is the (optional) extension"
+                r"^\d{10}$",
+                message="Make sure your phone number consists of 10 digits"
             )
         ]
     )

@@ -19,6 +19,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
             "last_name",
             "password",
             "confirm_password",
+            "tel_number"
         )
 
     @staticmethod

@@ -8,7 +8,14 @@ class OrderCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Order
-        fields = ("email", "first_name", "last_name", "phone_number")
+        fields = (
+            "email",
+            "first_name",
+            "last_name",
+            "phone_number",
+            "region",
+            "city"
+        )
 
 
 class OrderListSerializer(serializers.ModelSerializer):

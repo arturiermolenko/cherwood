@@ -15,7 +15,7 @@ class OrderCreateView(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         cart = Cart(self.request)
-        if not cart.cart.keys():
+        if not list(cart.cart.keys()):
             raise ValidationError("Put something in your cart please.")
         order = serializer.save(total=cart.get_total_price())
         product_ids = cart.cart.keys()

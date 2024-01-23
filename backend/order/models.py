@@ -20,6 +20,13 @@ class Order(models.Model):
             )
         ]
     )
+
+    region = models.CharField(
+        max_length=65, blank=True, null=True, choices=settings.REGIONS_DICT
+    )
+    city = models.CharField(
+        max_length=255, blank=True, null=True
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     total = models.DecimalField(max_digits=8, decimal_places=2)
 

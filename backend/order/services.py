@@ -12,7 +12,10 @@ def send_email(order) -> None:
     TO.append(settings.EMAIL_HOST_USER)   # send notification to the owner
     FROM = "cherwood@gmail.com"
     message = MIMEMultipart("alternative")
-    html_message = render_to_string("email.html", {"order": order})
+    html_message = render_to_string(
+        "email.html",
+        {"order": order, "oblast": settings.REGIONS_DICT.get(order.region)}
+    )
     plain_message = strip_tags(html_message)
     message.attach(MIMEText(plain_message, "plain"))
     message.attach(MIMEText(html_message, "html"))

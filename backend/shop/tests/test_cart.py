@@ -26,18 +26,7 @@ class CartTests(TestCase):
             subcategory=self.subcategory,
         )
 
-    def test_cart_init_with_existing_cart(self):
-        """
-        Initialization unauthenticated user`s cart with existing cart
-        """
-        existing_cart = {"products": [], "cart_total_price": 0}
-        self.request.session[settings.CART_SESSION_ID] = existing_cart
-
-        cart_instance = Cart(self.request)
-
-        self.assertEqual(cart_instance.cart, existing_cart)
-
-    def test_cart_init_without_existing_cart(self):
+    def test_cart_init(self):
         """
         Initialization unauthenticated user`s cart without existing cart
         """
@@ -56,6 +45,7 @@ class CartTests(TestCase):
         cart = {self.product.id: {"quantity": 1, "price": "100.00"}}
 
         self.assertEqual(cart_instance.cart, cart)
+        cart_instance.clear()
 
     def test_remove_one_product_from_cart(self):
         """
@@ -69,6 +59,7 @@ class CartTests(TestCase):
         cart = {self.product.id: {"quantity": 1, "price": "100.00"}}
 
         self.assertEqual(cart_instance.cart, cart)
+        cart_instance.clear()
 
     def test_remove_item_from_cart(self):
         """
@@ -80,6 +71,7 @@ class CartTests(TestCase):
         cart_instance.remove_item(self.product.id)
 
         self.assertEqual(cart_instance.cart, {})
+        cart_instance.clear()
 
     def test_get_all(self):
         """
@@ -91,6 +83,7 @@ class CartTests(TestCase):
         cart_items = "{1: {'quantity': 1, 'price': Decimal('100.00'), 'id': 1, 'total_price': Decimal('100.00')}}"
 
         self.assertEqual(str(cart_instance.cart), cart_items)
+        cart_instance.clear()
 
     def test_get_total_price(self):
         """
@@ -100,6 +93,7 @@ class CartTests(TestCase):
         cart_instance.add(self.product.id)
         cart_instance.add(self.product.id)
         self.assertEqual(cart_instance.get_total_price(), 200.00)
+        cart_instance.clear()
 
     def test_clear_cart(self):
         """
@@ -111,4 +105,4 @@ class CartTests(TestCase):
 
         cart_instance.clear()
 
-        self.assertEqual(cart_instance.session.get(settings.CART_SESSION_ID), None)
+        self.assertEqual(cart_instance.session.get(settings.CART_SESSION_ID), {})

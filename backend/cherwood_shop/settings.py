@@ -188,10 +188,30 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")  # app password preferably (my personal didn't work)
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8000",
-    "http://127.0.0.1:8000",
-    "http://localhost:3000",
-]
-CORS_ALLOW_ALL_HEADERS = True
-CORS_ALLOW_CSRF_COOKIE = True
+REGIONS_DICT = {
+    "Chernihivska": "Чернігівська область",
+    "Cherkaska": "Черкаська область",
+    "Chernivetska": "Чернівецька область",
+    "Dnipropetrovska": "Дніпропетровська область",
+    "Donetska": "Донецька область",
+    "Ivano-Frankivska": "Івано-Франківська область",
+    "Kharkivska": "Харківська область",
+    "Khersonska": "Херсонська область",
+    "Khmelnytska": "Хмельницька область",
+    "Kirovohradska": "Кіровоградська область",
+    "Kyivska": "Київська область",
+    "Luhanska": "Луганська область",
+    "Lvivska": "Львівська область",
+    "Mykolaivska": "Миколаївська область",
+    "Odeska": "Одеська область",
+    "Poltavska": "Полтавська область",
+    "Rivnenska": "Рівненська область",
+    "Sumska": "Сумська область",
+    "Ternopilska": "Тернопілська область",
+    "Vinnytska": "Вінницька область",
+    "Volynska": "Волинська область",
+    "Zakarpatska": "Закарпатська область",
+    "Zaporizka": "Запорізька область",
+    "Zhytomirska": "Житомирська область",
+    "Crimea": "АР Крим"
+}

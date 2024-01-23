@@ -12,15 +12,20 @@ class Order(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     phone_number = models.CharField(
-        max_length=65,
+        max_length=10,
         validators=[
             RegexValidator(
-                r"^\+[0-9]{1,3}\.[0-9]{4,14}(?:x.+)?$",
-                message="Make sure your phone number is in accordance with the format: "
-                        "+CCC.NNNNNNNNNNxEEEE, where C is the 1–3 digit country code, "
-                        "N is up to 14 digits, and E is the (optional) extension"
+                r"^\d{10}$",
+                message="Make sure your phone number consists of 10 digits"
             )
         ]
+    )
+
+    region = models.CharField(
+        max_length=65, blank=True, null=True, choices=settings.REGIONS_DICT
+    )
+    city = models.CharField(
+        max_length=255, blank=True, null=True
     )
     created_at = models.DateTimeField(auto_now_add=True)
     total = models.DecimalField(max_digits=8, decimal_places=2)
@@ -47,4 +52,4 @@ class OrderItem(models.Model):
         return self.product.price * self.quantity
 
     def __str__(self) -> str:
-        return f"{self.product}"
+        return f"{self.product}, quantity = {self.quantity}"

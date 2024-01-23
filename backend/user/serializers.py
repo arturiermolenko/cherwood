@@ -19,6 +19,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
             "last_name",
             "password",
             "confirm_password",
+            "tel_number"
         )
 
     @staticmethod
@@ -44,5 +45,13 @@ class UserCreateSerializer(serializers.ModelSerializer):
 class UserManageSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
-        fields = ("email", "first_name", "last_name", "favourites", "tel_number")
+        fields = (
+            "email",
+            "first_name",
+            "last_name",
+            "favourites",
+            "tel_number",
+            "region",
+            "city"
+        )
         read_only_fields = ("id", "email")

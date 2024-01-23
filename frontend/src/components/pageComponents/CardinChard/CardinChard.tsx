@@ -2,17 +2,87 @@ import { useAppSelector } from "../../../app/hooks";
 import { Cherwood } from "../../../helpers/Cherwood";
 import img from '../../../img/e547dbac650979a00cdb494fbc168463.jpg';
 import "./CardinChard.scss";
+import { Modal } from "../Modal/Modal";
+import { useEffect, useState } from "react";
+import { getChart, handleChart } from "../../../api";
+import { CartItem } from "../../../helpers/ChartInterface";
 
 type Props = {
   card: Cherwood;
+  handleRemove: () => void,
 }
 
-export const CardinChard: React.FC<Props> = ({card}) => {
+export const CardinChard: React.FC<Props> = ({card, handleRemove}) => {
+  const [chart, setChart] = useState<CartItem>({ products: [], cart_total_price: 0 });
+  const [isSelect, setIsSelect] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [change, setChange] = useState(false);
   const languageReducer = useAppSelector(state => state.language);
+
+  const hendlModal = () => {
+    setIsSelect(!isSelect);
+  } 
+
+  const hendleActChart = (action: string) => {
+    handleChart(action, card.id);
+    setChange(!change);
+    handleRemove()
+  } 
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+  
+    window.addEventListener('resize', handleResize);
+  
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+  
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await new Promise(resolve => setTimeout(resolve, 100));
+  
+        const userFromServer = await getChart();
+        setChart(userFromServer);
+      } catch (error) {
+        console.error("Error fetching chart:", error);
+      }
+    };
+  
+    fetchData();
+  }, [change]);
+
+const inChart = chart.products.find((product) => product.id === card.id);
 
   return (
     <div className="cardinChard">
-      <img src={img} alt="cardImg" className="cardinChard__img"/>
+      <div className="cardinChard__headCont">
+      <img 
+        src={img} 
+        alt="cardImg" 
+        className="cardinChard__img"
+        onClick={hendlModal}
+      />
+
+    {windowWidth < 780 &&(
+      <div className="cardinChard__count--button">
+        <button 
+          className="cardinChard__count--button--minus" 
+          onClick={() => hendleActChart('remove_one')}
+        />
+          <p className="cardinChard__count--button--count">{inChart?.quantity}</p>
+          <button 
+            className="cardinChard__count--button--plus" 
+            onClick={() => hendleActChart('add')}
+          />
+      </div>
+      )}
+    </div>
 
     <div className="cardinChard__container">
       <div className="cardinChard__top">
@@ -24,7 +94,7 @@ export const CardinChard: React.FC<Props> = ({card}) => {
           </div>
 
           <div className="cardinChard__price">
-          {`₴${card.price}`}
+          {`₴${inChart?.total_price}`}
           </div>
         </div>
 
@@ -77,13 +147,24 @@ export const CardinChard: React.FC<Props> = ({card}) => {
           </div>
 
           <div className="cardinChard__count">
+            {windowWidth > 780 &&(
             <div className="cardinChard__count--button">
-              <button className="cardinChard__count--button--minus" />
-                <p className="cardinChard__count--button--count">1</p>
-                <button className="cardinChard__count--button--plus" />
+              <button 
+                className="cardinChard__count--button--minus" 
+                onClick={() => hendleActChart('remove_one')}
+              />
+                <p className="cardinChard__count--button--count">{inChart?.quantity}</p>
+                <button 
+                  className="cardinChard__count--button--plus" 
+                  onClick={() => hendleActChart('add')}
+                />
             </div>
+            )}
 
-            <button className="cardinChard__count--remove">
+            <button 
+              className="cardinChard__count--remove"
+              onClick={() => hendleActChart('remove')}
+            >
               <p className="cardinChard__count--remove--dump" />
               <h2 className="cardinChard__count--remove--text">
                 {languageReducer.language 
@@ -94,6 +175,8 @@ export const CardinChard: React.FC<Props> = ({card}) => {
             </button>
           </div>
       </div>
+
+      {isSelect &&(<Modal card={card} hendlCloseModal={hendlModal}/>)}
     </div>
   );
 }

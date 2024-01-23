@@ -2,8 +2,10 @@ import axios from "axios";
 import classNames from "classnames";
 import { useEffect, useState } from "react";
 import { getChart, getUser } from "../../../api";
-import { useAppSelector } from "../../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { UserType } from "../../../helpers/UserType";
+import { CartItem } from "../../../helpers/ChartInterface";
+import { changeChartAction } from "../../../app/slice/ChartSlice";
 
 type Props = {
   id: number,
@@ -12,36 +14,30 @@ type Props = {
 
 export const LikeAndChart: React.FC<Props> = ({id, noAbsolute}) => {
   const [arr, setArr] = useState(false);
-  const [user, setUser] = useState<UserType>();
+  const [user, setUser] = useState<UserType | undefined>();
   const [isLike, setIsLike] = useState(false);
-  const [isInChart, setIsInChart] = useState(false);
+  const [isInChart, setIsInChart] = useState<CartItem>({ products: [], cart_total_price: 0 });
   const registrationReducer = useAppSelector(state => state.registration);
+  const dispatch = useAppDispatch();
 
 useEffect(() => {
-  getUser(registrationReducer.registration.access)
-  .then((userFromServer) => {
-    setUser(userFromServer)
-  })
+  if (registrationReducer.registration.access) {
+    getUser(registrationReducer.registration.access)
+    .then((userFromServer) => {
+      setUser(userFromServer)
+    })
+  }
 }, [isLike]);
 
-  useEffect(() => {
-    const timerId = setTimeout(() => {
-      getChart()
-      .then((chartData) => {
-        const isArray = Array.isArray(chartData);
-        const isProductInChart = isArray && chartData.some((item) => item.id === id);
-        console.log(isArray)
-        setIsInChart(isProductInChart);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-    }, 1000);
-  
-    return () => {
-      clearTimeout(timerId);
-    };
-  }, [arr]);
+useEffect(() => {
+    getChart()
+    .then((chartData) => {
+      setIsInChart(chartData);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}, [arr]);
 
   const handleLike = async () => {
     try {
@@ -53,8 +49,7 @@ useEffect(() => {
   
       const url = `http://127.0.0.1:8000/api/products/${id}/favourite/`;
       await axios.post(url, null, config);
-      setIsLike(!isLike);
-      console.log(isLike)
+      setIsLike(!isLike)
     } catch (error) {
       console.log(error);
     } 
@@ -62,21 +57,32 @@ useEffect(() => {
 
 const handleChart = async () => {
   try {
+    const currentAction = inChart ? 'remove' : 'add';
+
     const data = {
       product_id: id,
-      action: 'add'
+      action: currentAction,
     };
 
     const url = 'http://127.0.0.1:8000/api/cart/';
 
-    console.log(data)
-
     await axios.post(url, data);
-    setArr(!arr)
+    setArr(!arr);
+
+    dispatch(changeChartAction(prev => !prev));
+    console.log(arr)
   } catch (error) {
     console.log(error);
   }
 };
+
+let inChart = false;
+
+if (isInChart.products.length > 0) {
+  inChart = isInChart.products.some(((product) => product.id === id)
+  );
+}
+
   return (
     <div className="card__minicontainer">
       <button 
@@ -87,7 +93,7 @@ const handleChart = async () => {
         onClick={handleLike}
       />
       <button className={classNames("card__chart--cont", {
-          'card__chart--cont--select': isInChart,
+          'card__chart--cont--select': inChart,
           'card__noAbsolute' : noAbsolute,
         })} 
         onClick={handleChart}

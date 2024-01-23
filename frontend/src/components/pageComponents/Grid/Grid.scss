@@ -10,8 +10,10 @@
     height: 120px;
     object-fit: cover;
     margin-bottom: 23px;
+    border-radius: 12px;
 
     @include onPhone {
+      border-radius: 2px;
       width: 60px;
       height: 60px;
     }

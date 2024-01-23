@@ -13,6 +13,11 @@
     width: 32px;
     height: 32px;
     background-image: url("../../../img/Profile.svg");
+
+    @include onPhone {
+      width: 23px;
+      height: 23px;
+    }
   }
 
   &__img2 {

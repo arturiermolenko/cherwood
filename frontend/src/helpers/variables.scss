@@ -19,7 +19,7 @@ $borderHoverColor:#535456;
 }
 
 @mixin onDesktop {
-  @media (max-width:1024px) {
+  @media (max-width:1200px) {
     @content;
   }
 }

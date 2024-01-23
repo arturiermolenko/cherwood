@@ -227,6 +227,7 @@
     align-items: flex-start;
     border-bottom: 1px solid $darkWhiteColor;
     width: 100%;
+    flex-wrap: wrap;
   }
 
   &__together {
@@ -318,8 +319,8 @@
   }
 
   &__arrow {
-    width: 24px;
-    height: 24px;
+    width: 8px;
+    height: 14px;
     background-image: url("../../../img/RightArr.svg");
     background-size: contain;
     background-repeat: no-repeat;

@@ -1,9 +1,9 @@
 import { ProfileLogic } from "../../pageComponents/ProfileLogic/ProfileLogic";
 
-export const ProfileMain = () => {
+export const History = () => {
   return (
-    <div className="profile">
-      <ProfileLogic profile={true}/>
+    <div className="history">
+      <ProfileLogic profile={false} />
     </div>
   );
 }

@@ -66,6 +66,10 @@
       font-weight: 400;
       line-height: 120%; 
     }
+
+    &--box {
+      background-color: $whiteColor;
+    }
   }
 
   &__error {
@@ -114,6 +118,8 @@
     line-height: 120%;
     color: $whiteColor;
     border: none;
+    text-align: center;
+
 
     margin-top: 80px;
 
@@ -149,7 +155,6 @@
   &__button2 {
     border-radius: 12px;
     padding: 16px;
-    width: 100%;
     margin-bottom: 20px;
     cursor: pointer;
 

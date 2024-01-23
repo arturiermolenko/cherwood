@@ -12,6 +12,8 @@ import { SingUp } from './components/page/SingUp/SingUp';
 import { Like } from './components/page/Like/Like';
 import { Chart } from './components/page/Chart/Chart';
 import { ProfileMain } from './components/page/ProfileMain/Profile'; 
+import { SuccessOrder } from './components/pageComponents/SuccessOrder/SuccessOrder';
+import { History } from './components/page/History/History';
 
 export const App = () => {
     return (
@@ -69,6 +71,20 @@ export const App = () => {
           path="/profile" 
           element={(
             <ProfileMain />
+          )}
+        />
+
+        <Route 
+          path="/success" 
+          element={(
+            <SuccessOrder />
+          )}
+        />
+
+        <Route 
+          path="/history" 
+          element={(
+            <History />
           )}
         />
       </Routes>

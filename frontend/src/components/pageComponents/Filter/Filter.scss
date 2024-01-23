@@ -15,6 +15,12 @@
 
     background-repeat: no-repeat;
     background-size: contain;
+
+    @include onPhone {
+      margin-left: 0px;
+      width: 30px;
+      height: 30px;
+    }
   }
 
   &__radio {
@@ -105,7 +111,6 @@
     flex-grow: 1;
     cursor: pointer;
     padding: 13px;
-    margin-top: 12px;
   }
 
   &__label {

@@ -9,6 +9,7 @@ import './SuccessOrder.scss'
 export const SuccessOrder = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const languageReducer = useAppSelector(state => state.language);
+  const registrationReducer = useAppSelector(state => state.registration);
 
   useEffect(() => {
     const handleResize = () => {
@@ -34,10 +35,9 @@ export const SuccessOrder = () => {
         {windowWidth > 780 &&(<NavLink to='/' className="logo"/>)}
 
         <div className="chart__header--cont">
-          <NavLink 
-            to="/favorites" 
-            className="header__favorites header__img"
-         />
+        {(registrationReducer.registration.access || registrationReducer.registration.refresh) && (
+            <NavLink to="/favorites" className="header__favorites header__img" />
+        )}
 
           <Profile />
         </div>

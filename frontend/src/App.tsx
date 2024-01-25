@@ -1,6 +1,7 @@
 import {
     Routes,
     Route,
+    Navigate,
   } from 'react-router-dom';
   import "./App.scss";
 
@@ -14,6 +15,8 @@ import { Chart } from './components/page/Chart/Chart';
 import { ProfileMain } from './components/page/ProfileMain/Profile'; 
 import { SuccessOrder } from './components/pageComponents/SuccessOrder/SuccessOrder';
 import { History } from './components/page/History/History';
+import { OrderChart } from './components/page/OrderChart/OrderChart';
+import { NotFound } from './components/page/NotFound/NotFound';
 
 export const App = () => {
     return (
@@ -68,6 +71,13 @@ export const App = () => {
         />
 
         <Route 
+          path="/order" 
+          element={(
+            <OrderChart />
+          )}
+        />  
+
+        <Route 
           path="/profile" 
           element={(
             <ProfileMain />
@@ -87,6 +97,9 @@ export const App = () => {
             <History />
           )}
         />
+
+          <Route path="*" element={<NotFound />} />
+        <Route path="home" element={<Navigate to="/" replace />} />
       </Routes>
     );
 }

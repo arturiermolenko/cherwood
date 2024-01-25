@@ -13,6 +13,9 @@
 
     @include onPhone {
       flex-direction: column-reverse;
+      justify-content: space-around;
+      align-items: center;
+      padding: 0px;
     }
   }
 
@@ -22,12 +25,13 @@
 
     @include onPhone {
       gap: none;
+      justify-content: center;
     }
 
     &--colum {
       @include onPhone {
-        flex-direction: column;
-        gap: 20px;
+        align-items: baseline;
+        justify-content: space-between;
       }
     }
   }
@@ -35,6 +39,14 @@
   &__watch {
     display: flex;
     align-items: center;
+    gap: 40px;
+
+    @include onPhone {
+      gap: 8px;
+      width: 300px;
+      justify-content: space-between;
+      padding: 0 16px;
+    }
   }
 
   &__defolt {
@@ -45,6 +57,7 @@
     color: $greenColor;
     margin: 0px 30px;
     cursor: pointer;
+    margin: 0;
   }
 
   &__shown {
@@ -68,12 +81,13 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 32px;
+    gap: 69px;
     padding: 40px 70px;
 
     @include onPhone {
       padding: 16px;
       justify-content: center;
+      gap: 10px;
     }
   }
 

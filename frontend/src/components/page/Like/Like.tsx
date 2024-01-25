@@ -20,7 +20,9 @@ export const Like = () => {
   const favoriteCherwood = cherwood.filter(item => user?.favourites.includes(item.id));
 
 useEffect(() => {
-  getUser(registrationReducer.registration.access)
+  getUser(registrationReducer.registration.access 
+    || registrationReducer.registration.refresh
+    )
   .then((userFromServer) => {
     setUser(userFromServer)
   })

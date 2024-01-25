@@ -21,8 +21,12 @@ export const LikeAndChart: React.FC<Props> = ({id, noAbsolute}) => {
   const dispatch = useAppDispatch();
 
 useEffect(() => {
-  if (registrationReducer.registration.access) {
-    getUser(registrationReducer.registration.access)
+  if (registrationReducer.registration.access 
+    || registrationReducer.registration.refresh
+    ) {
+    getUser(registrationReducer.registration.access 
+      || registrationReducer.registration.refresh
+      )
     .then((userFromServer) => {
       setUser(userFromServer)
     })
@@ -43,7 +47,10 @@ useEffect(() => {
     try {
       const config = {
         headers: {
-          Authorization: `Bearer ${registrationReducer.registration.access}`
+          Authorization: `Bearer ${
+            registrationReducer.registration.access 
+            || registrationReducer.registration.refresh
+          }`
         }
       };
   

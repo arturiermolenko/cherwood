@@ -43,10 +43,12 @@
     padding: 21px;
     top: 0;
     left: 0;
-    margin-top: 50px;
+    margin-top: 105px;
 
     max-height: 300px;
     overflow-y: auto; 
+
+    cursor: pointer;
   }
 
   &__region {

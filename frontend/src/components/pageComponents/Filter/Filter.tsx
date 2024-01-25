@@ -28,10 +28,13 @@ export const Filter = () => {
 
   return (
     <div className="filter">
-    <button 
-      className="filter__img"
-      onClick={() => setIsSelect(!isSelect)}
-    />
+      <button 
+        className="filter__img--container"
+        onClick={() => setIsSelect(!isSelect)}
+      >
+        <p className="filter__img"/>
+      </button>
+
  
     {isSelect &&(
       <div className="filter__container">

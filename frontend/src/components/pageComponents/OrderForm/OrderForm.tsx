@@ -19,13 +19,13 @@ export const OrderForm = () => {
   const [lastName, setLastName] = useState<string | undefined>(user?.last_name || '');
   // const [country, setCountry] = useState<string | undefined>(user?.country || '');
   // const [city, setCity] = useState<string | undefined>(user?.city || '');
+  // const [region, setRegion] = useState<string | undefined>(user?.region || '');
   const [email, setEmail] = useState<string | undefined>(user?.email || '');
   const [telNumber, setTelNumber] = useState<string | undefined>(user?.tel_number || '');
   const [selectedRegion, setSelectedRegion] = useState(
     languageReducer.language ? 'Select region' : 'Виберіть вашу область'
   );
   const [isSelect, setIsSelect] = useState(false);
-  const [isSelect2, setIsSelect2] = useState(false);
   const [errors, setErrors] = useState({
     tel_number: '',
     tel_numberUkr: '',
@@ -39,36 +39,35 @@ export const OrderForm = () => {
     });
   };
 
-  const handleRegionClick = (region) => {
-    console.log(region, '1')
-    setIsSelect2(false);
-    console.log(region, '2')
+  const handleToggleSelect = () => setIsSelect((prev: boolean) => !prev);
+
+  const handleRegionClick = (region): void => {
     setSelectedRegion(region);
-    console.log('3')
+    handleToggleSelect();
   };
-
-  const handleRegionClick2 = () => {
-    setIsSelect(false);
-    setIsSelect2(false);
-
-    console.log(isSelect, isSelect2)
-  };
-
 
   useEffect(() => {
-    if (registrationReducer.registration.access) {
-      getUser(registrationReducer.registration.access)
+    if (registrationReducer.registration.access 
+      || registrationReducer.registration.refresh
+      ) {
+      getUser(registrationReducer.registration.access 
+        || registrationReducer.registration.refresh
+        )
       .then((userFromServer) => {
         setUser(userFromServer)
       })
     }
-  }, [registrationReducer.registration.access]);
+  }, [
+    registrationReducer.registration.access,
+    registrationReducer.registration.refresh
+  ]);
 
   useEffect(() => {
     setFirstName(user?.first_name || '');
     setLastName(user?.last_name || '');
     // setCountry(user?.country || '');
     // setCity(user?.city || '');
+    // setRegion(user?.region || '');
     setEmail(user?.email || '');
     setTelNumber(user?.tel_number || '');
   }, [user]);
@@ -86,10 +85,12 @@ export const OrderForm = () => {
       };
   
       await axios.post(url, orderData);
-      const updatedUser = await getUser(registrationReducer.registration.access);
+      const updatedUser = await getUser(
+        registrationReducer.registration.access ||
+        registrationReducer.registration.refresh 
+      );
       setUser(updatedUser);
 
-      window.location.reload();
       navigate('/success')
     } catch (error) {
       console.error(error);
@@ -195,11 +196,12 @@ export const OrderForm = () => {
           
           <button
               className="signUpLogic__miniContainer signUpLogic__input signUpLogic__input--box"
-              onClick={handleRegionClick2 }
+              onClick={handleToggleSelect}
             > 
             {selectedRegion}
+            </button>
 
-            {isSelect && isSelect2 &&(
+            {isSelect && (
                 <ul className="orderForm__regionCont">
                   {regian.map(item => (
                     <li 
@@ -213,7 +215,6 @@ export const OrderForm = () => {
                   )}
                 </ul>
               )}
-            </button>
           </div>
           
           <div className="signUpLogic__miniContainer">

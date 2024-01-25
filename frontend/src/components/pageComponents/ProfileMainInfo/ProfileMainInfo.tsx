@@ -19,7 +19,6 @@ export const ProfileMainInfo:React.FC<Props> = ({noProfile}) => {
   const [lastName, setLastName] = useState<string | undefined>(user?.last_name || '');
   // const [country, setCountry] = useState<string | undefined>(user?.country || '');
   // const [city, setCity] = useState<string | undefined>(user?.city || '');
-  const [email, setEmail] = useState<string | undefined>(user?.email || '');
   const [telNumber, setTelNumber] = useState<string | undefined>(user?.tel_number || '');
   const [errors, setErrors] = useState({
     tel_number: '',
@@ -48,7 +47,6 @@ export const ProfileMainInfo:React.FC<Props> = ({noProfile}) => {
     setLastName(user?.last_name || '');
     // setCountry(user?.country || '');
     // setCity(user?.city || '');
-    setEmail(user?.email || '');
     setTelNumber(user?.tel_number || '');
   }, [user]);
 
@@ -70,7 +68,10 @@ export const ProfileMainInfo:React.FC<Props> = ({noProfile}) => {
   
       await axios.put(url, requestData, config);
   
-      const updatedUser = await getUser(registrationReducer.registration.access);
+      const updatedUser = await getUser(
+        registrationReducer.registration.access ||
+        registrationReducer.registration.refresh 
+      );
       setUser(updatedUser);
       window.location.reload();
     } catch (error) {

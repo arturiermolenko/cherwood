@@ -1,8 +1,7 @@
 import { ChartLogic } from "../../pageComponents/ChartLogic/ChartLogic";
-import "./Chart.scss"
 
-export const Chart = () => {
+export const OrderChart = () => {
   return (
-    <ChartLogic isOrder={false}/>
+    <ChartLogic isOrder={true}/>
   );
 }

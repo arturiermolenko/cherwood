@@ -8,6 +8,7 @@ import { getCherwood } from '../../../api';
 
 import imh from "../.././../img/homeee.jpg"
 import { useAppSelector } from '../../../app/hooks';
+import { Modal } from '../Modal/Modal';
 
 const arrowButtons = {
   prevArrow:
@@ -35,8 +36,16 @@ const arrowButtons = {
 
 export const CarouselOnPage = () => {
   const [cherwood, setCherwood] = useState<Cherwood[]>([]);
+  const [isSelect, setIsSelect] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<Cherwood | null>(null);
+
   const languageReducer = useAppSelector(state => state.language);
   const isMobile = window.innerWidth <= 640;
+
+  const hendlModal = (item: Cherwood) => {
+    setSelectedItem(item);
+    setIsSelect(true);
+  }
  
   useEffect(() => {
       getCherwood()
@@ -44,6 +53,7 @@ export const CarouselOnPage = () => {
           setCherwood(straviFromServer);
         })
     }, []);
+
   return (
     <div className="carousel">
       <h2 className="carousel__title">
@@ -62,7 +72,7 @@ export const CarouselOnPage = () => {
             alt={`Slide ${photo.id}`}
           />
 
-          <button className='carousel__add'>
+          <button className='carousel__add' onClick={() =>hendlModal(photo)}>
             {languageReducer.language 
               ?('Add to cart +')
               :('Додати до кошика +')
@@ -71,6 +81,10 @@ export const CarouselOnPage = () => {
         </div>
         ))}
       </Slide>
+
+      {isSelect && selectedItem && (
+        <Modal card={selectedItem} hendlCloseModal={() => setIsSelect(false)} key={selectedItem.id}/>
+      )}
     </div>
   );
 };

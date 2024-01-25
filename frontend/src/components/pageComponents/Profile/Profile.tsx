@@ -45,7 +45,7 @@ export const Profile = () => {
       onClick={() => setIsSelect(!isSelect)}
     >
     <div className={classNames("profile__profile profile__img", {
-        'profile__img2': registrationReducer.registration.access && registrationReducer.registration.refresh,
+        'profile__img2': registrationReducer.registration.access || registrationReducer.registration.refresh,
       })}/>
   </div>
 
@@ -85,7 +85,7 @@ export const Profile = () => {
     </div>
    )}
 
-   {isSelect && registrationReducer.registration.access && registrationReducer.registration.refresh &&(
+   {isSelect && (registrationReducer.registration.access || registrationReducer.registration.refresh) &&(
       <div className="profile__list">
         <div className="profile__top">
           <button 
@@ -106,7 +106,7 @@ export const Profile = () => {
             </div>
           </NavLink>
           </li>
-          <li className="profile__select">
+          {/* <li className="profile__select">
             <NavLink to="/payment" className="profile__option">
               <p className="profile__img profile__pay"/>
               <div className="profile__text">
@@ -116,7 +116,7 @@ export const Profile = () => {
                 }
               </div>
             </NavLink>
-          </li>
+          </li> */}
 
           <li className="profile__select">
             <NavLink to="/history" className="profile__option">

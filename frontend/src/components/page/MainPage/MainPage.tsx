@@ -19,6 +19,8 @@ const imagePerRow = 6;
 export const MainPage = () => {
 const [cherwood, setCherwood] = useState<Cherwood[]>([]);
 const [next, setNext] = useState(imagePerRow);
+const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
 const [searchQuery] = useSearchParams();
 const languageReducer = useAppSelector(state => state.language);
 
@@ -27,6 +29,18 @@ useEffect(() => {
     .then((straviFromServer) => {
       setCherwood(straviFromServer);
     })
+}, []);
+
+useEffect(() => {
+  const handleResize = () => {
+    setWindowWidth(window.innerWidth);
+  };
+
+  window.addEventListener('resize', handleResize);
+
+  return () => {
+    window.removeEventListener('resize', handleResize);
+  };
 }, []);
 
 const tupe = searchQuery.get('tupe')|| '';;
@@ -92,22 +106,26 @@ const handleMoreImage = () => {
     <div className="main">
       <div className="main__topOptions">
       <div className="main__miniContainer main__miniContainer--colum">
-        <Select />
 
         <div className="main__watch">
+        <Select />
+        
+        <div className="main__shown">
+            {windowWidth > 780 &&
+              (languageReducer.language 
+                ?(`Showed ${stateCard.slice(0, next).length} results`)
+                :(`Показано ${stateCard.slice(0, next).length} результатів`)
+              )
+            }
+          </div>
+
           <div 
             className="main__defolt" 
             onClick={() =>setNext(15)}
           >
             {languageReducer.language 
               ?('View all')
-              :('Подивитись все')
-            }
-          </div>
-          <div className="main__shown">
-          {languageReducer.language 
-              ?(`Showed ${stateCard.slice(0, next).length} results`)
-              :(`Показано ${stateCard.slice(0, next).length} результатів`)
+              :('Усі')
             }
           </div>
         </div>
@@ -115,11 +133,12 @@ const handleMoreImage = () => {
 
       <div className="main__miniContainer">
         <Search />
-        <a 
+        {windowWidth > 780 &&( 
+          <a 
           href="https://www.instagram.com/cherwoodjoinery?igsh=bmhicHduZjdkOG42" 
           className="main__insta" 
           target="_blank"
-        />
+        />)}
       </div>
       </div>
 

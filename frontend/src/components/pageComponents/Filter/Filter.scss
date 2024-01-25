@@ -3,23 +3,37 @@
 .filter {
   padding: 12px;
 
-  &__img {
-    width: 48px;
-    height: 40px;
-    background-image: url("../../../img/Sort.svg");
-    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.12);
-    border-radius: 10px;
-    background-color: $whiteColor;
-    border: none;
-    cursor: pointer;
+  @include onPhone {
+    padding: 0px;
+  }
 
+  &__img {
+    width: 24px;
+    height: 24px;
+    background-image: url("../../../img//Filter2.svg");
     background-repeat: no-repeat;
     background-size: contain;
+    margin: 0;
 
     @include onPhone {
       margin-left: 0px;
-      width: 30px;
-      height: 30px;
+      width: 16px;
+      height: 16px;
+    }
+
+    &--container {
+      padding: 10px 9px;
+      box-sizing: border-box;
+      border: none;
+      background-color: $whiteColor;
+      box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.12);
+      border-radius: 10px;
+
+      cursor: pointer;
+
+      @include onPhone {
+        padding: 5px 4px;
+      }
     }
   }
 

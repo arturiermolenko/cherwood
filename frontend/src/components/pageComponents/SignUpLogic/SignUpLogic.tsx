@@ -257,7 +257,7 @@ export const SignUpLogic = () => {
             : 'Створити обліковий запис'}
         </button>
 
-        <p className="signUpLogic__or">
+        {/* <p className="signUpLogic__or">
           {languageReducer.language
             ? 'or'
             : 'або'}
@@ -275,7 +275,7 @@ export const SignUpLogic = () => {
           {languageReducer.language
             ? 'Sign up with Facebook'
             : 'Зареєструватися через Facebook'}
-        </button>
+        </button> */}
       </div>
 
       <div className="signUpLogic__container2">

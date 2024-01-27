@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "drf_spectacular",
     "corsheaders",
+    "django_celery_beat",
     "user",
     "shop",
     "order",
@@ -145,8 +146,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "static/"
-MEDIA_ROOT = BASE_DIR / "media"
-# MEDIA_ROOT = "/vol/web/media"
+MEDIA_ROOT = os.path.join(BASE_DIR, "/vol/web/media")
 MEDIA_URL = "/media/"
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -198,6 +198,18 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")  # app password preferably (my personal didn't work)
+
+CELERY_BROKER_URL = "redis://redis:6379"
+CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
+CELERY_TIMEZONE = "Europe/Kiev"
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
+
+CELERY_BEAT_SCHEDULE = {
+    "flush_expired_tokens": {
+        "task": "user.tasks.flush_expired_tokens",
+        "schedule": 86400
+    }
+}
 
 REGIONS_DICT = {
     "Chernihivska": "Чернігівська область",

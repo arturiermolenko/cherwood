@@ -3,7 +3,7 @@ from rest_framework.exceptions import ValidationError
 
 from order.models import Order, OrderItem
 from order.serializers import OrderCreateSerializer
-from order.services import send_email
+from order.tasks import send_email
 from shop.services import Cart
 
 
@@ -25,5 +25,5 @@ class OrderCreateView(generics.CreateAPIView):
                 product_id=product_id,
                 quantity=cart.cart[product_id]["quantity"]
             )
-        send_email(order)
+        send_email.delay(order.id)
         cart.clear()

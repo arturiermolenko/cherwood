@@ -22,7 +22,7 @@ class Order(models.Model):
     )
 
     region = models.CharField(
-        max_length=65, blank=True, null=True, choices=settings.REGIONS_DICT
+        max_length=65, blank=True, null=True, choices=settings.REGIONS_DICT.items()
     )
     city = models.CharField(
         max_length=255, blank=True, null=True

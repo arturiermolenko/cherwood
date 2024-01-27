@@ -31,7 +31,7 @@ SECRET_KEY = "django-insecure-^hkk$xn74+z)f)1!bt++d1rvq6(#l$3l*0all0q&=k8^9z)z6-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "0.0.0.0"]
 
 # Application definition
 
@@ -88,12 +88,23 @@ WSGI_APPLICATION = "cherwood_shop.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
+
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "HOST": os.environ["POSTGRES_HOST"],
+        "NAME": os.environ["POSTGRES_DB"],
+        "USER": os.environ["POSTGRES_USER"],
+        "PASSWORD": os.environ["POSTGRES_PASSWORD"],
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -188,10 +199,30 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")  # app password preferably (my personal didn't work)
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8000",
-    "http://127.0.0.1:8000",
-    "http://localhost:3000",
-]
-CORS_ALLOW_ALL_HEADERS = True
-CORS_ALLOW_CSRF_COOKIE = True
+REGIONS_DICT = {
+    "Chernihivska": "Чернігівська область",
+    "Cherkaska": "Черкаська область",
+    "Chernivetska": "Чернівецька область",
+    "Dnipropetrovska": "Дніпропетровська область",
+    "Donetska": "Донецька область",
+    "Ivano-Frankivska": "Івано-Франківська область",
+    "Kharkivska": "Харківська область",
+    "Khersonska": "Херсонська область",
+    "Khmelnytska": "Хмельницька область",
+    "Kirovohradska": "Кіровоградська область",
+    "Kyivska": "Київська область",
+    "Luhanska": "Луганська область",
+    "Lvivska": "Львівська область",
+    "Mykolaivska": "Миколаївська область",
+    "Odeska": "Одеська область",
+    "Poltavska": "Полтавська область",
+    "Rivnenska": "Рівненська область",
+    "Sumska": "Сумська область",
+    "Ternopilska": "Тернопілська область",
+    "Vinnytska": "Вінницька область",
+    "Volynska": "Волинська область",
+    "Zakarpatska": "Закарпатська область",
+    "Zaporizka": "Запорізька область",
+    "Zhytomirska": "Житомирська область",
+    "Crimea": "АР Крим"
+}

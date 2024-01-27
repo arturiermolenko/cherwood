@@ -18,6 +18,7 @@ export const LikeAndChart: React.FC<Props> = ({id, noAbsolute}) => {
   const [isLike, setIsLike] = useState(false);
   const [isInChart, setIsInChart] = useState<CartItem>({ products: [], cart_total_price: 0 });
   const registrationReducer = useAppSelector(state => state.registration);
+  const currentChartState = useAppSelector((state) => state.chart.chart);
   const dispatch = useAppDispatch();
 
 useEffect(() => {
@@ -76,8 +77,7 @@ const handleChart = async () => {
     await axios.post(url, data);
     setArr(!arr);
 
-    dispatch(changeChartAction(prev => !prev));
-    console.log(arr)
+    dispatch(changeChartAction(!currentChartState));
   } catch (error) {
     console.log(error);
   }

@@ -34,13 +34,13 @@ export const ProfileMainInfo:React.FC<Props> = ({noProfile}) => {
   };
 
   useEffect(() => {
-    if (registrationReducer.registration.access) {
+    if (registrationReducer.registration.access || registrationReducer.registration.refresh) {
       getUser(registrationReducer.registration.access)
       .then((userFromServer) => {
         setUser(userFromServer)
       })
     }
-  }, [registrationReducer.registration.access]);
+  }, [registrationReducer.registration.access, registrationReducer.registration.refresh]);
 
   useEffect(() => {
     setFirstName(user?.first_name || '');

@@ -57,8 +57,6 @@ export async function getChart(): Promise<CartItem> {
     });
 }
 
-
-
 export async function getUser(access): Promise<UserType> {
   const apiUrl = 'http://127.0.0.1:8000/api/user/me/';
 

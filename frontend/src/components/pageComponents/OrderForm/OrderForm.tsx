@@ -85,11 +85,16 @@ export const OrderForm = () => {
       };
   
       await axios.post(url, orderData);
-      const updatedUser = await getUser(
-        registrationReducer.registration.access ||
-        registrationReducer.registration.refresh 
-      );
-      setUser(updatedUser);
+
+      if (registrationReducer.registration.access 
+        || registrationReducer.registration.refresh
+        )  {
+          const updatedUser = await getUser(
+            registrationReducer.registration.access ||
+            registrationReducer.registration.refresh 
+          );
+          setUser(updatedUser);
+        }
 
       navigate('/success')
     } catch (error) {

@@ -30,7 +30,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./backend:/app/backend:Z
+      - ./backend:/app/backend
     command: >
       sh -c "python manage.py wait_for_db &&
              python manage.py migrate &&
@@ -57,3 +57,18 @@ services:
       restart: on-failure
       env_file:
           - ./backend/.env
+
+  celery_beat:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend/:/app/backend
+    command: celery -A cherwood_shop beat -l info
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - backend
+      - db
+      - redis
+      - celery_worker

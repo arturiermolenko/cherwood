@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "drf_spectacular",
     "corsheaders",
+    "django_celery_beat",
     "user",
     "shop",
     "order",
@@ -202,6 +203,13 @@ CELERY_BROKER_URL = "redis://redis:6379"
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 CELERY_TIMEZONE = "Europe/Kiev"
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
+
+CELERY_BEAT_SCHEDULE = {
+    "flush_expired_tokens": {
+        "task": "user.tasks.flush_expired_tokens",
+        "schedule": 86400
+    }
+}
 
 REGIONS_DICT = {
     "Chernihivska": "Чернігівська область",

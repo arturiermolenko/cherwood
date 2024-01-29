@@ -207,7 +207,7 @@ CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 CELERY_BEAT_SCHEDULE = {
     "flush_expired_tokens": {
         "task": "user.tasks.flush_expired_tokens",
-        "schedule": 86400
+        "schedule": 86400,
     }
 }
 

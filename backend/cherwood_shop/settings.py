@@ -142,6 +142,7 @@ USE_I18N = True
 
 USE_TZ = True
 
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
@@ -207,7 +208,7 @@ CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 CELERY_BEAT_SCHEDULE = {
     "flush_expired_tokens": {
         "task": "user.tasks.flush_expired_tokens",
-        "schedule": 86400
+        "schedule": 86400,
     }
 }
 

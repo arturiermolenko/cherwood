@@ -72,3 +72,15 @@ services:
       - db
       - redis
       - celery_worker
+
+  flower:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5555:5555"
+    command: "celery -A cherwood_shop flower --address=0.0.0.0"
+    depends_on:
+      - celery_worker
+    env_file:
+      - ./backend/.env

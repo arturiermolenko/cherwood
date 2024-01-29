@@ -31,7 +31,6 @@ class OrderCreateSerializer(serializers.ModelSerializer):
 
 
 class OrderListSerializer(serializers.ModelSerializer):
-    order_items = serializers.StringRelatedField(many=True)
 
     class Meta:
         model = Order

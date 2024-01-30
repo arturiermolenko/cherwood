@@ -16,7 +16,7 @@ export const Profile = () => {
   const handleLogOut = async () => {
     try {
       const data = {
-        refresh: registrationReducer.registration.refresh,
+        refresh: registrationReducer.registration.refresh || registrationReducer.registration.access,
       };
   
       const url = 'http://127.0.0.1:8000/api/user/logout/'; 
@@ -71,7 +71,7 @@ export const Profile = () => {
         </NavLink>
         </li>
         <li className="profile__select">
-          <NavLink to="logIn" className="profile__option profile__option--noBorder">
+          <NavLink to="/logIn" className="profile__option profile__option--noBorder">
             <p className="profile__img profile__logIn"/>
             <div className="profile__text">
               {languageReducer.language 

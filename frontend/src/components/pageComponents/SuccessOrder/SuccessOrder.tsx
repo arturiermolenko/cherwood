@@ -59,11 +59,6 @@ export const SuccessOrder = () => {
             :('Ми надіслали вам інформацію про покупку на вашу електронну адресу')
           }
         </h3>
-
-        <p className="successOrder__email">
-          gmail
-        </p>
-
         
       <NavLink to="/" className="modal__button2 modal__button">
           {languageReducer.language ? 'Go to shop' : 'Перейти в магазин'}

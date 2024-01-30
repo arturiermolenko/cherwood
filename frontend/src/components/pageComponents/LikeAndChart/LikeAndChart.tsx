@@ -13,7 +13,6 @@ type Props = {
 }
 
 export const LikeAndChart: React.FC<Props> = ({id, noAbsolute}) => {
-  const [arr, setArr] = useState(false);
   const [user, setUser] = useState<UserType | undefined>();
   const [isLike, setIsLike] = useState(false);
   const [isInChart, setIsInChart] = useState<CartItem>({ products: [], cart_total_price: 0 });
@@ -42,7 +41,7 @@ useEffect(() => {
     .catch((error) => {
       console.error(error);
     });
-}, [arr]);
+}, [currentChartState]);
 
   const handleLike = async () => {
     try {
@@ -75,7 +74,6 @@ const handleChart = async () => {
     const url = 'http://127.0.0.1:8000/api/cart/';
 
     await axios.post(url, data);
-    setArr(!arr);
 
     dispatch(changeChartAction(!currentChartState));
   } catch (error) {

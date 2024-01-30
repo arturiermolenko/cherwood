@@ -4,4 +4,6 @@ export interface UserType {
   last_name: string;
   favourites: number[];
   tel_number: string;
+  region: string;
+  city: string;
 }

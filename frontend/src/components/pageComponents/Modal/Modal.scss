@@ -159,6 +159,7 @@
     line-height: 120%;
     color: $whiteColor;
     margin: auto;
+    cursor: pointer;
 
     @include onPhone {
       width: 100%;

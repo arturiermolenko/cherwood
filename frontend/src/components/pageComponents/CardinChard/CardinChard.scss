@@ -17,6 +17,7 @@
     width: 100%;
     height: 100%;
     border-radius: 16px;
+    cursor: pointer;
 
     @include onPhone {
       width: 140px;
@@ -125,6 +126,11 @@
         @include onPhone {
           width: 24px;
           height: 20px;
+        }
+
+        &--active {
+          background-image: url("../../../img/HowerMinus.svg");
+          background-position: center;
         }
       }
 

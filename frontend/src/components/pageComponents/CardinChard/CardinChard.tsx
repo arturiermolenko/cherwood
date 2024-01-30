@@ -6,6 +6,7 @@ import { Modal } from "../Modal/Modal";
 import { useEffect, useState } from "react";
 import { getChart, handleChart } from "../../../api";
 import { CartItem } from "../../../helpers/ChartInterface";
+import classNames from "classnames";
 
 type Props = {
   card: Cherwood;
@@ -26,7 +27,7 @@ export const CardinChard: React.FC<Props> = ({card, handleRemove}) => {
   const hendleActChart = (action: string) => {
     handleChart(action, card.id);
     setChange(!change);
-    handleRemove()
+    handleRemove();
   } 
 
   useEffect(() => {
@@ -150,7 +151,9 @@ const inChart = chart.products.find((product) => product.id === card.id);
             {windowWidth > 780 &&(
             <div className="cardinChard__count--button">
               <button 
-                className="cardinChard__count--button--minus" 
+                className={classNames("cardinChard__count--button--minus", {
+                  'cardinChard__count--button--minus--active': inChart?.quantity !== 1,
+                })}  
                 onClick={() => hendleActChart('remove_one')}
               />
                 <p className="cardinChard__count--button--count">{inChart?.quantity}</p>

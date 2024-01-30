@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { UserType } from "../../../helpers/UserType";
 import { getUser } from "../../../api";
 import axios from "axios";
-import { NavLink } from "react-router-dom";
+import region from "../../../oblasts.json";
 
 type Props = {
   noProfile: boolean,
@@ -18,8 +18,13 @@ export const ProfileMainInfo:React.FC<Props> = ({noProfile}) => {
   const [firstName, setFirstName] = useState<string | undefined>(user?.first_name || '');
   const [lastName, setLastName] = useState<string | undefined>(user?.last_name || '');
   // const [country, setCountry] = useState<string | undefined>(user?.country || '');
-  // const [city, setCity] = useState<string | undefined>(user?.city || '');
+  const [userCity, setCity] = useState<string | undefined>(user?.city || '');
+  const [userRregion, setRegion] = useState<string | undefined>(user?.region || '');
   const [telNumber, setTelNumber] = useState<string | undefined>(user?.tel_number || '');
+  const [selectedRegion, setSelectedRegion] = useState(
+    languageReducer.language ? 'Select region' : 'Виберіть вашу область'
+  );
+  const [isSelect, setIsSelect] = useState(false);
   const [errors, setErrors] = useState({
     tel_number: '',
     tel_numberUkr: '',
@@ -31,6 +36,15 @@ export const ProfileMainInfo:React.FC<Props> = ({noProfile}) => {
       tel_number: '',
       tel_numberUkr: '',
     });
+  };
+
+  const handleToggleSelect = () => setIsSelect((prev: boolean) => !prev);
+
+  const handleRegionClick = (region): void => {
+    setSelectedRegion(region);
+    setRegion(region);
+    console.log(region)
+    handleToggleSelect();
   };
 
   useEffect(() => {
@@ -45,8 +59,8 @@ export const ProfileMainInfo:React.FC<Props> = ({noProfile}) => {
   useEffect(() => {
     setFirstName(user?.first_name || '');
     setLastName(user?.last_name || '');
-    // setCountry(user?.country || '');
-    // setCity(user?.city || '');
+    setRegion(user?.region || '');
+    setCity(user?.city || '');
     setTelNumber(user?.tel_number || '');
   }, [user]);
 
@@ -64,6 +78,8 @@ export const ProfileMainInfo:React.FC<Props> = ({noProfile}) => {
         first_name: firstName,
         last_name: lastName,
         tel_number: telNumber,
+        region: userRregion,
+        city: userCity,
       };
   
       await axios.put(url, requestData, config);
@@ -104,7 +120,7 @@ export const ProfileMainInfo:React.FC<Props> = ({noProfile}) => {
           </div>
 
           <div className="profileLogic__phone">
-            {`+${telNumber}`}
+            {`+38${telNumber}`}
           </div>
         </div>
     </div>
@@ -161,28 +177,35 @@ export const ProfileMainInfo:React.FC<Props> = ({noProfile}) => {
           </label>
         </div>
         
-        <div className="signUpLogic__miniContainer">
-          <p className="signUpLogic__text">
-            {languageReducer.language
-              ? 'Your country*'
-              : 'Ваша країна*'}
-          </p>
-        
-        <label
-            className="signUpLogic__miniContainer"
-            htmlFor="searchInput"
-          >
-          <input
-            type="text"
-            className="signUpLogic__input"
-            placeholder={
-              languageReducer.language
-                ? 'Enter your country'
-                : 'Введіть вашу країну'
-            }
-          />
-        </label>
-        </div>
+        <div className="signUpLogic__miniContainer signUpLogic__miniContainer--box">
+            <p className="signUpLogic__text">
+              {languageReducer.language
+                ? 'Your region*'
+                : 'Вашу область*'}
+            </p>
+          
+          <button
+              className="signUpLogic__miniContainer signUpLogic__input signUpLogic__input--box"
+              onClick={handleToggleSelect}
+            > 
+            {selectedRegion}
+            </button>
+
+            {isSelect && (
+                <ul className="orderForm__regionCont">
+                  {region.map(item => (
+                    <li 
+                      key={item} 
+                      className="orderForm__region"
+                      onClick={() => handleRegionClick(item)}
+                    >
+                      {item}
+                    </li>
+                    )
+                  )}
+                </ul>
+              )}
+          </div>
         
         <div className="signUpLogic__miniContainer">
           <p className="signUpLogic__text">
@@ -203,6 +226,8 @@ export const ProfileMainInfo:React.FC<Props> = ({noProfile}) => {
                   ? 'Enter your city'
                   : 'Введіть ваше місто'
               }
+              value={userCity}
+              onChange={(e) => setCity(e.target.value)}
             />
           </label>
         </div>
@@ -225,7 +250,7 @@ export const ProfileMainInfo:React.FC<Props> = ({noProfile}) => {
             className={classNames("signUpLogic__input", {
               'signUpLogic__error': errors.tel_number,
             })}
-            placeholder='38 000 000 000 00'
+            placeholder='000 000 000 00'
             value={telNumber}
             onChange={handleNumber}
           />
@@ -242,8 +267,7 @@ export const ProfileMainInfo:React.FC<Props> = ({noProfile}) => {
         </label>
       </div>
 
-        <NavLink
-          to='/success' 
+        <button
           className="
             signUpLogic__green 
             signUpLogic__button2
@@ -256,7 +280,7 @@ export const ProfileMainInfo:React.FC<Props> = ({noProfile}) => {
             ? 'Confirm'
             : 'Продовжити'
         }
-        </NavLink>
+        </button>
     </div>
   </div>
   );

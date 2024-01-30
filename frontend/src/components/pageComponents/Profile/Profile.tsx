@@ -4,8 +4,8 @@ import { NavLink } from "react-router-dom";
 import "./Profile.scss";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import classNames from "classnames";
-import axios from "axios";
 import { addRegistrationAction } from "../../../app/slice/RegistrSlice";
+import { LogOut } from "../../../api";
 
 export const Profile = () => {
   const [isSelect, setIsSelect] = useState(false);
@@ -14,29 +14,14 @@ export const Profile = () => {
   const dispatch = useAppDispatch();
 
   const handleLogOut = async () => {
-    try {
-      const data = {
-        refresh: registrationReducer.registration.refresh || registrationReducer.registration.access,
-      };
-  
-      const url = 'http://127.0.0.1:8000/api/user/logout/'; 
-      await axios.post(url, data, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      dispatch(addRegistrationAction({
-        access: '',
-        refresh: '',
-      }));
+    LogOut(registrationReducer.registration.access || registrationReducer.registration.refresh);
+    dispatch(addRegistrationAction({
+      access: '',
+      refresh: '',
+    }));
 
-      setIsSelect(false);
-      window.location.reload();
-    } catch (error) {
-      console.log(error);
-    } 
+    setIsSelect(false);
   };
-
 
   return (
     <div className="profile__cont">

@@ -1,14 +1,15 @@
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { BackButton } from "../BackButton/BackButton";
 import './ProfileLogic.scss'
-import { useAppSelector } from "../../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import classNames from "classnames";
 import { ProfileMainInfo } from "../ProfileMainInfo/ProfileMainInfo";
 import { useEffect, useState } from "react";
 import { Footer } from "../Footer/Footer";
 import { HistoryLogic } from "../HistoryLogic/HistoryLogic";
-import { getChart } from "../../../api";
+import { LogOut, getChart } from "../../../api";
 import { CartItem } from "../../../helpers/ChartInterface";
+import { addRegistrationAction } from "../../../app/slice/RegistrSlice";
 
 type Props = {
   profile: boolean;
@@ -20,6 +21,19 @@ export const ProfileLogic: React.FC<Props> = ({profile}) => {
   const location = useLocation();
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const registrationReducer = useAppSelector(state => state.registration);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const handleLogOut = () => {
+    LogOut(registrationReducer.registration.access || registrationReducer.registration.refresh);
+    dispatch(addRegistrationAction({
+      access: '',
+      refresh: '',
+    }));
+    navigate('/')
+  };
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -131,7 +145,7 @@ export const ProfileLogic: React.FC<Props> = ({profile}) => {
             )}
       </div>
           
-      <div className="profileLogic__nav--box"> 
+      <div className="profileLogic__nav--box" onClick={handleLogOut}> 
         <div className="profileLogic__link profileLogic__link--red">
           <p className="profileLogic__logout header__img" />
               {windowWidth > 780 &&( 

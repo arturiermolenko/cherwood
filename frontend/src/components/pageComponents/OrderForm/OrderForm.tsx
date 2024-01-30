@@ -19,11 +19,11 @@ export const OrderForm = () => {
   const [lastName, setLastName] = useState<string | undefined>(user?.last_name || '');
   // const [country, setCountry] = useState<string | undefined>(user?.country || '');
   const [userCity, setCity] = useState<string | undefined>(user?.city || '');
-  const [userRregion, setRegion] = useState<string | undefined>(user?.region || '');
+  // const [userRregion, setUserRegion] = useState<string | undefined>(user?.region || '');
   const [email, setEmail] = useState<string | undefined>(user?.email || '');
   const [telNumber, setTelNumber] = useState<string | undefined>(user?.tel_number || '');
-  const [selectedRegion, setSelectedRegion] = useState(
-    languageReducer.language ? 'Select region' : 'Виберіть вашу область'
+  const [selectedRegion, setSelectedRegion] = useState(user?.email ||
+    ''
   );
   const [isSelect, setIsSelect] = useState(false);
   const [errors, setErrors] = useState({
@@ -41,7 +41,7 @@ export const OrderForm = () => {
 
   const handleToggleSelect = () => setIsSelect((prev: boolean) => !prev);
 
-  const handleRegionClick = (region): void => {
+  const handleRegionClick = (region: string): void => {
     setSelectedRegion(region);
     handleToggleSelect();
 
@@ -72,18 +72,18 @@ export const OrderForm = () => {
     setLastName(user?.last_name || '');
     // setCountry(user?.country || '');
     setCity(user?.city || '');
-    setRegion(user?.region || '');
+    setSelectedRegion(user?.region || '');
     setEmail(user?.email || '');
     setTelNumber(user?.tel_number || '');
   }, [user]);
 
   const handleConfirm = async () => {
-    if (user?.first_name === '' 
-    ||user?.last_name === ''
-    || user?.city === ''
-    || user?.region === ''
-    || user?.email === ''
-    || user?.tel_number === ''
+    if (firstName === '' 
+    ||lastName === ''
+    || userCity === ''
+    || selectedRegion === ''
+    || email === ''
+    || telNumber === ''
     ) {
       setErrors({
         erorr1: 'Enter a value in the field',
@@ -98,7 +98,7 @@ export const OrderForm = () => {
           first_name: firstName,
           last_name: lastName,
           phone_number: telNumber,
-          region: userRregion,
+          region: selectedRegion,
           city: userCity,
         };
     
@@ -133,7 +133,7 @@ export const OrderForm = () => {
 
 
       <div className="orderForm__container">
-        <div className="profileLogic__inputBox">
+        <div className="profileLogic__inputBox orderForm__inputBox">
           <div className="signUpLogic__miniContainer">
             <p className="signUpLogic__text">
               {languageReducer.language
@@ -238,14 +238,16 @@ export const OrderForm = () => {
           
           <button
               className={classNames("signUpLogic__miniContainer signUpLogic__input signUpLogic__input--box", {
-                'signUpLogic__error': (userRregion === '' && errors.erorr1 ),
+                'signUpLogic__error': (selectedRegion === '' && errors.erorr1 ),
               })}
               onClick={handleToggleSelect}
             > 
-            {selectedRegion}
+            {selectedRegion === '' 
+            ? (languageReducer.language ? 'Select region' : 'Виберіть вашу область')
+            : selectedRegion}
             </button>
 
-            {(userRregion === '' && errors.erorr1 )&& (
+            {(selectedRegion === '' && errors.erorr1 )&& (
             <div className="signUpLogic__errorText">
                 {
                 languageReducer.language 

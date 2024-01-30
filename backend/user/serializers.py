@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 from django.core import exceptions
@@ -43,6 +44,8 @@ class UserCreateSerializer(serializers.ModelSerializer):
 
 
 class UserManageSerializer(serializers.ModelSerializer):
+    region = serializers.CharField(max_length=65)
+
     class Meta:
         model = get_user_model()
         fields = (
@@ -55,3 +58,12 @@ class UserManageSerializer(serializers.ModelSerializer):
             "city"
         )
         read_only_fields = ("id", "email")
+
+    def validate_region(self, value):
+        region_dict = settings.REGIONS_DICT
+        if value in list(region_dict.keys()):
+            return value
+        elif value in list(region_dict.values()):
+            position = list(region_dict.values()).index(value)
+            return list(region_dict.keys())[position]
+        raise ValidationError(f"{value} is not a possible choice.")

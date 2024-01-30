@@ -2,14 +2,18 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
+from celery import shared_task
 from django.conf import settings
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
+from order.models import Order
 
-def send_email(order) -> None:
-    TO = order.email if isinstance(order.email, list) else [order.email]
-    TO.append(settings.EMAIL_HOST_USER)   # send notification to the owner
+
+@shared_task
+def send_email(order_id: int) -> None:
+    order = Order.objects.get(id=order_id)
+    TO = [order.email, settings.EMAIL_HOST_USER]   # send notification to the owner
     FROM = "cherwood@gmail.com"
     message = MIMEMultipart("alternative")
     html_message = render_to_string(

@@ -6,6 +6,7 @@ import options from "../src/options.json";
 import { UserType } from "./helpers/UserType";
 import { CartItem } from "./helpers/ChartInterface";
 import axios from "axios";
+import { BookingItem } from "./helpers/BookingInterface";
 
 function wait(delay: number) {
   return new Promise(resolve => setTimeout(resolve, delay));
@@ -38,6 +39,24 @@ export async function getCherwood(): Promise<Cherwood[]> {
     });
 }
 
+export const LogOut = async (access) => {
+  try {
+    const data = {
+      refresh: access,
+    };
+
+    const url = 'http://127.0.0.1:8000/api/user/logout/'; 
+    await axios.post(url, data, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    window.location.reload();
+  } catch (error) {
+    console.log(error);
+  } 
+};
+
 export async function getChart(): Promise<CartItem> {
   const apiUrl = 'http://127.0.0.1:8000/api/cart/';
 
@@ -56,8 +75,6 @@ export async function getChart(): Promise<CartItem> {
       return Promise.reject(error);
     });
 }
-
-
 
 export async function getUser(access): Promise<UserType> {
   const apiUrl = 'http://127.0.0.1:8000/api/user/me/';
@@ -88,6 +105,37 @@ export async function getUser(access): Promise<UserType> {
       return Promise.reject(error);
     });
 }
+
+export async function getBooking(access): Promise<BookingItem[]> {
+  const apiUrl = 'http://127.0.0.1:8000/api/user/orders/';
+
+  const accessToken = access;
+
+  const headers = {
+    Authorization: `Bearer ${accessToken}`,
+  };
+
+  const requestOptions: RequestInit = {
+    method: 'GET',
+    headers: new Headers(headers),
+  };
+
+  return fetch(apiUrl, requestOptions)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Failed to fetch data from ${apiUrl}`);
+      }
+      return response.json();
+    })
+    .then((jsonData: BookingItem[]) => {
+      return Promise.resolve(jsonData);
+    })
+    .catch(error => {
+      console.error(error);
+      return Promise.reject(error);
+    });
+}
+
 
 
 export async function getOptions(): Promise<Option[]> {

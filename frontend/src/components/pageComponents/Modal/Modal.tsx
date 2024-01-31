@@ -5,12 +5,16 @@ import { BackButton } from "../BackButton/BackButton";
 import { Slide } from "react-slideshow-image";
 
 import innn from "../../../img/e547dbac650979a00cdb494fbc168463.jpg"
-import { useAppSelector } from "../../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { Header } from "../Header/Header";
 import { Footer } from "../Footer/Footer";
-import { getCherwood } from "../../../api";
+import { getChart, getCherwood } from "../../../api";
 import { Card } from "../Card/Card";
 import { LikeAndChart } from "../LikeAndChart/LikeAndChart";
+import { CartItem } from "../../../helpers/ChartInterface";
+import axios from "axios";
+import { changeChartAction } from "../../../app/slice/ChartSlice";
+import { useNavigate } from "react-router";
 
 type Props = {
   card: Cherwood,
@@ -43,7 +47,17 @@ const arrowButtons = {
 
 export const Modal: React.FC<Props> = ({ card, hendlCloseModal }) => {
   const [cherwood, setCherwood] = useState<Cherwood[]>([]);
+  const [isInChart, setIsInChart] = useState<CartItem>({ products: [], cart_total_price: 0 });
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
   const languageReducer = useAppSelector(state => state.language);
+  const currentChartState = useAppSelector((state) => state.chart.chart);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  
+const togetherBuy = cherwood.filter((item) => card.buying_with_it.includes(item.id));
+const shouldShow = screenWidth <= 780;
+let inChart = false;
 
 useEffect(() => {
   getCherwood()
@@ -52,23 +66,53 @@ useEffect(() => {
   })
 }, []);
 
-  const togetherBuy = cherwood.filter((item) => card.buying_with_it.includes(item.id));
+useEffect(() => {
+  getChart()
+  .then((chartData) => {
+    setIsInChart(chartData);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+}, [currentChartState]);
 
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+useEffect(() => {
+  const handleResize = () => {
+    setScreenWidth(window.innerWidth);
+  };
 
-  useEffect(() => {
-    const handleResize = () => {
-      setScreenWidth(window.innerWidth);
+  window.addEventListener('resize', handleResize);
+
+  return () => {
+    window.removeEventListener('resize', handleResize);
+  };
+}, [])
+
+const handleChart = async () => {
+  try {
+    const currentAction = inChart ? null : 'add';
+
+    const data = {
+      product_id: card.id,
+      action: currentAction,
     };
 
-    window.addEventListener('resize', handleResize);
+    const url = 'http://127.0.0.1:8000/api/cart/';
 
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [])
+    await axios.post(url, data);
 
-  const shouldShow = screenWidth <= 780;
+    dispatch(changeChartAction(!currentChartState));
+
+    navigate('/chart')
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+if (isInChart.products.length > 0) {
+  inChart = isInChart.products.some(((product) => product.id === card.id)
+  );
+}
 
    return (
     <div className="modal">
@@ -108,7 +152,7 @@ useEffect(() => {
             <p className="modal__price">{`₴ ${card.price}`}</p>
           </div>
 
-          <button className="modal__button">
+          <button className="modal__button" onClick={handleChart}>
             {languageReducer.language 
               ?('Buy now')
               :("Купити зараз")

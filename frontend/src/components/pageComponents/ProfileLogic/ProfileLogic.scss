@@ -80,6 +80,7 @@
 
     &--red {
       border: 0.5px solid $red;
+      cursor: pointer;
     }
 
     @include onPhone {

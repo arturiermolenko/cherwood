@@ -235,6 +235,10 @@
     flex-direction: column;
     max-width: 438px;
     width: 100%;
+
+    @include onPhone {
+      margin-top: 40px;
+   }
   }
 
   &__logIn {

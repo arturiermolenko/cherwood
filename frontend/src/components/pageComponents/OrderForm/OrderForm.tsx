@@ -7,7 +7,7 @@ import { getUser } from "../../../api";
 import classNames from "classnames";
 import axios from "axios";
 import { useNavigate } from "react-router";
-import regian from "../../../oblasts.json";
+import region from "../../../oblasts.json";
 
 export const OrderForm = () => {
   const languageReducer = useAppSelector(state => state.language);
@@ -18,32 +18,37 @@ export const OrderForm = () => {
   const [firstName, setFirstName] = useState<string | undefined>(user?.first_name || '');
   const [lastName, setLastName] = useState<string | undefined>(user?.last_name || '');
   // const [country, setCountry] = useState<string | undefined>(user?.country || '');
-  // const [city, setCity] = useState<string | undefined>(user?.city || '');
-  // const [region, setRegion] = useState<string | undefined>(user?.region || '');
+  const [userCity, setCity] = useState<string | undefined>(user?.city || '');
+  // const [userRregion, setUserRegion] = useState<string | undefined>(user?.region || '');
   const [email, setEmail] = useState<string | undefined>(user?.email || '');
   const [telNumber, setTelNumber] = useState<string | undefined>(user?.tel_number || '');
-  const [selectedRegion, setSelectedRegion] = useState(
-    languageReducer.language ? 'Select region' : 'Виберіть вашу область'
+  const [selectedRegion, setSelectedRegion] = useState(user?.email ||
+    ''
   );
   const [isSelect, setIsSelect] = useState(false);
   const [errors, setErrors] = useState({
-    tel_number: '',
-    tel_numberUkr: '',
+    erorr1: '',
+    erorr1_numberUkr: '',
   });
   
   const handleNumber = (e) => {
     setTelNumber(e.target.value);
     setErrors({
-      tel_number: '',
-      tel_numberUkr: '',
+      erorr1: '',
+      erorr1_numberUkr: '',
     });
   };
 
   const handleToggleSelect = () => setIsSelect((prev: boolean) => !prev);
 
-  const handleRegionClick = (region): void => {
+  const handleRegionClick = (region: string): void => {
     setSelectedRegion(region);
     handleToggleSelect();
+
+    setErrors({
+      erorr1: '',
+      erorr1_numberUkr: '',
+    });
   };
 
   useEffect(() => {
@@ -66,38 +71,53 @@ export const OrderForm = () => {
     setFirstName(user?.first_name || '');
     setLastName(user?.last_name || '');
     // setCountry(user?.country || '');
-    // setCity(user?.city || '');
-    // setRegion(user?.region || '');
+    setCity(user?.city || '');
+    setSelectedRegion(user?.region || '');
     setEmail(user?.email || '');
     setTelNumber(user?.tel_number || '');
   }, [user]);
 
   const handleConfirm = async () => {
-    try {
-  
-      const url = 'http://127.0.0.1:8000/api/order/create/';
-  
-      const orderData = {
-        email: email,
-        first_name: firstName,
-        last_name: lastName,
-        phone_number: telNumber,
-      };
-  
-      await axios.post(url, orderData);
-      const updatedUser = await getUser(
-        registrationReducer.registration.access ||
-        registrationReducer.registration.refresh 
-      );
-      setUser(updatedUser);
-
-      navigate('/success')
-    } catch (error) {
-      console.error(error);
+    if (firstName === '' 
+    ||lastName === ''
+    || userCity === ''
+    || selectedRegion === ''
+    || email === ''
+    || telNumber === ''
+    ) {
       setErrors({
-        tel_number: 'Invalid number, it must be 13 digits',
-        tel_numberUkr: 'Некоректний номер, повинно бути 13 цифр',
+        erorr1: 'Enter a value in the field',
+        erorr1_numberUkr: 'Введіть значення в поле',
       });
+    } else {
+      try {
+        const url = 'http://127.0.0.1:8000/api/order/create/';
+    
+        const orderData = {
+          email: email,
+          first_name: firstName,
+          last_name: lastName,
+          phone_number: telNumber,
+          region: selectedRegion,
+          city: userCity,
+        };
+    
+        await axios.post(url, orderData);
+  
+        if (registrationReducer.registration.access 
+          || registrationReducer.registration.refresh
+          )  {
+            const updatedUser = await getUser(
+              registrationReducer.registration.access ||
+              registrationReducer.registration.refresh 
+            );
+            setUser(updatedUser);
+          }
+  
+        navigate('/success')
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
@@ -113,7 +133,7 @@ export const OrderForm = () => {
 
 
       <div className="orderForm__container">
-        <div className="profileLogic__inputBox">
+        <div className="profileLogic__inputBox orderForm__inputBox">
           <div className="signUpLogic__miniContainer">
             <p className="signUpLogic__text">
               {languageReducer.language
@@ -127,7 +147,9 @@ export const OrderForm = () => {
             >
             <input
               type="text"
-              className="signUpLogic__input"
+              className={classNames("signUpLogic__input", {
+                'signUpLogic__error':(firstName === '' && errors.erorr1 ),
+              })}
               placeholder={
                 languageReducer.language
                   ? 'Enter your email first name'
@@ -136,6 +158,15 @@ export const OrderForm = () => {
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
             />
+            {(firstName === '' && errors.erorr1 )&& (
+                <div className="signUpLogic__errorText">
+                    {
+                    languageReducer.language 
+                    ? errors.erorr1
+                    : errors.erorr1_numberUkr
+                  }
+                </div>
+                )}
           </label>
           </div>
 
@@ -152,7 +183,9 @@ export const OrderForm = () => {
               >
               <input
                 type="text"
-                className="signUpLogic__input"
+                className={classNames("signUpLogic__input", {
+                  'signUpLogic__error': (lastName === '' && errors.erorr1 ),
+                })}
                 placeholder={
                   languageReducer.language
                     ? 'Enter your email last name'
@@ -161,9 +194,18 @@ export const OrderForm = () => {
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
               />
+               {(lastName === '' && errors.erorr1 )&& (
+                <div className="signUpLogic__errorText">
+                    {
+                    languageReducer.language 
+                    ? errors.erorr1
+                    : errors.erorr1_numberUkr
+                  }
+                </div>
+                )}
             </label>
           </div>
-          
+{/*           
           <div className="signUpLogic__miniContainer">
             <p className="signUpLogic__text">
               {languageReducer.language
@@ -185,7 +227,7 @@ export const OrderForm = () => {
               }
             />
           </label>
-          </div>
+          </div> */}
 
           <div className="signUpLogic__miniContainer signUpLogic__miniContainer--box">
             <p className="signUpLogic__text">
@@ -195,15 +237,29 @@ export const OrderForm = () => {
             </p>
           
           <button
-              className="signUpLogic__miniContainer signUpLogic__input signUpLogic__input--box"
+              className={classNames("signUpLogic__miniContainer signUpLogic__input signUpLogic__input--box", {
+                'signUpLogic__error': (selectedRegion === '' && errors.erorr1 ),
+              })}
               onClick={handleToggleSelect}
             > 
-            {selectedRegion}
+            {selectedRegion === '' 
+            ? (languageReducer.language ? 'Select region' : 'Виберіть вашу область')
+            : selectedRegion}
             </button>
+
+            {(selectedRegion === '' && errors.erorr1 )&& (
+            <div className="signUpLogic__errorText">
+                {
+                languageReducer.language 
+                ? errors.erorr1
+                : errors.erorr1_numberUkr
+              }
+            </div>
+            )}
 
             {isSelect && (
                 <ul className="orderForm__regionCont">
-                  {regian.map(item => (
+                  {region.map(item => (
                     <li 
                       key={item} 
                       className="orderForm__region"
@@ -230,13 +286,27 @@ export const OrderForm = () => {
             >
               <input
                 type="text"
-                className="signUpLogic__input"
+                className={classNames("signUpLogic__input", {
+                  'signUpLogic__error': (userCity === '' && errors.erorr1 ),
+                })}
                 placeholder={
                   languageReducer.language
                     ? 'Enter your city'
                     : 'Введіть ваше місто'
                 }
+                value={userCity}
+                onChange={(e) => setCity(e.target.value)}
               />
+
+          {(userCity === '' && errors.erorr1 )&& (
+            <div className="signUpLogic__errorText">
+                {
+                languageReducer.language 
+                ? errors.erorr1
+                : errors.erorr1_numberUkr
+              }
+            </div>
+            )}
             </label>
           </div>
 
@@ -256,19 +326,19 @@ export const OrderForm = () => {
               name="phone"
               pattern="\+[0-9]{1,4}\s?[0-9]{1,14}"
               className={classNames("signUpLogic__input", {
-                'signUpLogic__error': errors.tel_number,
+                'signUpLogic__error': (telNumber === '' && errors.erorr1 ),
               })}
-              placeholder='38 000 000 000 00'
+              placeholder='000 000 000 00'
               value={telNumber}
               onChange={handleNumber}
             />
               
-          {errors.tel_number && (
+          {(telNumber === '' && errors.erorr1 )&& (
             <div className="signUpLogic__errorText">
                 {
                 languageReducer.language 
-                ? errors.tel_number
-                : errors.tel_numberUkr
+                ? errors.erorr1
+                : errors.erorr1_numberUkr
               }
             </div>
             )}
@@ -288,7 +358,9 @@ export const OrderForm = () => {
             >
               <input
                 type="gmail"
-                className="signUpLogic__input"
+                className={classNames("signUpLogic__input", {
+                  'signUpLogic__error': (email === '' && errors.erorr1 ),
+                })}
                 placeholder={
                   languageReducer.language
                     ? 'Enter your email address'
@@ -298,6 +370,15 @@ export const OrderForm = () => {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </label>
+            {(email === '' && errors.erorr1 ) && (
+            <div className="signUpLogic__errorText">
+                {
+                languageReducer.language 
+                ? errors.erorr1
+                : errors.erorr1_numberUkr
+              }
+            </div>
+            )}
           </div>
 
         <div className="profileLogic__warning" >

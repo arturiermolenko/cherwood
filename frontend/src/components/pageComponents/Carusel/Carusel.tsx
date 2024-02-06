@@ -38,6 +38,7 @@ export const CarouselOnPage = () => {
   const [cherwood, setCherwood] = useState<Cherwood[]>([]);
   const [isSelect, setIsSelect] = useState(false);
   const [selectedItem, setSelectedItem] = useState<Cherwood | null>(null);
+  const [isLoading, setIsLoading] = useState(true); // Add loading state
 
   const languageReducer = useAppSelector(state => state.language);
   const isMobile = window.innerWidth <= 640;
@@ -48,39 +49,44 @@ export const CarouselOnPage = () => {
   }
  
   useEffect(() => {
-      getCherwood()
-        .then((straviFromServer) => {
-          setCherwood(straviFromServer);
-        })
-    }, []);
+    getCherwood()
+      .then((straviFromServer) => {
+        setCherwood(straviFromServer);
+        setIsLoading(false); // Set loading to false when data is fetched
+      })
+  }, []);
 
   return (
     <div className="carousel">
+     {!isLoading && 
       <h2 className="carousel__title">
         {languageReducer.language 
           ?('Recommended products')
           :('Рекомендовані товари')
         }
       </h2>
+      }
 
-     <Slide {...arrowButtons} duration={5000} indicators={!isMobile}>
-      {cherwood.map((photo) => (
-        <div key={photo.id} className="each-slide">
-          <img 
-            src={imh} 
-            className={`carousel__slide`} 
-            alt={`Slide ${photo.id}`}
-          />
+      {!isLoading && 
+        <Slide {...arrowButtons} duration={5000} indicators={!isMobile}>
+          {cherwood.map((photo) => (
+            <div key={photo.id} className="each-slide">
+              <img 
+                src={imh} 
+                className={`carousel__slide`} 
+                alt={`Slide ${photo.id}`}
+              />
 
-          <button className='carousel__add' onClick={() =>hendlModal(photo)}>
-            {languageReducer.language 
-              ?('Add to cart +')
-              :('Додати до кошика +')
-            }
-          </button>
-        </div>
-        ))}
-      </Slide>
+              <button className='carousel__add' onClick={() => hendlModal(photo)}>
+                {languageReducer.language 
+                  ?('Add to cart +')
+                  :('Додати до кошика +')
+                }
+              </button>
+            </div>
+          ))}
+        </Slide>
+      }
 
       {isSelect && selectedItem && (
         <Modal card={selectedItem} hendlCloseModal={() => setIsSelect(false)} key={selectedItem.id}/>

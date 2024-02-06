@@ -106,6 +106,8 @@
   margin: 0 auto;
   border-radius: 20px;
   position: relative;
+  max-width:none;
+
 
   @include onPhone {
     height: 350px;
@@ -116,6 +118,11 @@
 
 .react-slideshow-container + ul.indicators {
   gap: 14px;
+}
+
+.react-slideshow-wrapper.slide {
+  width: 100%;
+  overflow: hidden;
 }
 
 .react-slideshow-container + ul.indicators .each-slideshow-indicator:before {

@@ -7,20 +7,7 @@ services:
       - "5433:5432"
     env_file:
       - ./backend/.env
-  
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
 
-    ports:
-      - '3000:3000'
-
-    volumes:
-      - ./frontend:/app/frontend
-
-    depends_on:
-      - backend
 
   backend:
     build:

@@ -52,19 +52,14 @@ export const OrderForm = () => {
   };
 
   useEffect(() => {
-    if (registrationReducer.registration.access 
-      || registrationReducer.registration.refresh
-      ) {
-      getUser(registrationReducer.registration.access 
-        || registrationReducer.registration.refresh
-        )
+    if (registrationReducer.registration.access ) {
+      getUser(registrationReducer.registration.access)
       .then((userFromServer) => {
         setUser(userFromServer)
       })
     }
   }, [
-    registrationReducer.registration.access,
-    registrationReducer.registration.refresh
+    registrationReducer.registration.access
   ]);
 
   useEffect(() => {
@@ -104,12 +99,9 @@ export const OrderForm = () => {
     
         await axios.post(url, orderData);
   
-        if (registrationReducer.registration.access 
-          || registrationReducer.registration.refresh
-          )  {
+        if (registrationReducer.registration.access)  {
             const updatedUser = await getUser(
-              registrationReducer.registration.access ||
-              registrationReducer.registration.refresh 
+              registrationReducer.registration.access 
             );
             setUser(updatedUser);
           }

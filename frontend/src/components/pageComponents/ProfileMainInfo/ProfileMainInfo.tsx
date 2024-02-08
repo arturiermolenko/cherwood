@@ -48,13 +48,13 @@ export const ProfileMainInfo:React.FC<Props> = ({noProfile}) => {
   };
 
   useEffect(() => {
-    if (registrationReducer.registration.access || registrationReducer.registration.refresh) {
+    if (registrationReducer.registration.access) {
       getUser(registrationReducer.registration.access)
       .then((userFromServer) => {
         setUser(userFromServer)
       })
     }
-  }, [registrationReducer.registration.access, registrationReducer.registration.refresh]);
+  }, [registrationReducer.registration.access]);
 
   useEffect(() => {
     setFirstName(user?.first_name || '');
@@ -85,8 +85,7 @@ export const ProfileMainInfo:React.FC<Props> = ({noProfile}) => {
       await axios.put(url, requestData, config);
   
       const updatedUser = await getUser(
-        registrationReducer.registration.access ||
-        registrationReducer.registration.refresh 
+        registrationReducer.registration.access
       );
       setUser(updatedUser);
       window.location.reload();

@@ -118,7 +118,7 @@ export const Header = () => {
               </NavLink>
             </div>
 
-            {(registrationReducer.registration.access || registrationReducer.registration.refresh) && (
+            {registrationReducer.registration.access && (
               <NavLink to="/favorites" className="header__favorites header__img" />
             )}
 

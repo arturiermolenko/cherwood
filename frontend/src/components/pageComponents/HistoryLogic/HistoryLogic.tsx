@@ -22,9 +22,7 @@ export const HistoryLogic = () => {
  
   useEffect(() => {
     getBooking( 
-       registrationReducer.registration.access 
-      || registrationReducer.registration.refresh
-      )
+       registrationReducer.registration.access)
       .then((straviFromServer) => {
         setCherwood(straviFromServer);
       })

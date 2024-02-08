@@ -14,7 +14,7 @@ export const Profile = () => {
   const dispatch = useAppDispatch();
 
   const handleLogOut = async () => {
-    LogOut(registrationReducer.registration.access || registrationReducer.registration.refresh);
+    LogOut(registrationReducer.registration.access);
     dispatch(addRegistrationAction({
       access: '',
       refresh: '',
@@ -30,7 +30,7 @@ export const Profile = () => {
       onClick={() => setIsSelect(!isSelect)}
     >
     <div className={classNames("profile__profile profile__img", {
-        'profile__img2': registrationReducer.registration.access || registrationReducer.registration.refresh,
+        'profile__img2': registrationReducer.registration.access
       })}/>
   </div>
 
@@ -70,7 +70,7 @@ export const Profile = () => {
     </div>
    )}
 
-   {isSelect && (registrationReducer.registration.access || registrationReducer.registration.refresh) &&(
+   {isSelect && (registrationReducer.registration.access) &&(
       <div className="profile__list">
         <div className="profile__top">
           <button 

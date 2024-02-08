@@ -35,7 +35,7 @@ export const SuccessOrder = () => {
         {windowWidth > 780 &&(<NavLink to='/' className="logo"/>)}
 
         <div className="chart__header--cont">
-        {(registrationReducer.registration.access || registrationReducer.registration.refresh) && (
+        {(registrationReducer.registration.access) && (
             <NavLink to="/favorites" className="header__favorites header__img" />
         )}
 

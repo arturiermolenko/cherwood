@@ -16,7 +16,7 @@ export const Delivery = () => {
           </h2>
           <p className="delivery__img delivery__delivery" />
         </div>
-
+{/* 
         <div className="delivery__container">
           <h2 className="delivery__text">
             {languageReducer.language 
@@ -25,7 +25,7 @@ export const Delivery = () => {
             }
           </h2>
           <p className="delivery__img delivery__pay" />
-        </div>
+        </div> */}
 
         <div className="delivery__container">
           <h2 className="delivery__text">
@@ -38,11 +38,11 @@ export const Delivery = () => {
         </div>
       </div>
       
-      <div className="delivery__container">
+      {/* <div className="delivery__container">
         <h2 className="delivery__text">
           {languageReducer.language 
             ?('We cooperate with the New post office')
-            :('Ми співпрацюємо з Новою понтою відділенням.')
+            :('Ми співпрацюємо з Новою понтою.')
          }
         </h2>
 
@@ -56,7 +56,7 @@ export const Delivery = () => {
           </p>
         </div>
 
-      </div>
+      </div> */}
     </div>
   );
 }
